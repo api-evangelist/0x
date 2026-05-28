@@ -1,0 +1,32 @@
+aid: 0x
+name: 0x
+description: "API for querying token and pool stats across various liquidity pools"
+url: https://0x.org/api
+specificationVersion: '0.20'
+created: '2026-05-28'
+modified: '2026-05-28'
+x-source: public-apis/public-apis
+x-category: "Cryptocurrency"
+x-tier: 3
+x-tier-reason: bulk-registered-from-public-apis
+tags:
+  - Cryptocurrency
+  - Public APIs
+apis:
+  - name: 0x
+    description: "API for querying token and pool stats across various liquidity pools"
+    humanURL: https://0x.org/api
+    baseURL: https://0x.org/api
+    tags:
+      - Cryptocurrency
+    properties:
+      - type: Documentation
+        url: https://0x.org/api
+common:
+  - type: Website
+    url: https://0x.org/api
+  - type: PublicAPIsListing
+    url: https://github.com/public-apis/public-apis
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
