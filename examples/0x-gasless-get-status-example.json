@@ -1,0 +1,23 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "https://api.0x.org/gasless/status/0xdef0987654321fedcba0987654321fedcba0987654321fedcba0987654321fed?chainId=1",
+    "headers": {
+      "0x-api-key": "YOUR_API_KEY",
+      "0x-version": "v2"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "transactions": [
+        {
+          "hash": "0xfaceb00c000000000000000000000000000000000000000000000000deadbeef",
+          "timestamp": 1735682500
+        }
+      ],
+      "status": "confirmed",
+      "reason": null
+    }
+  }
+}

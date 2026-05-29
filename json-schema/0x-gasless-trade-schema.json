@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/0x/main/json-schema/0x-gasless-trade-schema.json",
+  "title": "0x Gasless Trade",
+  "description": "A meta-transaction trade submitted via POST /gasless/submit. The taker signs Permit2 and the trade off-chain; 0x relayers submit on-chain. Fees are deducted from the sell token.",
+  "x-schema-source": "openapi",
+  "type": "object",
+  "properties": {
+    "tradeHash": {
+      "type": "string",
+      "pattern": "^0x[a-fA-F0-9]{64}$",
+      "description": "Unique trade hash to poll with GET /gasless/status/{tradeHash}."
+    },
+    "chainId": {
+      "type": "integer"
+    },
+    "approval": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "description": "Approval payload \u2014 token, signature type (Permit, Permit2, ExecuteMetaTransaction), and the EIP-712 typed data signed by the taker.",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "permit",
+            "permit2",
+            "executeMetaTransaction"
+          ]
+        },
+        "hash": {
+          "type": "string"
+        },
+        "eip712": {
+          "type": "object"
+        }
+      }
+    },
+    "trade": {
+      "type": "object",
+      "description": "The trade payload (Permit2-based meta-transaction).",
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "hash": {
+          "type": "string"
+        },
+        "eip712": {
+          "type": "object"
+        }
+      }
+    },
+    "fees": {
+      "type": "object",
+      "properties": {
+        "integratorFee": {
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "zeroExFee": {
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "gasFee": {
+          "type": [
+            "object",
+            "null"
+          ]
+        }
+      }
+    }
+  },
+  "required": [
+    "chainId",
+    "trade"
+  ]
+}

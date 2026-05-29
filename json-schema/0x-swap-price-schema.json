@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/0x/main/json-schema/0x-swap-price-schema.json",
+  "title": "0x Swap Price",
+  "description": "An indicative price for an asset pair returned by /swap/allowance-holder/price and /swap/permit2/price. Does NOT include calldata.",
+  "x-schema-source": "openapi",
+  "type": "object",
+  "properties": {
+    "liquidityAvailable": {
+      "type": "boolean"
+    },
+    "chainId": {
+      "type": "integer"
+    },
+    "buyToken": {
+      "type": "string",
+      "pattern": "^0x[a-fA-F0-9]{40}$"
+    },
+    "sellToken": {
+      "type": "string",
+      "pattern": "^0x[a-fA-F0-9]{40}$"
+    },
+    "buyAmount": {
+      "type": "string",
+      "pattern": "^[0-9]+$"
+    },
+    "sellAmount": {
+      "type": "string",
+      "pattern": "^[0-9]+$"
+    },
+    "minBuyAmount": {
+      "type": "string",
+      "pattern": "^[0-9]+$"
+    },
+    "blockNumber": {
+      "type": "string",
+      "pattern": "^[0-9]+$"
+    },
+    "estimatedPriceImpact": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "totalNetworkFee": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[0-9]+$"
+    },
+    "gas": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[0-9]+$"
+    },
+    "gasPrice": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[0-9]+$"
+    },
+    "route": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "fees": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "issues": {
+      "type": [
+        "object",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "liquidityAvailable"
+  ]
+}

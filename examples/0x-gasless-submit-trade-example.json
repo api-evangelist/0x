@@ -1,0 +1,62 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "https://api.0x.org/gasless/submit",
+    "headers": {
+      "0x-api-key": "YOUR_API_KEY",
+      "0x-version": "v2",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "chainId": 1,
+      "approval": {
+        "type": "permit2",
+        "eip712": {
+          "domain": {"name": "Permit2", "chainId": 1, "verifyingContract": "0x000000000022D473030F116dDEE9F6B43aC78BA3"},
+          "primaryType": "PermitTransferFrom",
+          "message": {
+            "permitted": {"token": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", "amount": "1000000000"},
+            "spender": "0x7F6cEE965959295cC64d0E6c00d99d6532d8e86b",
+            "nonce": "0",
+            "deadline": "1735689600"
+          }
+        },
+        "signature": {
+          "v": 27,
+          "r": "0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef",
+          "s": "0xfedcba0987654321fedcba0987654321fedcba0987654321fedcba0987654321",
+          "signatureType": 2
+        }
+      },
+      "trade": {
+        "type": "metatransaction_v2",
+        "eip712": {
+          "domain": {"name": "ZeroEx", "version": "1.0.0", "chainId": 1, "verifyingContract": "0xdef1c0ded9bec7f1a1670819833240f027b25eff"},
+          "primaryType": "MetaTransactionDataV2",
+          "message": {
+            "signer": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+            "sender": "0x0000000000000000000000000000000000000000",
+            "expirationTimeSeconds": "1735689600",
+            "salt": "1735682400",
+            "callData": "0x...",
+            "feeToken": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+            "fees": []
+          }
+        },
+        "signature": {
+          "v": 28,
+          "r": "0xaaaa567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef",
+          "s": "0xbbbbba0987654321fedcba0987654321fedcba0987654321fedcba0987654321",
+          "signatureType": 2
+        }
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "type": "metatransaction_v2",
+      "tradeHash": "0xdef0987654321fedcba0987654321fedcba0987654321fedcba0987654321fed"
+    }
+  }
+}

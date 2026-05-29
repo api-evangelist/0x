@@ -1,0 +1,53 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "https://api.0x.org/swap/allowance-holder/price?chainId=1&sellToken=0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2&buyToken=0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48&sellAmount=1000000000000000000&taker=0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+    "headers": {
+      "0x-api-key": "YOUR_API_KEY",
+      "0x-version": "v2"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "liquidityAvailable": true,
+      "chainId": 1,
+      "blockNumber": "20850142",
+      "buyAmount": "2629142387",
+      "buyToken": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+      "sellAmount": "1000000000000000000",
+      "sellToken": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+      "minBuyAmount": "2603192577",
+      "totalNetworkFee": "1530000000000000",
+      "fees": {
+        "integratorFee": null,
+        "zeroExFee": {
+          "amount": "0",
+          "token": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "type": "volume"
+        },
+        "gasFee": null
+      },
+      "issues": {
+        "allowance": null,
+        "balance": null,
+        "simulationIncomplete": false,
+        "invalidSourcesPassed": []
+      },
+      "route": {
+        "fills": [
+          {
+            "source": "Uniswap_V3",
+            "from": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+            "to": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+            "proportionBps": "10000"
+          }
+        ],
+        "tokens": [
+          {"address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", "symbol": "WETH"},
+          {"address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", "symbol": "USDC"}
+        ]
+      }
+    }
+  }
+}

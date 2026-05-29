@@ -1,0 +1,121 @@
+{
+  "@context": {
+    "@vocab": "https://0x.org/schema#",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "fibo": "https://spec.edmcouncil.org/fibo/ontology/",
+    "0x": "https://0x.org/schema#",
+
+    "SwapQuote": "0x:SwapQuote",
+    "SwapPrice": "0x:SwapPrice",
+    "GaslessTrade": "0x:GaslessTrade",
+    "GaslessTradeStatus": "0x:GaslessTradeStatus",
+    "CrossChainQuote": "0x:CrossChainQuote",
+    "LiquiditySource": "0x:LiquiditySource",
+    "SupportedChain": "0x:SupportedChain",
+    "TradeAnalyticsRecord": "0x:TradeAnalyticsRecord",
+    "BridgeProvider": "0x:BridgeProvider",
+    "Permit2Authorization": "0x:Permit2Authorization",
+    "SettlerContract": "0x:SettlerContract",
+
+    "id": "schema:identifier",
+    "name": "schema:name",
+    "description": "schema:description",
+    "url": "schema:url",
+
+    "chainId": {
+      "@id": "0x:chainId",
+      "@type": "xsd:integer"
+    },
+    "originChainId": {
+      "@id": "0x:originChainId",
+      "@type": "xsd:integer"
+    },
+    "destinationChainId": {
+      "@id": "0x:destinationChainId",
+      "@type": "xsd:integer"
+    },
+    "buyToken": {
+      "@id": "0x:buyToken",
+      "@type": "xsd:hexBinary"
+    },
+    "sellToken": {
+      "@id": "0x:sellToken",
+      "@type": "xsd:hexBinary"
+    },
+    "buyAmount": "0x:buyAmount",
+    "sellAmount": "0x:sellAmount",
+    "minBuyAmount": "0x:minBuyAmount",
+    "blockNumber": "0x:blockNumber",
+    "allowanceTarget": "0x:allowanceTarget",
+    "taker": "0x:taker",
+    "tradeHash": "0x:tradeHash",
+    "transactionHash": "0x:transactionHash",
+
+    "transaction": "0x:transaction",
+    "route": "0x:route",
+    "fees": "0x:fees",
+    "issues": "0x:issues",
+    "permit2": "0x:permit2",
+    "totalNetworkFee": "0x:totalNetworkFee",
+    "gas": "0x:gas",
+    "gasPrice": "0x:gasPrice",
+    "value": "0x:value",
+    "data": "0x:data",
+    "to": "0x:to",
+
+    "liquidityAvailable": {
+      "@id": "0x:liquidityAvailable",
+      "@type": "xsd:boolean"
+    },
+    "expiration": {
+      "@id": "0x:expiration",
+      "@type": "xsd:integer"
+    },
+
+    "integratorFee": "0x:integratorFee",
+    "zeroExFee": "0x:zeroExFee",
+    "gasFee": "0x:gasFee",
+    "surplus": "0x:surplus",
+
+    "bridge": "0x:bridge",
+    "bridgeProviderId": "0x:bridgeProviderId",
+    "inputAmount": "0x:inputAmount",
+    "outputAmount": "0x:outputAmount",
+    "minOutputAmount": "0x:minOutputAmount",
+    "estimatedDurationSeconds": {
+      "@id": "0x:estimatedDurationSeconds",
+      "@type": "xsd:integer"
+    },
+
+    "status": "0x:status",
+    "swapSupported": {
+      "@id": "0x:swapSupported",
+      "@type": "xsd:boolean"
+    },
+    "gaslessSupported": {
+      "@id": "0x:gaslessSupported",
+      "@type": "xsd:boolean"
+    },
+    "crossChainSupported": {
+      "@id": "0x:crossChainSupported",
+      "@type": "xsd:boolean"
+    },
+
+    "kind": "0x:kind",
+    "enabled": {
+      "@id": "0x:enabled",
+      "@type": "xsd:boolean"
+    },
+
+    "timestamp": {
+      "@id": "dcterms:date",
+      "@type": "xsd:integer"
+    },
+    "createdAt": {
+      "@id": "dcterms:created",
+      "@type": "xsd:dateTime"
+    }
+  }
+}

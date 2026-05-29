@@ -1,0 +1,59 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "https://api.0x.org/trade-analytics/swap?chainId=1&startTimestamp=1735603200&endTimestamp=1735689600&limit=2",
+    "headers": {
+      "0x-api-key": "YOUR_API_KEY",
+      "0x-version": "v2"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "trades": [
+        {
+          "tradeHash": "0x9999888877776666555544443333222211110000aaaabbbbccccddddeeeeffff",
+          "transactionHash": "0xfaceb00c000000000000000000000000000000000000000000000000deadbeef",
+          "chainId": 1,
+          "timestamp": 1735604000,
+          "taker": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "buyToken": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "sellToken": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "buyAmount": "2629142387",
+          "sellAmount": "1000000000000000000",
+          "integratorFeeAmount": "3943713",
+          "integratorFeeRecipient": "0x9999888877776666555544443333222211110000",
+          "surplus": "1234567",
+          "gasUsed": "212450",
+          "blockNumber": "20850142",
+          "route": {
+            "fills": [{"source": "Uniswap_V3", "proportionBps": "10000"}]
+          }
+        },
+        {
+          "tradeHash": "0x1111222233334444555566667777888899990000aaaabbbbccccddddeeeeffff",
+          "transactionHash": "0xbeefcafe00000000000000000000000000000000000000000000000000d00d00d",
+          "chainId": 1,
+          "timestamp": 1735612400,
+          "taker": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+          "buyToken": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          "sellToken": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "buyAmount": "500000000000000000",
+          "sellAmount": "1320000000",
+          "integratorFeeAmount": "1980000",
+          "integratorFeeRecipient": "0x9999888877776666555544443333222211110000",
+          "surplus": "0",
+          "gasUsed": "186200",
+          "blockNumber": "20850698",
+          "route": {
+            "fills": [
+              {"source": "Curve", "proportionBps": "5000"},
+              {"source": "Balancer_V2", "proportionBps": "5000"}
+            ]
+          }
+        }
+      ],
+      "next": "eyJjdXJzb3IiOiIyMDg1MDY5OCJ9"
+    }
+  }
+}

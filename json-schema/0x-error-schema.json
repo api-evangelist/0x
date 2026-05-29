@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/0x/main/json-schema/0x-error-schema.json",
+  "title": "0x API Error",
+  "description": "Canonical error envelope used across 0x APIs. The `name` field is one of the documented error codes (see openapi.json components.schemas).",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Error code (e.g. INPUT_INVALID, INSUFFICIENT_BALANCE, TOKEN_NOT_SUPPORTED)."
+    },
+    "message": {
+      "type": "string"
+    },
+    "data": {
+      "type": [
+        "object",
+        "array",
+        "null"
+      ],
+      "description": "Optional structured detail about the failure (validation issues, missing balances, etc.)."
+    }
+  },
+  "required": [
+    "name",
+    "message"
+  ]
+}

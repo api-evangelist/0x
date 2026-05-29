@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/0x/main/json-schema/0x-gasless-trade-status-schema.json",
+  "title": "0x Gasless Trade Status",
+  "description": "Status returned by GET /gasless/status/{tradeHash}. Tracks the lifecycle from submitted through confirmed/failed.",
+  "type": "object",
+  "properties": {
+    "tradeHash": {
+      "type": "string",
+      "pattern": "^0x[a-fA-F0-9]{64}$"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "submitted",
+        "succeeded",
+        "confirmed",
+        "failed",
+        "expired"
+      ]
+    },
+    "reason": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "transactions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "hash": {
+            "type": "string",
+            "pattern": "^0x[a-fA-F0-9]{64}$"
+          },
+          "timestamp": {
+            "type": "integer"
+          },
+          "blockNumber": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "tradeHash",
+    "status"
+  ]
+}

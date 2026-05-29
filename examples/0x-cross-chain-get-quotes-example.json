@@ -1,0 +1,64 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "https://api.0x.org/cross-chain/quotes?originChainId=1&destinationChainId=8453&originToken=0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48&destinationToken=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913&inputAmount=1000000000&recipient=0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+    "headers": {
+      "0x-api-key": "YOUR_API_KEY",
+      "0x-version": "v1"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "quotes": [
+        {
+          "quoteId": "quote_01HZX7YQABCD",
+          "bridge": "across_v4",
+          "originChainId": 1,
+          "destinationChainId": 8453,
+          "originToken": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "destinationToken": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+          "inputAmount": "1000000000",
+          "outputAmount": "999000000",
+          "minOutputAmount": "994000000",
+          "fees": {
+            "bridgeFee": {"amount": "1000000", "token": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"},
+            "relayerFee": {"amount": "500000", "token": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"}
+          },
+          "estimatedDurationSeconds": 90,
+          "transactions": [
+            {
+              "to": "0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
+              "data": "0x...",
+              "value": "0",
+              "chainId": 1
+            }
+          ]
+        },
+        {
+          "quoteId": "quote_01HZX7YQEFGH",
+          "bridge": "relay",
+          "originChainId": 1,
+          "destinationChainId": 8453,
+          "originToken": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "destinationToken": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+          "inputAmount": "1000000000",
+          "outputAmount": "998500000",
+          "minOutputAmount": "993500000",
+          "fees": {
+            "bridgeFee": {"amount": "1500000", "token": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"}
+          },
+          "estimatedDurationSeconds": 30,
+          "transactions": [
+            {
+              "to": "0xa5F565650890fBA1824Ee0F21EbBbF660a179934",
+              "data": "0x...",
+              "value": "0",
+              "chainId": 1
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

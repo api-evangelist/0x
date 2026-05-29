@@ -1,0 +1,187 @@
+vocabulary:
+  name: 0x Domain Vocabulary
+  description: >-
+    Domain vocabulary for the 0x liquidity infrastructure platform, covering
+    DEX aggregation, on-chain settlement, gasless meta-transactions,
+    cross-chain bridging, and integrator monetisation concepts.
+  version: '2026-05-28'
+  terms:
+
+    - term: 0x API
+      definition: >-
+        Unified REST API exposing the 0x liquidity engine. Comprises four
+        product surfaces: Swap, Gasless, Cross-Chain, and Trade Analytics.
+        All endpoints are served from `https://api.0x.org` and authenticated
+        with a `0x-api-key` header plus a `0x-version` header.
+      tags: [Platform, Core Concept]
+
+    - term: Swap API
+      definition: >-
+        REST API that aggregates 150+ liquidity sources (AMMs + private market
+        makers) and returns indicative prices, firm quotes, and ready-to-sign
+        transaction calldata. Supports two allowance models — AllowanceHolder
+        and Permit2.
+      tags: [Product, Swap]
+
+    - term: Gasless API
+      definition: >-
+        REST API that lets end users swap tokens without holding the native
+        gas asset. The taker signs an off-chain Permit2 EIP-712 meta-transaction
+        and 0x relayers submit it on-chain. Gas fees are deducted from the
+        sell-side token.
+      tags: [Product, Gasless, Meta-Transactions]
+
+    - term: Cross-Chain API
+      definition: >-
+        Private-beta REST API that returns aggregated bridge quotes across 16+
+        providers (Across V4, Relay, Bungee, CCIP, Squid Coral, NEAR Intents,
+        OFT, Mayan, Circle CCTP, Arbitrum, Linea, Superchain, HyperCore) for
+        any-token, any-chain swaps including non-EVM destinations like Solana,
+        HyperCore, and Tron.
+      tags: [Product, Cross-Chain, Bridging]
+
+    - term: Trade Analytics API
+      definition: >-
+        Read-only REST API that returns the integrator's historical Swap and
+        Gasless trade records — including integrator fee accrual, trade
+        surplus, and on-chain settlement metadata — for monetisation
+        reporting and accounting.
+      tags: [Product, Analytics, Reporting]
+
+    - term: AllowanceHolder
+      definition: >-
+        Recommended swap allowance flow. The taker grants a one-time ERC-20
+        approval to the AllowanceHolder contract; subsequent swaps require
+        only a single transaction. Multisig- and smart-account-friendly
+        because it does not require off-chain signature support.
+      tags: [Allowance, Pattern]
+
+    - term: Permit2
+      definition: >-
+        Uniswap-standard signature-based allowance system. Replaces individual
+        ERC-20 approvals with EIP-712 signed permits that authorise a single
+        spender for a single amount until a deadline. The advanced 0x flow,
+        used by Swap API v2 and required by the Gasless API.
+      tags: [Allowance, Standard, EIP-712]
+
+    - term: Settler
+      definition: >-
+        0x's settlement smart contract — the on-chain target of every Swap
+        API quote's `transaction.to`. The current Settler uses Permit2 for
+        token movement. Integrators MUST NOT set allowances directly on the
+        Settler.
+      tags: [Smart Contract, Settlement]
+
+    - term: Liquidity Source
+      definition: >-
+        A venue 0x routes against — either a public AMM (Uniswap V3, Curve,
+        Balancer, Maverick, etc.) or a private RFQ market maker. Sources are
+        chain-scoped and can be enabled or disabled per request via
+        `excludedSources` / `includedSources`.
+      tags: [Liquidity, Routing]
+
+    - term: RFQ (Request-for-Quote)
+      definition: >-
+        Private liquidity channel where professional market makers stream
+        prices to the 0x API. RFQ fills typically beat AMM pricing and avoid
+        revert risk. Included automatically in /price responses regardless of
+        the `taker` parameter.
+      tags: [Liquidity, Private]
+
+    - term: Trade Surplus
+      definition: >-
+        Positive price improvement that occurs when an order fills better
+        than the quoted price. On the Standard pricing plan, 0x collects
+        the trade surplus as part of its revenue model.
+      tags: [Monetization, Pricing]
+
+    - term: Integrator Fee (swapFeeBps)
+      definition: >-
+        Optional fee the integrator charges on swap volume, configured by
+        passing `swapFeeBps` and `swapFeeRecipient` query parameters. The
+        fee is deducted on-chain by the Settler and remitted to the
+        recipient address.
+      tags: [Monetization, Fee]
+
+    - term: Slippage
+      definition: >-
+        The maximum acceptable difference between the quoted buyAmount and the
+        actual fill amount. Controlled by the `slippageBps` query parameter
+        (default 100 bps = 1%).
+      tags: [Trading, Risk]
+
+    - term: Liquidity Available
+      definition: >-
+        Top-level boolean field on /price and /quote responses indicating
+        whether 0x found a viable route for the requested pair and size. If
+        `liquidityAvailable` is false, no other fields are populated.
+      tags: [API Field]
+
+    - term: Trade Hash
+      definition: >-
+        Unique 32-byte identifier for a Gasless trade. Returned by
+        POST /gasless/submit and used as the path parameter for
+        GET /gasless/status/{tradeHash}.
+      tags: [Gasless, Identifier]
+
+    - term: Approval Token
+      definition: >-
+        An ERC-20 token that supports a gasless approval scheme (Permit,
+        Permit2, or ExecuteMetaTransaction). Returned by
+        GET /gasless/gasless-approval-tokens for each supported chain. The
+        Gasless API requires the sell token to be on this list.
+      tags: [Gasless, Token]
+
+    - term: Bridge Provider
+      definition: >-
+        A cross-chain liquidity provider integrated into the Cross-Chain API.
+        Selected per quote via the `includedBridges` / `excludedBridges`
+        parameters. Provider IDs are documented at
+        docs.0x.org/introduction/supported-chains.
+      tags: [Cross-Chain, Bridging]
+
+    - term: ChainId
+      definition: >-
+        The numeric identifier of the chain a request applies to. Swap and
+        Gasless support 20+ EVM chains using canonical EVM chain IDs.
+        The Cross-Chain API also uses virtual chain IDs for non-EVM
+        destinations: Solana = 999,999,999,991; HyperCore = 999,999,999,992;
+        Tron = 999,999,999,993.
+      tags: [Chain, Identifier]
+
+    - term: 0x Settler Contract
+      definition: >-
+        The on-chain Solidity contract suite (0xProject/0x-settler) that
+        receives and executes every swap. Built around Permit2 and audited
+        for the v2 release. Source published at
+        github.com/0xProject/0x-settler.
+      tags: [Smart Contract, Settlement]
+
+    - term: Matcha
+      definition: >-
+        0x's consumer-facing aggregator UI (matcha.xyz). A reference
+        integration of the Swap and Cross-Chain APIs.
+      tags: [Product, Consumer]
+
+    - term: 0x Dashboard
+      definition: >-
+        The integrator self-service portal at dashboard.0x.org for creating
+        API keys, viewing usage, managing billing, and configuring fee
+        recipients.
+      tags: [Portal, Integrator]
+
+    - term: 0x MCP Server
+      definition: >-
+        Hosted Model Context Protocol server at `https://docs.0x.org/_mcp/server`
+        that gives AI agents live, searchable access to 0x documentation.
+      tags: [AI, Tooling]
+
+    - term: 0x Agent Skill (0x-api)
+      definition: >-
+        Official Claude Code / Cursor / GitHub Copilot Agent Skill installed
+        via `npx skills add 0xProject/0x-ai`. Embeds 0x API knowledge into
+        the agent so it can generate production-ready swap and gasless code.
+      tags: [AI, Tooling]
+maintainer:
+  name: Kin Lane
+  email: kin@apievangelist.com

@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/0x/main/json-schema/0x-liquidity-source-schema.json",
+  "title": "0x Liquidity Source",
+  "description": "A liquidity venue (AMM or RFQ market maker) that 0x routes against. Returned by GET /sources.",
+  "type": "object",
+  "properties": {
+    "chainId": {
+      "type": "integer"
+    },
+    "name": {
+      "type": "string",
+      "description": "Source identifier (e.g. UniswapV3, Curve, Balancer, RFQ)."
+    },
+    "kind": {
+      "type": "string",
+      "enum": [
+        "amm",
+        "rfq",
+        "private",
+        "intent"
+      ]
+    },
+    "enabled": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "chainId",
+    "name"
+  ]
+}

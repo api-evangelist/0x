@@ -1,0 +1,29 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "https://api.0x.org/sources?chainId=1",
+    "headers": {
+      "0x-api-key": "YOUR_API_KEY",
+      "0x-version": "v2"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "sources": [
+        {"chainId": 1, "name": "Uniswap_V2", "kind": "amm", "enabled": true},
+        {"chainId": 1, "name": "Uniswap_V3", "kind": "amm", "enabled": true},
+        {"chainId": 1, "name": "Uniswap_V4", "kind": "amm", "enabled": true},
+        {"chainId": 1, "name": "Curve", "kind": "amm", "enabled": true},
+        {"chainId": 1, "name": "Balancer_V2", "kind": "amm", "enabled": true},
+        {"chainId": 1, "name": "Maverick", "kind": "amm", "enabled": true},
+        {"chainId": 1, "name": "PancakeSwap_V3", "kind": "amm", "enabled": true},
+        {"chainId": 1, "name": "Sushiswap", "kind": "amm", "enabled": true},
+        {"chainId": 1, "name": "DODO_V2", "kind": "amm", "enabled": true},
+        {"chainId": 1, "name": "Kyber_Elastic", "kind": "amm", "enabled": true},
+        {"chainId": 1, "name": "RFQ", "kind": "rfq", "enabled": true},
+        {"chainId": 1, "name": "0x_RFQ_T", "kind": "rfq", "enabled": true}
+      ]
+    }
+  }
+}

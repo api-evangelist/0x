@@ -1,0 +1,71 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "https://api.0x.org/swap/permit2/quote?chainId=1&sellToken=0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2&buyToken=0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48&sellAmount=1000000000000000000&taker=0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+    "headers": {
+      "0x-api-key": "YOUR_API_KEY",
+      "0x-version": "v2"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "liquidityAvailable": true,
+      "chainId": 1,
+      "blockNumber": "20850142",
+      "buyAmount": "2629142387",
+      "buyToken": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+      "sellAmount": "1000000000000000000",
+      "sellToken": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+      "minBuyAmount": "2603192577",
+      "allowanceTarget": "0x000000000022D473030F116dDEE9F6B43aC78BA3",
+      "transaction": {
+        "to": "0x7F6cEE965959295cC64d0E6c00d99d6532d8e86b",
+        "data": "0x1fff991f000000000000000000000000f39fd6e51aad88f6f4ce6ab8827279cfffb92266...",
+        "gas": "288079",
+        "gasPrice": "9000000000",
+        "value": "0"
+      },
+      "permit2": {
+        "type": "Permit2",
+        "hash": "0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef",
+        "eip712": {
+          "types": {
+            "PermitTransferFrom": [
+              {"name": "permitted", "type": "TokenPermissions"},
+              {"name": "spender", "type": "address"},
+              {"name": "nonce", "type": "uint256"},
+              {"name": "deadline", "type": "uint256"}
+            ],
+            "TokenPermissions": [
+              {"name": "token", "type": "address"},
+              {"name": "amount", "type": "uint256"}
+            ]
+          },
+          "domain": {
+            "name": "Permit2",
+            "chainId": 1,
+            "verifyingContract": "0x000000000022D473030F116dDEE9F6B43aC78BA3"
+          },
+          "primaryType": "PermitTransferFrom",
+          "message": {
+            "permitted": {
+              "token": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+              "amount": "1000000000000000000"
+            },
+            "spender": "0x7F6cEE965959295cC64d0E6c00d99d6532d8e86b",
+            "nonce": "2241959297796804108812485799074816",
+            "deadline": "1735689600"
+          }
+        }
+      },
+      "fees": {
+        "integratorFee": null,
+        "zeroExFee": {"amount": "0", "token": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", "type": "volume"},
+        "gasFee": null
+      },
+      "totalNetworkFee": "2593440000000000",
+      "issues": {"allowance": null, "balance": null, "simulationIncomplete": false, "invalidSourcesPassed": []}
+    }
+  }
+}

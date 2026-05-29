@@ -1,32 +1,287 @@
 aid: 0x
+url: https://raw.githubusercontent.com/api-evangelist/0x/refs/heads/main/apis.yml
 name: 0x
-description: "API for querying token and pool stats across various liquidity pools"
-url: https://0x.org/api
-specificationVersion: '0.20'
-created: '2026-05-28'
-modified: '2026-05-28'
-x-source: public-apis/public-apis
-x-category: "Cryptocurrency"
-x-tier: 3
-x-tier-reason: bulk-registered-from-public-apis
+kind: company
+description: >-
+  0x is the institutional-grade DEX aggregation and crypto liquidity
+  infrastructure platform that powers token swaps inside hundreds of consumer
+  wallets, exchanges, and onchain apps. The 0x API surface aggregates 150+
+  liquidity sources — public AMMs and exclusive professional market makers —
+  across 20+ EVM chains, exposing four primary products: the Swap API
+  (AllowanceHolder and Permit2 flows) for on-chain swaps, the Gasless API for
+  swaps with no native gas token, the Cross-Chain API for any-token any-chain
+  bridging across 16+ providers, and the Trade Analytics API for monetisation
+  and reporting. Settlement is performed by the 0x Settler smart contracts
+  using the Permit2 standard, and integrators get a unified API key, a
+  TypeScript SDK, an official Agent Skill, and an MCP server for AI-assisted
+  development.
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 tags:
   - Cryptocurrency
-  - Public APIs
+  - DeFi
+  - DEX Aggregator
+  - Swap
+  - Gasless
+  - Cross-Chain
+  - Permit2
+  - Liquidity
+  - Trade Analytics
+  - Web3
+  - Settlement
+  - Smart Contracts
+created: '2026-05-28'
+modified: '2026-05-28'
+specificationVersion: '0.20'
+x-source: public-apis/public-apis
+x-category: Cryptocurrency
+x-tier: 1
+x-type: company
 apis:
-  - name: 0x
-    description: "API for querying token and pool stats across various liquidity pools"
-    humanURL: https://0x.org/api
-    baseURL: https://0x.org/api
+  - aid: 0x:swap-api
+    name: 0x Swap API
+    description: >-
+      Institutional-grade DEX aggregation API that returns indicative prices and
+      firm quotes plus ready-to-sign transaction calldata for token swaps across
+      150+ liquidity sources on 20+ supported EVM chains. Supports two
+      allowance models: the simple AllowanceHolder pattern (recommended,
+      multisig-friendly) and the gas-optimised Permit2 pattern with EIP-712
+      signing.
+    humanURL: https://0x.org/products/swap
+    baseURL: https://api.0x.org
     tags:
-      - Cryptocurrency
+      - Swap
+      - DEX Aggregation
+      - Permit2
+      - AllowanceHolder
+      - Liquidity
     properties:
       - type: Documentation
-        url: https://0x.org/api
+        url: https://docs.0x.org/0x-swap-api/introduction
+      - type: OpenAPI
+        url: openapi/0x-api.yaml
+      - type: SignUp
+        url: https://dashboard.0x.org/create-account
+      - type: SDK
+        title: TypeScript SDK (OpenAPI-generated)
+        url: https://github.com/0xProject/0x-swap-ts-sdk-migration
+      - type: CodeExamples
+        title: Swap v2 AllowanceHolder Headless Example
+        url: https://github.com/0xProject/0x-examples/tree/main/swap-v2-allowance-holder-headless-example
+      - type: CodeExamples
+        title: Swap v2 Permit2 Headless Example
+        url: https://github.com/0xProject/0x-examples/tree/main/swap-v2-permit2-headless-example
+      - type: CodeExamples
+        title: Swap v2 AllowanceHolder Next.js App
+        url: https://github.com/0xProject/0x-examples/tree/main/swap-v2-allowance-holder-next-app
+      - type: CodeExamples
+        title: Swap v2 Permit2 Next.js App
+        url: https://github.com/0xProject/0x-examples/tree/main/swap-v2-permit2-next-app
+      - type: CodeExamples
+        title: Swap v2 with Foundry
+        url: https://github.com/0xProject/0x-examples/tree/main/swap-v2-with-foundry
+      - type: Tutorials
+        title: Swap Tokens with 0x Swap API
+        url: https://docs.0x.org/0x-swap-api/guides/swap-tokens-with-0x-swap-api
+  - aid: 0x:gasless-api
+    name: 0x Gasless API
+    description: >-
+      Lets end users swap tokens without holding the chain's native gas asset
+      (ETH, BNB, AVAX, etc.). Fees are deducted from the sell token via a
+      meta-transaction signed off-chain (Permit2 EIP-712) and submitted by 0x
+      relayers to the Settler contract. Includes endpoints for indicative price,
+      firm quote, trade submission, status polling, and supported approval
+      tokens.
+    humanURL: https://0x.org/products/gasless
+    baseURL: https://api.0x.org
+    tags:
+      - Gasless
+      - Meta-Transactions
+      - Permit2
+      - Relay
+      - Swap
+    properties:
+      - type: Documentation
+        url: https://docs.0x.org/gasless-api/introduction
+      - type: OpenAPI
+        url: openapi/0x-api.yaml
+      - type: SignUp
+        url: https://dashboard.0x.org/create-account
+      - type: CodeExamples
+        title: Gasless v2 Headless Example
+        url: https://github.com/0xProject/0x-examples/tree/main/gasless-v2-headless-example
+      - type: CodeExamples
+        title: Gasless v2 ERC-4337 Smart Account
+        url: https://github.com/0xProject/0x-examples/tree/main/gasless-v2-erc4337-smart-account
+      - type: CodeExamples
+        title: Gasless v2 Trading Bot
+        url: https://github.com/0xProject/0x-examples/tree/main/gasless-v2-trading-bot
+  - aid: 0x:cross-chain-api
+    name: 0x Cross-Chain API
+    description: >-
+      Any-token, any-chain bridging API (currently private beta) that returns
+      cross-chain quotes, real-time streaming quote updates, transaction status,
+      transaction history, and the list of supported bridge providers (Across
+      V4, Relay, Bungee, CCIP, Squid Coral, NEAR Intents, OFT, Mayan, Circle
+      CCTP, Arbitrum/Linea/Superchain canonical bridges, and HyperCore). Covers
+      EVM chains plus Solana, HyperCore, and Tron.
+    humanURL: https://0x.org/products/cross-chain
+    baseURL: https://api.0x.org
+    tags:
+      - Cross-Chain
+      - Bridging
+      - Quotes
+      - Streaming
+      - Intents
+      - Solana
+      - HyperCore
+    properties:
+      - type: Documentation
+        url: https://docs.0x.org/cross-chain-api/introduction
+      - type: OpenAPI
+        url: openapi/0x-cross-chain.yaml
+      - type: SignUp
+        url: https://0x.org/products/cross-chain
+      - type: CodeExamples
+        title: Cross-Chain Headless Example
+        url: https://github.com/0xProject/0x-examples/tree/main/cross-chain-headless-example
+      - type: CodeExamples
+        title: Cross-Chain Streaming Next.js App
+        url: https://github.com/0xProject/0x-examples/tree/main/cross-chain-streaming-next-app
+  - aid: 0x:trade-analytics-api
+    name: 0x Trade Analytics API
+    description: >-
+      Read-only API for retrieving the integrator's Swap and Gasless trade
+      history with surplus, fees, taker, route, and per-trade settlement
+      detail — used for monetisation reporting, accounting reconciliation, and
+      dashboarding.
+    humanURL: https://docs.0x.org/trade-analytics-api
+    baseURL: https://api.0x.org
+    tags:
+      - Trade Analytics
+      - Reporting
+      - Monetization
+      - Fees
+    properties:
+      - type: Documentation
+        url: https://docs.0x.org/trade-analytics-api
+      - type: OpenAPI
+        url: openapi/0x-api.yaml
+      - type: SignUp
+        url: https://dashboard.0x.org/create-account
+  - aid: 0x:sources-api
+    name: 0x Sources API
+    description: >-
+      Lists the active aggregated liquidity sources (AMMs, RFQ market makers,
+      private liquidity venues) currently routed against by the Swap and
+      Gasless engines for a given chain.
+    humanURL: https://docs.0x.org/api-reference
+    baseURL: https://api.0x.org
+    tags:
+      - Liquidity
+      - Sources
+      - Reference
+    properties:
+      - type: Documentation
+        url: https://docs.0x.org/api-reference
+      - type: OpenAPI
+        url: openapi/0x-api.yaml
 common:
   - type: Website
-    url: https://0x.org/api
-  - type: PublicAPIsListing
-    url: https://github.com/public-apis/public-apis
+    url: https://0x.org
+  - type: Documentation
+    url: https://docs.0x.org
+  - type: Portal
+    url: https://dashboard.0x.org
+  - type: SignUp
+    url: https://dashboard.0x.org/create-account
+  - type: Pricing
+    url: https://0x.org/pricing
+  - type: Blog
+    url: https://0x.org/post
+  - type: GitHubOrganization
+    url: https://github.com/0xProject
+  - type: Twitter
+    url: https://x.com/0xProject
+  - type: HelpCenter
+    url: https://help.0x.org
+  - type: StatusPage
+    url: https://status.0x.org
+  - type: ChangeLog
+    url: https://docs.0x.org/changelog
+  - type: Tools
+    title: MCP Server
+    url: https://docs.0x.org/_mcp/server
+  - type: Tools
+    title: Claude Code Skill (0x-api)
+    url: https://github.com/0xProject/0x-ai
+  - type: Tools
+    title: 0x Parser (Transaction Parsing Library)
+    url: https://github.com/0xProject/0x-parser
+  - type: Tools
+    title: 0x Settler Smart Contracts
+    url: https://github.com/0xProject/0x-settler
+  - type: CodeExamples
+    title: 0x API Code Examples Collection
+    url: https://github.com/0xProject/0x-examples
+  - type: SDK
+    title: '@0x/0x-parser (npm)'
+    url: https://www.npmjs.com/package/@0x/0x-parser
+  - type: Tutorials
+    title: Token Swap dApp Course
+    url: https://github.com/0xProject/token-swap-dapp-course-code
+  - type: Tutorials
+    title: Swap Demo Tutorial
+    url: https://github.com/0xProject/swap-demo-tutorial
+  - type: SupportedChains
+    url: https://docs.0x.org/introduction/supported-chains
+  - type: APIIssues
+    url: https://docs.0x.org/introduction/api-issues
+  - type: FAQ
+    url: https://docs.0x.org/introduction/faq
+  - type: Plans
+    url: plans/0x-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/0x-rate-limits.yml
+  - type: FinOps
+    url: finops/0x-finops.yml
+  - type: Spectral
+    url: rules/0x-rules.yml
+  - type: Vocabulary
+    url: vocabulary/0x-vocabulary.yml
+  - type: JSONLD
+    url: json-ld/0x-context.jsonld
+integrations:
+  - name: Coinbase
+  - name: MetaMask
+  - name: Phantom
+  - name: Brave
+  - name: Rainbow Wallet
+  - name: Polygon
+  - name: DeFi Saver
+  - name: Matcha
+  - name: Ethereum
+  - name: Arbitrum
+  - name: Base
+  - name: Optimism
+  - name: BNB Smart Chain
+  - name: Avalanche
+  - name: Polygon
+  - name: Linea
+  - name: Scroll
+  - name: Berachain
+  - name: Abstract
+  - name: HyperEVM
+  - name: Ink
+  - name: Mantle
+  - name: Monad
+  - name: Plasma
+  - name: Sonic
+  - name: Tempo
+  - name: Unichain
+  - name: World Chain
+  - name: Solana
+  - name: HyperCore
+  - name: Tron
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com

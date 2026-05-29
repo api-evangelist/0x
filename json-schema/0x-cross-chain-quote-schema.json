@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/0x/main/json-schema/0x-cross-chain-quote-schema.json",
+  "title": "0x Cross-Chain Quote",
+  "description": "A bridge quote returned by GET /cross-chain/quotes. Aggregates routes from 16+ bridge providers.",
+  "type": "object",
+  "properties": {
+    "quoteId": {
+      "type": "string"
+    },
+    "originChainId": {
+      "type": "integer"
+    },
+    "destinationChainId": {
+      "type": "integer"
+    },
+    "originToken": {
+      "type": "string"
+    },
+    "destinationToken": {
+      "type": "string"
+    },
+    "inputAmount": {
+      "type": "string",
+      "pattern": "^[0-9]+$"
+    },
+    "outputAmount": {
+      "type": "string",
+      "pattern": "^[0-9]+$"
+    },
+    "minOutputAmount": {
+      "type": "string",
+      "pattern": "^[0-9]+$"
+    },
+    "bridge": {
+      "type": "string",
+      "description": "Bridge provider ID (across_v4, relay, bungee_auto, ccip, squid, near_intents, oft, mayan_swift, mayan_mctp, mayan_fast_mctp, circle_forwarder_standard, circle_forwarder_fast, arbitrum_bridge, linea, superchain, hyper_core_bridge)."
+    },
+    "fees": {
+      "type": "object"
+    },
+    "estimatedDurationSeconds": {
+      "type": "integer"
+    },
+    "transactions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "to": {
+            "type": "string"
+          },
+          "data": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          },
+          "chainId": {
+            "type": "integer"
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "originChainId",
+    "destinationChainId",
+    "inputAmount",
+    "outputAmount"
+  ]
+}

@@ -1,0 +1,924 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: 0x API — Swap
+  description: '0x API — Swap. 5 operations. Lead operation: Get Price (Allowance Holder). Self-contained Naftiko capability
+    covering one 0x business surface.'
+  tags:
+  - 0x
+  - 0X Api
+  - Swap
+  created: '2026-05-28'
+  modified: '2026-05-28'
+binds:
+- namespace: env
+  keys:
+    0X_API_KEY: 0X_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: 0x-api-swap
+    baseUri: https://api.0x.org
+    description: 0x API — Swap business capability. Self-contained, no shared references.
+    authentication:
+      type: apiKey
+      in: header
+      name: 0x-api-key
+      value: '{{env.0X_API_KEY}}'
+    defaultHeaders:
+      0x-version: v2
+    resources:
+    - name: swap-allowance-holder-price
+      path: /swap/allowance-holder/price
+      operations:
+      - name: swap-allowanceholder-getprice
+        method: GET
+        path: /swap/allowance-holder/price
+        description: Get Price (Allowance Holder)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: 0x-api-key
+          in: header
+          type: string
+          required: true
+          description: Visit dashboard.0x.org to get your API Key
+        - name: 0x-version
+          in: header
+          type: string
+          required: true
+          description: API version
+        - name: chainId
+          in: query
+          type: integer
+          required: true
+          description: Chain ID. See [here](https://docs.0x.org/docs/introduction/supported-chains) for the list of supported
+            chains
+        - name: buyToken
+          in: query
+          type: string
+          required: true
+          description: The contract address of the token to buy
+        - name: sellToken
+          in: query
+          type: string
+          required: true
+          description: The contract address of the token to sell
+        - name: sellAmount
+          in: query
+          type: string
+          required: false
+          description: The amount of `sellToken` in `sellToken` base units to sell
+        - name: buyAmount
+          in: query
+          type: string
+          required: false
+          description: The exact amount of `buyToken` in `buyToken` base units to buy
+        - name: taker
+          in: query
+          type: string
+          required: false
+          description: The address which holds the `sellToken` balance and has the allowance set for the swap
+        - name: txOrigin
+          in: query
+          type: string
+          required: false
+          description: The address of the external account that started the transaction. This is only needed if `taker` is
+            a smart contract.
+        - name: recipient
+          in: query
+          type: string
+          required: false
+          description: The address to receive the `buyToken`. If not provided, defaults to the taker address. Not supported
+            for wrap/unwrap operations.
+        - name: swapFeeRecipient
+          in: query
+          type: string
+          required: false
+          description: The wallet address to receive the specified trading fees (supports single or multiple comma-separated
+            values). You must also specify the `swapFeeBps` in the request to use this feature. When multiple values are provided,
+            must match length of `swapFeeBps`.
+        - name: swapFeeBps
+          in: query
+          type: string
+          required: false
+          description: The amount in Bps of the `swapFeeToken` to charge and deliver to the `swapFeeRecipient` (supports single
+            or multiple comma-separated values). You must also specify the `swapFeeRecipient` in the request to use this feature.
+            For security, this field has a default limit of 1000 Bps. If your application requires a higher value, please
+            reach out to us.
+        - name: swapFeeToken
+          in: query
+          type: string
+          required: false
+          description: The contract address of the token to receive trading fees in (supports single or multiple comma-separated
+            values). Each token must be set to the value of either the `buyToken` or the `sellToken`. If omitted, the fee
+            token will be determined by 0x with preference to stablecoins and highly liquid assets. You must also specify
+            the `swapFeeRecipient` and `swapFeeBps` to charge integrator fees. When multiple values are provided, must match
+            length of `swapFeeBps`.
+        - name: tradeSurplusRecipient
+          in: query
+          type: string
+          required: false
+          description: The address to receive any trade surplus. If specified, this address will receive trade surplus when
+            applicable. Otherwise, the taker will receive the surplus. This feature is only available to selected integrators
+            on a custom pricing plan. In other cases, the surplus will be collected by 0x. For assistance with a custom plan,
+            please contact support.
+        - name: tradeSurplusMaxBps
+          in: query
+          type: integer
+          required: false
+          description: The maximum trade surplus (positive slippage) that can be collected in Bps of the buy amount. If not
+            provided, defaults to 10000 (100%). Must be used together with `tradeSurplusRecipient`.
+        - name: gasPrice
+          in: query
+          type: string
+          required: false
+          description: The target gas price (in wei) for the swap transaction. If not provided, the default value is based
+            on the 0x gas price oracle
+        - name: slippageBps
+          in: query
+          type: integer
+          required: false
+          description: The maximum acceptable slippage of the `buyToken` in Bps. If this parameter is set to 0, no slippage
+            will be tolerated. If not provided, the default slippage tolerance is 100Bps
+        - name: slippagePpm
+          in: query
+          type: integer
+          required: false
+          description: The maximum acceptable slippage of the `buyToken` in parts-per-million (PPM). Mutually exclusive with
+            `slippageBps`. e.g. 3000 PPM = 30 BPS = 0.30%.
+        - name: excludedSources
+          in: query
+          type: string
+          required: false
+          description: Liquidity sources e.g. Uniswap_V3, SushiSwap, 0x_RFQ to exclude from the provided quote. See https://api.0x.org/sources?chainId=<chain_id>
+            with the desired chain's ID for a full list of sources. Separate multiple sources with a comma
+        - name: sellEntireBalance
+          in: query
+          type: string
+          required: false
+          description: If set to `true`, the taker's entire `sellToken` balance will be sold during trade execution. The `sellAmount`
+            should be the maximum estimated value, as close as possible to the actual taker's balance to ensure the best routing.
+            Selling more than the `sellAmount` may cause the trade to revert. This feature is designed for cases where the
+            precise sell amount is determined during execution. Learn more [here](https://docs.0x.org/docs/0x-swap-api/additional-topics/sell-entire-balance).
+        - name: wrapUnwrapMode
+          in: query
+          type: string
+          required: false
+          description: Controls how native wrap/unwrap trades are executed. `direct` calls the wrapped-native token contract
+            directly. `settler` routes wrap/unwrap through Settler or Allowance Holder for compatibility. Ignored for non-wrap/unwrap
+            swaps. If omitted, `direct` mode is used.
+    - name: swap-allowance-holder-quote
+      path: /swap/allowance-holder/quote
+      operations:
+      - name: swap-allowanceholder-getquote
+        method: GET
+        path: /swap/allowance-holder/quote
+        description: Get Quote (Allowance Holder)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: 0x-api-key
+          in: header
+          type: string
+          required: true
+          description: Visit dashboard.0x.org to get your API Key
+        - name: 0x-version
+          in: header
+          type: string
+          required: true
+          description: API version
+        - name: chainId
+          in: query
+          type: integer
+          required: true
+          description: Chain ID. See [here](https://docs.0x.org/docs/introduction/supported-chains) for the list of supported
+            chains
+        - name: buyToken
+          in: query
+          type: string
+          required: true
+          description: The contract address of the token to buy
+        - name: sellToken
+          in: query
+          type: string
+          required: true
+          description: The contract address of the token to sell
+        - name: sellAmount
+          in: query
+          type: string
+          required: false
+          description: The amount of `sellToken` in `sellToken` base units to sell
+        - name: buyAmount
+          in: query
+          type: string
+          required: false
+          description: The exact amount of `buyToken` in `buyToken` base units to buy
+        - name: taker
+          in: query
+          type: string
+          required: true
+          description: The address which holds the `sellToken` balance and has the allowance set for the swap
+        - name: txOrigin
+          in: query
+          type: string
+          required: false
+          description: The address of the external account that started the transaction. This is only needed if `taker` is
+            a smart contract.
+        - name: recipient
+          in: query
+          type: string
+          required: false
+          description: The address to receive the `buyToken`. If not provided, defaults to the taker address. Not supported
+            for wrap/unwrap operations.
+        - name: swapFeeRecipient
+          in: query
+          type: string
+          required: false
+          description: The wallet address to receive the specified trading fees (supports single or multiple comma-separated
+            values). You must also specify the `swapFeeBps` in the request to use this feature. When multiple values are provided,
+            must match length of `swapFeeBps`.
+        - name: swapFeeBps
+          in: query
+          type: string
+          required: false
+          description: The amount in Bps of the `swapFeeToken` to charge and deliver to the `swapFeeRecipient` (supports single
+            or multiple comma-separated values). You must also specify the `swapFeeRecipient` in the request to use this feature.
+            For security, this field has a default limit of 1000 Bps. If your application requires a higher value, please
+            reach out to us.
+        - name: swapFeeToken
+          in: query
+          type: string
+          required: false
+          description: The contract address of the token to receive trading fees in (supports single or multiple comma-separated
+            values). Each token must be set to the value of either the `buyToken` or the `sellToken`. If omitted, the fee
+            token will be determined by 0x with preference to stablecoins and highly liquid assets. You must also specify
+            the `swapFeeRecipient` and `swapFeeBps` to charge integrator fees. When multiple values are provided, must match
+            length of `swapFeeBps`.
+        - name: tradeSurplusRecipient
+          in: query
+          type: string
+          required: false
+          description: The address to receive any trade surplus. If specified, this address will receive trade surplus when
+            applicable. Otherwise, the taker will receive the surplus. This feature is only available to selected integrators
+            on a custom pricing plan. In other cases, the surplus will be collected by 0x. For assistance with a custom plan,
+            please contact support.
+        - name: tradeSurplusMaxBps
+          in: query
+          type: integer
+          required: false
+          description: The maximum trade surplus (positive slippage) that can be collected in Bps of the buy amount. If not
+            provided, defaults to 10000 (100%). Must be used together with `tradeSurplusRecipient`.
+        - name: gasPrice
+          in: query
+          type: string
+          required: false
+          description: The target gas price (in wei) for the swap transaction. If not provided, the default value is based
+            on the 0x gas price oracle
+        - name: slippageBps
+          in: query
+          type: integer
+          required: false
+          description: The maximum acceptable slippage of the `buyToken` in Bps. If this parameter is set to 0, no slippage
+            will be tolerated. If not provided, the default slippage tolerance is 100Bps
+        - name: slippagePpm
+          in: query
+          type: integer
+          required: false
+          description: The maximum acceptable slippage of the `buyToken` in parts-per-million (PPM). Mutually exclusive with
+            `slippageBps`. e.g. 3000 PPM = 30 BPS = 0.30%.
+        - name: excludedSources
+          in: query
+          type: string
+          required: false
+          description: Liquidity sources e.g. Uniswap_V3, SushiSwap, 0x_RFQ to exclude from the provided quote. `See https://api.0x.org/sources?chainId=<chain_id>`
+            with the desired chain's ID for a full list of sources. Separate multiple sources with a comma
+        - name: sellEntireBalance
+          in: query
+          type: string
+          required: false
+          description: If set to `true`, the taker's entire `sellToken` balance will be sold during trade execution. The `sellAmount`
+            should be the maximum estimated value, as close as possible to the actual taker's balance to ensure the best routing.
+            Selling more than the `sellAmount` may cause the trade to revert. This feature is designed for cases where the
+            precise sell amount is determined during execution. Learn more [here](https://docs.0x.org/docs/0x-swap-api/additional-topics/sell-entire-balance).
+        - name: wrapUnwrapMode
+          in: query
+          type: string
+          required: false
+          description: Controls how native wrap/unwrap trades are executed. `direct` calls the wrapped-native token contract
+            directly. `settler` routes wrap/unwrap through Settler or Allowance Holder for compatibility. Ignored for non-wrap/unwrap
+            swaps. If omitted, `direct` mode is used.
+    - name: swap-permit2-price
+      path: /swap/permit2/price
+      operations:
+      - name: swap-permit2-getprice
+        method: GET
+        path: /swap/permit2/price
+        description: Get Price (Permit2)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: 0x-api-key
+          in: header
+          type: string
+          required: true
+          description: Visit dashboard.0x.org to get your API Key
+        - name: 0x-version
+          in: header
+          type: string
+          required: true
+          description: API version
+        - name: chainId
+          in: query
+          type: integer
+          required: true
+          description: Chain ID. See [here](https://docs.0x.org/docs/introduction/supported-chains) for the list of supported
+            chains
+        - name: buyToken
+          in: query
+          type: string
+          required: true
+          description: The contract address of the token to buy
+        - name: sellToken
+          in: query
+          type: string
+          required: true
+          description: The contract address of the token to sell
+        - name: sellAmount
+          in: query
+          type: string
+          required: false
+          description: The amount of `sellToken` in `sellToken` base units to sell
+        - name: buyAmount
+          in: query
+          type: string
+          required: false
+          description: The exact amount of `buyToken` in `buyToken` base units to buy
+        - name: taker
+          in: query
+          type: string
+          required: false
+          description: The address which holds the `sellToken` balance and has the allowance set for the swap
+        - name: txOrigin
+          in: query
+          type: string
+          required: false
+          description: The address of the external account that started the transaction. This is only needed if `taker` is
+            a smart contract.
+        - name: recipient
+          in: query
+          type: string
+          required: false
+          description: The address to receive the `buyToken`. If not provided, defaults to the taker address. Not supported
+            for wrap/unwrap operations.
+        - name: swapFeeRecipient
+          in: query
+          type: string
+          required: false
+          description: The wallet address to receive the specified trading fees (supports single or multiple comma-separated
+            values). You must also specify the `swapFeeBps` in the request to use this feature. When multiple values are provided,
+            must match length of `swapFeeBps`.
+        - name: swapFeeBps
+          in: query
+          type: string
+          required: false
+          description: The amount in Bps of the `swapFeeToken` to charge and deliver to the `swapFeeRecipient` (supports single
+            or multiple comma-separated values). You must also specify the `swapFeeRecipient` in the request to use this feature.
+            For security, this field has a default limit of 1000 Bps. If your application requires a higher value, please
+            reach out to us.
+        - name: swapFeeToken
+          in: query
+          type: string
+          required: false
+          description: The contract address of the token to receive trading fees in (supports single or multiple comma-separated
+            values). Each token must be set to the value of either the `buyToken` or the `sellToken`. If omitted, the fee
+            token will be determined by 0x with preference to stablecoins and highly liquid assets. You must also specify
+            the `swapFeeRecipient` and `swapFeeBps` to charge integrator fees. When multiple values are provided, must match
+            length of `swapFeeBps`.
+        - name: tradeSurplusRecipient
+          in: query
+          type: string
+          required: false
+          description: The address to receive any trade surplus. If specified, this address will receive trade surplus when
+            applicable. Otherwise, the taker will receive the surplus. This feature is only available to selected integrators
+            on a custom pricing plan. In other cases, the surplus will be collected by 0x. For assistance with a custom plan,
+            please contact support.
+        - name: tradeSurplusMaxBps
+          in: query
+          type: integer
+          required: false
+          description: The maximum trade surplus (positive slippage) that can be collected in Bps of the buy amount. If not
+            provided, defaults to 10000 (100%). Must be used together with `tradeSurplusRecipient`.
+        - name: gasPrice
+          in: query
+          type: string
+          required: false
+          description: The target gas price (in wei) for the swap transaction. If not provided, the default value is based
+            on the 0x gas price oracle
+        - name: slippageBps
+          in: query
+          type: integer
+          required: false
+          description: The maximum acceptable slippage of the `buyToken` in Bps. If this parameter is set to 0, no slippage
+            will be tolerated. If not provided, the default slippage tolerance is 100Bps
+        - name: slippagePpm
+          in: query
+          type: integer
+          required: false
+          description: The maximum acceptable slippage of the `buyToken` in parts-per-million (PPM). Mutually exclusive with
+            `slippageBps`. e.g. 3000 PPM = 30 BPS = 0.30%.
+        - name: excludedSources
+          in: query
+          type: string
+          required: false
+          description: Liquidity sources e.g. Uniswap_V3, SushiSwap, 0x_RFQ to exclude from the provided quote. See https://api.0x.org/sources?chainId=<chain_id>
+            with the desired chain's ID for a full list of sources. Separate multiple sources with a comma
+        - name: sellEntireBalance
+          in: query
+          type: string
+          required: false
+          description: If set to `true`, the taker's entire `sellToken` balance will be sold during trade execution. The `sellAmount`
+            should be the maximum estimated value, as close as possible to the actual taker's balance to ensure the best routing.
+            Selling more than the `sellAmount` may cause the trade to revert. This feature is designed for cases where the
+            precise sell amount is determined during execution. Learn more [here](https://docs.0x.org/docs/0x-swap-api/additional-topics/sell-entire-balance).
+        - name: wrapUnwrapMode
+          in: query
+          type: string
+          required: false
+          description: Controls how native wrap/unwrap trades are executed. `direct` calls the wrapped-native token contract
+            directly. `settler` routes wrap/unwrap through Settler or Allowance Holder for compatibility. Ignored for non-wrap/unwrap
+            swaps. If omitted, `direct` mode is used.
+    - name: swap-permit2-quote
+      path: /swap/permit2/quote
+      operations:
+      - name: swap-permit2-getquote
+        method: GET
+        path: /swap/permit2/quote
+        description: Get Quote (Permit2)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: 0x-api-key
+          in: header
+          type: string
+          required: true
+          description: Visit dashboard.0x.org to get your API Key
+        - name: 0x-version
+          in: header
+          type: string
+          required: true
+          description: API version
+        - name: chainId
+          in: query
+          type: integer
+          required: true
+          description: Chain ID. See [here](https://docs.0x.org/docs/introduction/supported-chains) for the list of supported
+            chains
+        - name: buyToken
+          in: query
+          type: string
+          required: true
+          description: The contract address of the token to buy
+        - name: sellToken
+          in: query
+          type: string
+          required: true
+          description: The contract address of the token to sell
+        - name: sellAmount
+          in: query
+          type: string
+          required: false
+          description: The amount of `sellToken` in `sellToken` base units to sell
+        - name: buyAmount
+          in: query
+          type: string
+          required: false
+          description: The exact amount of `buyToken` in `buyToken` base units to buy
+        - name: taker
+          in: query
+          type: string
+          required: true
+          description: The address which holds the `sellToken` balance and has the allowance set for the swap
+        - name: txOrigin
+          in: query
+          type: string
+          required: false
+          description: The address of the external account that started the transaction. This is only needed if `taker` is
+            a smart contract.
+        - name: recipient
+          in: query
+          type: string
+          required: false
+          description: The address to receive the `buyToken`. If not provided, defaults to the taker address. Not supported
+            for wrap/unwrap operations.
+        - name: swapFeeRecipient
+          in: query
+          type: string
+          required: false
+          description: The wallet address to receive the specified trading fees (supports single or multiple comma-separated
+            values). You must also specify the `swapFeeBps` in the request to use this feature. When multiple values are provided,
+            must match length of `swapFeeBps`.
+        - name: swapFeeBps
+          in: query
+          type: string
+          required: false
+          description: The amount in Bps of the `swapFeeToken` to charge and deliver to the `swapFeeRecipient` (supports single
+            or multiple comma-separated values). You must also specify the `swapFeeRecipient` in the request to use this feature.
+            For security, this field has a default limit of 1000 Bps. If your application requires a higher value, please
+            reach out to us.
+        - name: swapFeeToken
+          in: query
+          type: string
+          required: false
+          description: The contract address of the token to receive trading fees in (supports single or multiple comma-separated
+            values). Each token must be set to the value of either the `buyToken` or the `sellToken`. If omitted, the fee
+            token will be determined by 0x with preference to stablecoins and highly liquid assets. You must also specify
+            the `swapFeeRecipient` and `swapFeeBps` to charge integrator fees. When multiple values are provided, must match
+            length of `swapFeeBps`.
+        - name: tradeSurplusRecipient
+          in: query
+          type: string
+          required: false
+          description: The address to receive any trade surplus. If specified, this address will receive trade surplus when
+            applicable. Otherwise, the taker will receive the surplus. This feature is only available to selected integrators
+            on a custom pricing plan. In other cases, the surplus will be collected by 0x. For assistance with a custom plan,
+            please contact support.
+        - name: tradeSurplusMaxBps
+          in: query
+          type: integer
+          required: false
+          description: The maximum trade surplus (positive slippage) that can be collected in Bps of the buy amount. If not
+            provided, defaults to 10000 (100%). Must be used together with `tradeSurplusRecipient`.
+        - name: gasPrice
+          in: query
+          type: string
+          required: false
+          description: The target gas price (in wei) for the swap transaction. If not provided, the default value is based
+            on the 0x gas price oracle
+        - name: slippageBps
+          in: query
+          type: integer
+          required: false
+          description: The maximum acceptable slippage of the `buyToken` in Bps. If this parameter is set to 0, no slippage
+            will be tolerated. If not provided, the default slippage tolerance is 100Bps
+        - name: slippagePpm
+          in: query
+          type: integer
+          required: false
+          description: The maximum acceptable slippage of the `buyToken` in parts-per-million (PPM). Mutually exclusive with
+            `slippageBps`. e.g. 3000 PPM = 30 BPS = 0.30%.
+        - name: excludedSources
+          in: query
+          type: string
+          required: false
+          description: Liquidity sources e.g. Uniswap_V3, SushiSwap, 0x_RFQ to exclude from the provided quote. `See https://api.0x.org/sources?chainId=<chain_id>`
+            with the desired chain's ID for a full list of sources. Separate multiple sources with a comma
+        - name: sellEntireBalance
+          in: query
+          type: string
+          required: false
+          description: If set to `true`, the taker's entire `sellToken` balance will be sold during trade execution. The `sellAmount`
+            should be the maximum estimated value, as close as possible to the actual taker's balance to ensure the best routing.
+            Selling more than the `sellAmount` may cause the trade to revert. This feature is designed for cases where the
+            precise sell amount is determined during execution. Learn more [here](https://docs.0x.org/docs/0x-swap-api/additional-topics/sell-entire-balance).
+        - name: wrapUnwrapMode
+          in: query
+          type: string
+          required: false
+          description: Controls how native wrap/unwrap trades are executed. `direct` calls the wrapped-native token contract
+            directly. `settler` routes wrap/unwrap through Settler or Allowance Holder for compatibility. Ignored for non-wrap/unwrap
+            swaps. If omitted, `direct` mode is used.
+    - name: swap-chains
+      path: /swap/chains
+      operations:
+      - name: swap-chains
+        method: GET
+        path: /swap/chains
+        description: Get Supported Chains
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: 0x-api-key
+          in: header
+          type: string
+          required: true
+          description: Visit dashboard.0x.org to get your API Key
+        - name: 0x-version
+          in: header
+          type: string
+          required: true
+          description: API version
+  exposes:
+  - type: rest
+    namespace: 0x-api-swap-rest
+    port: 8080
+    description: REST adapter for 0x API — Swap. One Spectral-compliant resource per consumed operation.
+    resources:
+    - path: /swap/allowance-holder/price
+      name: swap-allowance-holder-price
+      description: REST surface for swap-allowance-holder-price.
+      operations:
+      - method: GET
+        name: swap-allowanceholder-getprice
+        description: Get Price (Allowance Holder)
+        call: 0x-api-swap.swap-allowanceholder-getprice
+        with:
+          0x-api-key: rest.0x-api-key
+          0x-version: rest.0x-version
+          chainId: rest.chainId
+          buyToken: rest.buyToken
+          sellToken: rest.sellToken
+          sellAmount: rest.sellAmount
+          buyAmount: rest.buyAmount
+          taker: rest.taker
+          txOrigin: rest.txOrigin
+          recipient: rest.recipient
+          swapFeeRecipient: rest.swapFeeRecipient
+          swapFeeBps: rest.swapFeeBps
+          swapFeeToken: rest.swapFeeToken
+          tradeSurplusRecipient: rest.tradeSurplusRecipient
+          tradeSurplusMaxBps: rest.tradeSurplusMaxBps
+          gasPrice: rest.gasPrice
+          slippageBps: rest.slippageBps
+          slippagePpm: rest.slippagePpm
+          excludedSources: rest.excludedSources
+          sellEntireBalance: rest.sellEntireBalance
+          wrapUnwrapMode: rest.wrapUnwrapMode
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /swap/allowance-holder/quote
+      name: swap-allowance-holder-quote
+      description: REST surface for swap-allowance-holder-quote.
+      operations:
+      - method: GET
+        name: swap-allowanceholder-getquote
+        description: Get Quote (Allowance Holder)
+        call: 0x-api-swap.swap-allowanceholder-getquote
+        with:
+          0x-api-key: rest.0x-api-key
+          0x-version: rest.0x-version
+          chainId: rest.chainId
+          buyToken: rest.buyToken
+          sellToken: rest.sellToken
+          sellAmount: rest.sellAmount
+          buyAmount: rest.buyAmount
+          taker: rest.taker
+          txOrigin: rest.txOrigin
+          recipient: rest.recipient
+          swapFeeRecipient: rest.swapFeeRecipient
+          swapFeeBps: rest.swapFeeBps
+          swapFeeToken: rest.swapFeeToken
+          tradeSurplusRecipient: rest.tradeSurplusRecipient
+          tradeSurplusMaxBps: rest.tradeSurplusMaxBps
+          gasPrice: rest.gasPrice
+          slippageBps: rest.slippageBps
+          slippagePpm: rest.slippagePpm
+          excludedSources: rest.excludedSources
+          sellEntireBalance: rest.sellEntireBalance
+          wrapUnwrapMode: rest.wrapUnwrapMode
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /swap/permit2/price
+      name: swap-permit2-price
+      description: REST surface for swap-permit2-price.
+      operations:
+      - method: GET
+        name: swap-permit2-getprice
+        description: Get Price (Permit2)
+        call: 0x-api-swap.swap-permit2-getprice
+        with:
+          0x-api-key: rest.0x-api-key
+          0x-version: rest.0x-version
+          chainId: rest.chainId
+          buyToken: rest.buyToken
+          sellToken: rest.sellToken
+          sellAmount: rest.sellAmount
+          buyAmount: rest.buyAmount
+          taker: rest.taker
+          txOrigin: rest.txOrigin
+          recipient: rest.recipient
+          swapFeeRecipient: rest.swapFeeRecipient
+          swapFeeBps: rest.swapFeeBps
+          swapFeeToken: rest.swapFeeToken
+          tradeSurplusRecipient: rest.tradeSurplusRecipient
+          tradeSurplusMaxBps: rest.tradeSurplusMaxBps
+          gasPrice: rest.gasPrice
+          slippageBps: rest.slippageBps
+          slippagePpm: rest.slippagePpm
+          excludedSources: rest.excludedSources
+          sellEntireBalance: rest.sellEntireBalance
+          wrapUnwrapMode: rest.wrapUnwrapMode
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /swap/permit2/quote
+      name: swap-permit2-quote
+      description: REST surface for swap-permit2-quote.
+      operations:
+      - method: GET
+        name: swap-permit2-getquote
+        description: Get Quote (Permit2)
+        call: 0x-api-swap.swap-permit2-getquote
+        with:
+          0x-api-key: rest.0x-api-key
+          0x-version: rest.0x-version
+          chainId: rest.chainId
+          buyToken: rest.buyToken
+          sellToken: rest.sellToken
+          sellAmount: rest.sellAmount
+          buyAmount: rest.buyAmount
+          taker: rest.taker
+          txOrigin: rest.txOrigin
+          recipient: rest.recipient
+          swapFeeRecipient: rest.swapFeeRecipient
+          swapFeeBps: rest.swapFeeBps
+          swapFeeToken: rest.swapFeeToken
+          tradeSurplusRecipient: rest.tradeSurplusRecipient
+          tradeSurplusMaxBps: rest.tradeSurplusMaxBps
+          gasPrice: rest.gasPrice
+          slippageBps: rest.slippageBps
+          slippagePpm: rest.slippagePpm
+          excludedSources: rest.excludedSources
+          sellEntireBalance: rest.sellEntireBalance
+          wrapUnwrapMode: rest.wrapUnwrapMode
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /swap/chains
+      name: swap-chains
+      description: REST surface for swap-chains.
+      operations:
+      - method: GET
+        name: swap-chains
+        description: Get Supported Chains
+        call: 0x-api-swap.swap-chains
+        with:
+          0x-api-key: rest.0x-api-key
+          0x-version: rest.0x-version
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: 0x-api-swap-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for 0x API — Swap. One tool per consumed operation, routed inline through this capability's consumes
+      block.
+    tools:
+    - name: 0x-swap-allowanceholder-getprice
+      description: Get Price (Allowance Holder)
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: 0x-api-swap.swap-allowanceholder-getprice
+      with:
+        0x-api-key: tools.0x-api-key
+        0x-version: tools.0x-version
+        chainId: tools.chainId
+        buyToken: tools.buyToken
+        sellToken: tools.sellToken
+        sellAmount: tools.sellAmount
+        buyAmount: tools.buyAmount
+        taker: tools.taker
+        txOrigin: tools.txOrigin
+        recipient: tools.recipient
+        swapFeeRecipient: tools.swapFeeRecipient
+        swapFeeBps: tools.swapFeeBps
+        swapFeeToken: tools.swapFeeToken
+        tradeSurplusRecipient: tools.tradeSurplusRecipient
+        tradeSurplusMaxBps: tools.tradeSurplusMaxBps
+        gasPrice: tools.gasPrice
+        slippageBps: tools.slippageBps
+        slippagePpm: tools.slippagePpm
+        excludedSources: tools.excludedSources
+        sellEntireBalance: tools.sellEntireBalance
+        wrapUnwrapMode: tools.wrapUnwrapMode
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: 0x-swap-allowanceholder-getquote
+      description: Get Quote (Allowance Holder)
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: 0x-api-swap.swap-allowanceholder-getquote
+      with:
+        0x-api-key: tools.0x-api-key
+        0x-version: tools.0x-version
+        chainId: tools.chainId
+        buyToken: tools.buyToken
+        sellToken: tools.sellToken
+        sellAmount: tools.sellAmount
+        buyAmount: tools.buyAmount
+        taker: tools.taker
+        txOrigin: tools.txOrigin
+        recipient: tools.recipient
+        swapFeeRecipient: tools.swapFeeRecipient
+        swapFeeBps: tools.swapFeeBps
+        swapFeeToken: tools.swapFeeToken
+        tradeSurplusRecipient: tools.tradeSurplusRecipient
+        tradeSurplusMaxBps: tools.tradeSurplusMaxBps
+        gasPrice: tools.gasPrice
+        slippageBps: tools.slippageBps
+        slippagePpm: tools.slippagePpm
+        excludedSources: tools.excludedSources
+        sellEntireBalance: tools.sellEntireBalance
+        wrapUnwrapMode: tools.wrapUnwrapMode
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: 0x-swap-permit2-getprice
+      description: Get Price (Permit2)
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: 0x-api-swap.swap-permit2-getprice
+      with:
+        0x-api-key: tools.0x-api-key
+        0x-version: tools.0x-version
+        chainId: tools.chainId
+        buyToken: tools.buyToken
+        sellToken: tools.sellToken
+        sellAmount: tools.sellAmount
+        buyAmount: tools.buyAmount
+        taker: tools.taker
+        txOrigin: tools.txOrigin
+        recipient: tools.recipient
+        swapFeeRecipient: tools.swapFeeRecipient
+        swapFeeBps: tools.swapFeeBps
+        swapFeeToken: tools.swapFeeToken
+        tradeSurplusRecipient: tools.tradeSurplusRecipient
+        tradeSurplusMaxBps: tools.tradeSurplusMaxBps
+        gasPrice: tools.gasPrice
+        slippageBps: tools.slippageBps
+        slippagePpm: tools.slippagePpm
+        excludedSources: tools.excludedSources
+        sellEntireBalance: tools.sellEntireBalance
+        wrapUnwrapMode: tools.wrapUnwrapMode
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: 0x-swap-permit2-getquote
+      description: Get Quote (Permit2)
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: 0x-api-swap.swap-permit2-getquote
+      with:
+        0x-api-key: tools.0x-api-key
+        0x-version: tools.0x-version
+        chainId: tools.chainId
+        buyToken: tools.buyToken
+        sellToken: tools.sellToken
+        sellAmount: tools.sellAmount
+        buyAmount: tools.buyAmount
+        taker: tools.taker
+        txOrigin: tools.txOrigin
+        recipient: tools.recipient
+        swapFeeRecipient: tools.swapFeeRecipient
+        swapFeeBps: tools.swapFeeBps
+        swapFeeToken: tools.swapFeeToken
+        tradeSurplusRecipient: tools.tradeSurplusRecipient
+        tradeSurplusMaxBps: tools.tradeSurplusMaxBps
+        gasPrice: tools.gasPrice
+        slippageBps: tools.slippageBps
+        slippagePpm: tools.slippagePpm
+        excludedSources: tools.excludedSources
+        sellEntireBalance: tools.sellEntireBalance
+        wrapUnwrapMode: tools.wrapUnwrapMode
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: 0x-swap-chains
+      description: Get Supported Chains
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: 0x-api-swap.swap-chains
+      with:
+        0x-api-key: tools.0x-api-key
+        0x-version: tools.0x-version
+      outputParameters:
+      - type: object
+        mapping: $.

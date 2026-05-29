@@ -1,0 +1,230 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/0x/main/json-schema/0x-swap-quote-schema.json",
+  "title": "0x Swap Quote",
+  "description": "A firm quote returned by /swap/allowance-holder/quote and /swap/permit2/quote. Includes the calldata required to submit the swap on-chain.",
+  "x-schema-source": "openapi",
+  "x-source-url": "openapi/0x-api.yaml#/components/schemas",
+  "type": "object",
+  "properties": {
+    "liquidityAvailable": {
+      "type": "boolean",
+      "description": "Whether liquidity is available for the requested pair."
+    },
+    "chainId": {
+      "type": "integer",
+      "description": "Chain ID the quote was generated for."
+    },
+    "buyToken": {
+      "type": "string",
+      "pattern": "^0x[a-fA-F0-9]{40}$",
+      "description": "Contract address of the buy token."
+    },
+    "sellToken": {
+      "type": "string",
+      "pattern": "^0x[a-fA-F0-9]{40}$",
+      "description": "Contract address of the sell token."
+    },
+    "buyAmount": {
+      "type": "string",
+      "pattern": "^[0-9]+$",
+      "description": "Amount of buyToken returned, in base units."
+    },
+    "sellAmount": {
+      "type": "string",
+      "pattern": "^[0-9]+$",
+      "description": "Amount of sellToken charged, in base units."
+    },
+    "minBuyAmount": {
+      "type": "string",
+      "pattern": "^[0-9]+$",
+      "description": "Minimum buyToken amount after slippage tolerance."
+    },
+    "blockNumber": {
+      "type": "string",
+      "pattern": "^[0-9]+$",
+      "description": "Block at which liquidity was sampled."
+    },
+    "allowanceTarget": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^0x[a-fA-F0-9]{40}$",
+      "description": "Contract the taker must approve to spend sellToken. Null for native asset and wrap/unwrap."
+    },
+    "transaction": {
+      "type": "object",
+      "description": "Pre-built calldata for submission to the network.",
+      "properties": {
+        "to": {
+          "type": "string",
+          "pattern": "^0x[a-fA-F0-9]{40}$"
+        },
+        "data": {
+          "type": "string",
+          "pattern": "^0x[a-fA-F0-9]+$"
+        },
+        "gas": {
+          "type": "string",
+          "pattern": "^[0-9]+$"
+        },
+        "gasPrice": {
+          "type": "string",
+          "pattern": "^[0-9]+$"
+        },
+        "value": {
+          "type": "string",
+          "pattern": "^[0-9]+$"
+        }
+      },
+      "required": [
+        "to",
+        "data",
+        "gas",
+        "value"
+      ]
+    },
+    "route": {
+      "type": "object",
+      "description": "Routing detail: which liquidity sources were used and at what fill percentage.",
+      "properties": {
+        "fills": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "source": {
+                "type": "string"
+              },
+              "from": {
+                "type": "string",
+                "pattern": "^0x[a-fA-F0-9]{40}$"
+              },
+              "to": {
+                "type": "string",
+                "pattern": "^0x[a-fA-F0-9]{40}$"
+              },
+              "proportionBps": {
+                "type": "integer"
+              }
+            }
+          }
+        },
+        "tokens": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "address": {
+                "type": "string",
+                "pattern": "^0x[a-fA-F0-9]{40}$"
+              },
+              "symbol": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "fees": {
+      "type": "object",
+      "description": "Detailed fee breakdown (integrator fee, zero-ex fee, gas fee).",
+      "properties": {
+        "integratorFee": {
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "zeroExFee": {
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "gasFee": {
+          "type": [
+            "object",
+            "null"
+          ]
+        }
+      }
+    },
+    "issues": {
+      "type": "object",
+      "description": "Allowance, balance, or signature issues blocking submission.",
+      "properties": {
+        "allowance": {
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "balance": {
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "simulationIncomplete": {
+          "type": "boolean"
+        },
+        "invalidSourcesPassed": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "permit2": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "description": "Permit2 EIP-712 typed data the taker must sign (Permit2 flow only).",
+      "properties": {
+        "type": {
+          "const": "Permit2"
+        },
+        "hash": {
+          "type": "string"
+        },
+        "eip712": {
+          "type": "object"
+        }
+      }
+    },
+    "totalNetworkFee": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[0-9]+$",
+      "description": "Total network fee in native token base units."
+    },
+    "gas": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[0-9]+$"
+    },
+    "gasPrice": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[0-9]+$"
+    },
+    "expiration": {
+      "type": "integer",
+      "description": "Unix timestamp when this quote expires."
+    }
+  },
+  "required": [
+    "liquidityAvailable"
+  ]
+}

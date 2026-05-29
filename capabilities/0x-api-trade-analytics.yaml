@@ -1,0 +1,192 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: 0x API — Trade Analytics
+  description: '0x API — Trade Analytics. 2 operations. Lead operation: Get Swap Trade Analytics. Self-contained Naftiko capability
+    covering one 0x business surface.'
+  tags:
+  - 0x
+  - 0X Api
+  - Trade Analytics
+  created: '2026-05-28'
+  modified: '2026-05-28'
+binds:
+- namespace: env
+  keys:
+    0X_API_KEY: 0X_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: 0x-api-trade-analytics
+    baseUri: https://api.0x.org
+    description: 0x API — Trade Analytics business capability. Self-contained, no shared references.
+    authentication:
+      type: apiKey
+      in: header
+      name: 0x-api-key
+      value: '{{env.0X_API_KEY}}'
+    defaultHeaders:
+      0x-version: v2
+    resources:
+    - name: trade-analytics-swap
+      path: /trade-analytics/swap
+      operations:
+      - name: tradeanalytics-swap
+        method: GET
+        path: /trade-analytics/swap
+        description: Get Swap Trade Analytics
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: 0x-api-key
+          in: header
+          type: string
+          required: true
+          description: Visit dashboard.0x.org to get your API Key
+        - name: 0x-version
+          in: header
+          type: string
+          required: true
+          description: API version
+        - name: cursor
+          in: query
+          type: string
+          required: false
+          description: A pagination cursor used to fetch the next page of trades. It should be set to `null` for the initial
+            request; otherwise, it should be the value of `nextCursor` that is returned from `getSwapTrades` or `getGaslessTrades`
+            calls.
+        - name: startTimestamp
+          in: query
+          type: integer
+          required: false
+          description: Unix timestamp in seconds, specifying the starting point of the time range filter. Only trades completed
+            on or after this timestamp will be included in the response.
+        - name: endTimestamp
+          in: query
+          type: integer
+          required: false
+          description: Unix timestamp in seconds, specifying the end point of the time range filter. Only trades completed
+            on or before this timestamp will be included in the response.
+    - name: trade-analytics-gasless
+      path: /trade-analytics/gasless
+      operations:
+      - name: tradeanalytics-gasless
+        method: GET
+        path: /trade-analytics/gasless
+        description: Get Gasless Trade Analytics
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: 0x-api-key
+          in: header
+          type: string
+          required: true
+          description: Visit dashboard.0x.org to get your API Key
+        - name: 0x-version
+          in: header
+          type: string
+          required: true
+          description: API version
+        - name: cursor
+          in: query
+          type: string
+          required: false
+          description: A pagination cursor used to fetch the next page of trades. It should be set to `null` for the initial
+            request; otherwise, it should be the value of `nextCursor` that is returned from `getSwapTrades` or `getGaslessTrades`
+            calls.
+        - name: startTimestamp
+          in: query
+          type: integer
+          required: false
+          description: Unix timestamp in seconds, specifying the starting point of the time range filter. Only trades completed
+            on or after this timestamp will be included in the response.
+        - name: endTimestamp
+          in: query
+          type: integer
+          required: false
+          description: Unix timestamp in seconds, specifying the end point of the time range filter. Only trades completed
+            on or before this timestamp will be included in the response.
+  exposes:
+  - type: rest
+    namespace: 0x-api-trade-analytics-rest
+    port: 8080
+    description: REST adapter for 0x API — Trade Analytics. One Spectral-compliant resource per consumed operation.
+    resources:
+    - path: /trade-analytics/swap
+      name: trade-analytics-swap
+      description: REST surface for trade-analytics-swap.
+      operations:
+      - method: GET
+        name: tradeanalytics-swap
+        description: Get Swap Trade Analytics
+        call: 0x-api-trade-analytics.tradeanalytics-swap
+        with:
+          0x-api-key: rest.0x-api-key
+          0x-version: rest.0x-version
+          cursor: rest.cursor
+          startTimestamp: rest.startTimestamp
+          endTimestamp: rest.endTimestamp
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /trade-analytics/gasless
+      name: trade-analytics-gasless
+      description: REST surface for trade-analytics-gasless.
+      operations:
+      - method: GET
+        name: tradeanalytics-gasless
+        description: Get Gasless Trade Analytics
+        call: 0x-api-trade-analytics.tradeanalytics-gasless
+        with:
+          0x-api-key: rest.0x-api-key
+          0x-version: rest.0x-version
+          cursor: rest.cursor
+          startTimestamp: rest.startTimestamp
+          endTimestamp: rest.endTimestamp
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: 0x-api-trade-analytics-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for 0x API — Trade Analytics. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: 0x-tradeanalytics-swap
+      description: Get Swap Trade Analytics
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: 0x-api-trade-analytics.tradeanalytics-swap
+      with:
+        0x-api-key: tools.0x-api-key
+        0x-version: tools.0x-version
+        cursor: tools.cursor
+        startTimestamp: tools.startTimestamp
+        endTimestamp: tools.endTimestamp
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: 0x-tradeanalytics-gasless
+      description: Get Gasless Trade Analytics
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: 0x-api-trade-analytics.tradeanalytics-gasless
+      with:
+        0x-api-key: tools.0x-api-key
+        0x-version: tools.0x-version
+        cursor: tools.cursor
+        startTimestamp: tools.startTimestamp
+        endTimestamp: tools.endTimestamp
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,115 @@
+{
+  "title": "0x Swap Quote Structure",
+  "description": "Field-level documentation for the firm quote payload returned by /swap/allowance-holder/quote and /swap/permit2/quote.",
+  "type": "object",
+  "fields": [
+    {
+      "name": "liquidityAvailable",
+      "type": "boolean",
+      "required": true,
+      "description": "Whether the aggregated liquidity routes can fill the requested pair at the requested size. If false, no other fields are populated."
+    },
+    {
+      "name": "chainId",
+      "type": "integer",
+      "required": true,
+      "description": "The chain on which the quote was generated. See https://docs.0x.org/introduction/supported-chains."
+    },
+    {
+      "name": "buyToken",
+      "type": "string (20-byte hex)",
+      "required": true,
+      "description": "Contract address of the buy-side token."
+    },
+    {
+      "name": "sellToken",
+      "type": "string (20-byte hex)",
+      "required": true,
+      "description": "Contract address of the sell-side token."
+    },
+    {
+      "name": "buyAmount",
+      "type": "string (uint256 decimal)",
+      "required": true,
+      "description": "Quantity of buyToken the taker will receive, expressed in base units."
+    },
+    {
+      "name": "sellAmount",
+      "type": "string (uint256 decimal)",
+      "required": true,
+      "description": "Quantity of sellToken the taker spends, in base units."
+    },
+    {
+      "name": "minBuyAmount",
+      "type": "string (uint256 decimal)",
+      "required": true,
+      "description": "Minimum acceptable buyAmount after applying slippage tolerance."
+    },
+    {
+      "name": "blockNumber",
+      "type": "string (decimal)",
+      "required": true,
+      "description": "Block number at which the liquidity sources were sampled."
+    },
+    {
+      "name": "allowanceTarget",
+      "type": "string (20-byte hex) | null",
+      "required": true,
+      "description": "Contract the taker must approve to spend sellToken. Null for native asset trades and wrap/unwrap."
+    },
+    {
+      "name": "transaction",
+      "type": "object",
+      "required": true,
+      "description": "Pre-built transaction calldata for direct submission to the network.",
+      "fields": [
+        {"name": "to", "type": "string (20-byte hex)", "description": "Settler contract address."},
+        {"name": "data", "type": "string (0x-prefixed hex)", "description": "Encoded swap calldata."},
+        {"name": "gas", "type": "string (decimal)", "description": "Gas estimate."},
+        {"name": "gasPrice", "type": "string (decimal)", "description": "Suggested gas price in wei."},
+        {"name": "value", "type": "string (decimal)", "description": "Native-token value to send (non-zero only when sellToken is the native asset)."}
+      ]
+    },
+    {
+      "name": "route",
+      "type": "object",
+      "required": false,
+      "description": "Routing detail showing which liquidity sources fill which fraction of the order."
+    },
+    {
+      "name": "fees",
+      "type": "object",
+      "required": false,
+      "description": "Breakdown of integrator fee, 0x platform fee, and gas fee.",
+      "fields": [
+        {"name": "integratorFee", "type": "object | null", "description": "Fee accruing to the integrator (configurable via swapFeeBps / swapFeeRecipient)."},
+        {"name": "zeroExFee", "type": "object | null", "description": "0x platform fee."},
+        {"name": "gasFee", "type": "object | null", "description": "Estimated network gas fee."}
+      ]
+    },
+    {
+      "name": "issues",
+      "type": "object",
+      "required": false,
+      "description": "Pre-submission issues: insufficient allowance, insufficient balance, invalid sources, etc."
+    },
+    {
+      "name": "permit2",
+      "type": "object | null",
+      "required": false,
+      "description": "Permit2 EIP-712 typed data the taker must sign. Only present on the Permit2 flow."
+    },
+    {
+      "name": "totalNetworkFee",
+      "type": "string (decimal) | null",
+      "required": false,
+      "description": "Total network fee in native-token base units."
+    },
+    {
+      "name": "expiration",
+      "type": "integer (unix seconds)",
+      "required": false,
+      "description": "Quote expiry timestamp."
+    }
+  ]
+}

@@ -1,0 +1,159 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+provider: 0x
+providerId: 0x
+publisherName: 0x Labs
+serviceCategory: API
+created: '2026-05-28'
+modified: '2026-05-28'
+tags:
+  - Cryptocurrency
+  - DeFi
+  - DEX Aggregator
+  - FinOps
+  - Cost Management
+  - FOCUS
+description: >-
+  FinOps Framework alignment for the 0x API surface. Maps the three streams
+  of integrator cost — subscription fee, swap fee (and integrator-side
+  monetisation), and trade-surplus capture — to the FOCUS data model so
+  finance and engineering can do unit-economics analysis on per-trade margin,
+  cost-per-active-wallet, and cost-per-billion of routed volume.
+principles:
+  - name: Visibility
+    description: Make 0x subscription, swap fees, and trade-surplus capture visible alongside on-chain gas spend in near real time via the Trade Analytics API.
+  - name: Allocation
+    description: Tag every chargeable call (and every settled swap) with the consuming team, app, chain, and feature so cost can be allocated to the originating business unit.
+  - name: Optimization
+    description: Continuously evaluate request patterns (debouncing /price, batching, RFQ inclusion), tier selection, and integrator-fee configuration to optimise unit economics per swap.
+  - name: Accountability
+    description: Establish budget owners for the 0x subscription, fee-recipient revenue stream, and the gas-and-surplus pass-through to end users.
+
+domains:
+  - name: API Subscription
+    description: Fixed monthly fee charged by 0x for access to the Standard or Custom commercial tier.
+    costDrivers:
+      - tier_selection
+      - billing_period (monthly vs annual)
+    focusMapping:
+      ChargeCategory: Purchase
+      ChargeClass: Recurring
+      ServiceCategory: API
+      ServiceSubcategory: Aggregator
+      PricingCategory: Standard
+      PricingUnit: subscription_month
+
+  - name: Swap Volume Fee
+    description: 0.15% (15 bps) variable fee charged by 0x on routed swap volume on the Standard plan, discounted on the Custom plan.
+    costDrivers:
+      - swap_volume_usd
+      - chain
+      - plan_tier
+    focusMapping:
+      ChargeCategory: Usage
+      ChargeClass: Consumption
+      ServiceCategory: API
+      ServiceSubcategory: Swap
+      PricingCategory: Standard
+      PricingUnit: percent_of_volume
+
+  - name: Trade Surplus Capture
+    description: 0x retains the positive price improvement (surplus) on filled orders. From the integrator's perspective this is an opportunity cost rather than a billed line item, but it should be tracked.
+    costDrivers:
+      - quote_volatility
+      - venue_routing
+      - rfq_inclusion
+    focusMapping:
+      ChargeCategory: Usage
+      ChargeClass: Other
+      ServiceCategory: API
+      ServiceSubcategory: Settlement
+      PricingCategory: Variable
+      PricingUnit: trade_surplus_usd
+
+  - name: Integrator Monetisation (Revenue)
+    description: Inverse of cost — integrators can configure swapFeeBps + swapFeeRecipient to capture their own per-swap fee. Surface this in the FinOps view as negative cost / direct revenue attribution.
+    costDrivers:
+      - swap_volume_usd
+      - swap_fee_bps_configured
+    focusMapping:
+      ChargeCategory: Credit
+      ChargeClass: Other
+      ServiceCategory: API
+      ServiceSubcategory: Swap
+      PricingCategory: Variable
+      PricingUnit: percent_of_volume
+
+  - name: On-Chain Gas (Pass-Through)
+    description: For self-custody swaps, the end user pays gas. For Gasless trades, gas is deducted from the user's sell token by the relayer. Either way the integrator may want to attribute the gas cost to the originating chain and feature.
+    costDrivers:
+      - chain_gas_price
+      - settler_call_gas_units
+      - gasless_relay_uplift
+    focusMapping:
+      ChargeCategory: Usage
+      ChargeClass: Consumption
+      ServiceCategory: API
+      ServiceSubcategory: Gasless
+      PricingCategory: Variable
+      PricingUnit: gas_units
+
+focusFields:
+  required:
+    - BillingPeriodStart
+    - BillingPeriodEnd
+    - ChargeCategory
+    - ChargePeriodStart
+    - ChargePeriodEnd
+    - ProviderName
+    - PublisherName
+    - InvoiceIssuerName
+    - ServiceName
+    - ServiceCategory
+    - BilledCost
+    - EffectiveCost
+    - ListCost
+    - ContractedCost
+    - PricingCategory
+    - PricingUnit
+    - PricingQuantity
+  recommended:
+    - SubAccountId
+    - SubAccountName
+    - ResourceId
+    - ResourceName
+    - ResourceType
+    - Region
+    - Tags
+  zeroExSpecific:
+    - x-0x-chain-id (the EVM chain the trade settled on)
+    - x-0x-trade-hash (unique trade identifier, joinable to Trade Analytics)
+    - x-0x-buy-token / x-0x-sell-token (token contract addresses)
+    - x-0x-route-source (winning liquidity source)
+    - x-0x-integrator-fee-bps (configured integrator fee, if any)
+    - x-0x-surplus (trade surplus captured by 0x, if any)
+
+unitEconomics:
+  - metric: Cost per Successful Swap
+    formula: (Subscription Fee + Σ Swap Volume Fee) / Count of Successful Swaps in Period
+    insight: Lower the cost per swap as volume scales onto the Custom plan.
+  - metric: Cost per Active Wallet
+    formula: (Subscription Fee + Σ Swap Volume Fee) / Distinct Taker Addresses in Period
+    insight: Helps size the cost of the user base independent of trading frequency.
+  - metric: Revenue per Swap (Integrator)
+    formula: Σ (swapAmount * swapFeeBps / 10000) / Count of Successful Swaps
+    insight: Track the integrator's monetisation against 0x's pass-through fee.
+  - metric: Net Margin per Billion Routed
+    formula: (Integrator Revenue - 0x Swap Fee - Subscription Fee) / (Routed Volume / 1B USD)
+    insight: Unit economics of the integration at scale.
+
+notes:
+  - Pull per-trade detail from GET /trade-analytics/swap and /trade-analytics/gasless to build the FOCUS rows for the Swap Volume Fee, Trade Surplus, and Integrator Monetisation domains.
+  - Reconcile the FinOps view monthly against the dashboard.0x.org invoice and any RFQ-specific pricing terms.
+  - For Gasless trades, the gas-cost line item is denominated in the sell token rather than the native gas asset — convert via the per-trade fee breakdown returned in /gasless/quote.

@@ -1,0 +1,111 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: 0x
+providerId: 0x
+created: '2026-05-28'
+modified: '2026-05-28'
+tags:
+  - Cryptocurrency
+  - DeFi
+  - DEX Aggregator
+  - Rate Limiting
+  - Quotas
+  - Throttling
+description: >-
+  Rate limit envelope for the 0x API surface. Rates are scoped per API key
+  (issued via dashboard.0x.org) and shared across all product surfaces
+  (Swap, Gasless, Cross-Chain, Trade Analytics, Sources). Values reflect
+  the public commercial pricing tiers documented at https://0x.org/pricing.
+headers:
+  limit: X-RateLimit-Limit
+  remaining: X-RateLimit-Remaining
+  reset: X-RateLimit-Reset
+  retryAfter: Retry-After
+  policy: RateLimit-Policy
+responseCodes:
+  throttled: 429
+  quotaExceeded: 429
+  serviceUnavailable: 503
+limits:
+  - tier: free
+    name: Free / Developer Tier
+    scope: api-key
+    metric: requests_per_second
+    limit: 1
+    burst: 2
+    timeFrame: second
+    applies:
+      - https://api.0x.org
+    description: >-
+      Conservative envelope for evaluation accounts. Sustained traffic at
+      this rate is fine; bursts above the burst ceiling will be throttled
+      with 429 Too Many Requests.
+
+  - tier: standard
+    name: Standard Tier
+    scope: api-key
+    metric: requests_per_second
+    limit: 5
+    burst: 10
+    timeFrame: second
+    applies:
+      - https://api.0x.org
+    description: >-
+      Per dashboard.0x.org and the public Standard plan: 5 requests per
+      second sustained, with brief bursts tolerated.
+
+  - tier: custom
+    name: Custom / Enterprise Tier
+    scope: api-key
+    metric: requests_per_second
+    limit: 100
+    burst: 200
+    timeFrame: second
+    applies:
+      - https://api.0x.org
+    description: >-
+      Custom-plan accounts get 100+ RPS by default with higher ceilings
+      negotiated against committed volume.
+
+  - tier: any
+    name: Per-Trade Quote Freshness Window
+    scope: per-quote
+    metric: seconds
+    limit: 60
+    timeFrame: per_quote
+    applies:
+      - https://api.0x.org/swap/allowance-holder/quote
+      - https://api.0x.org/swap/permit2/quote
+      - https://api.0x.org/gasless/quote
+    description: >-
+      Firm quotes have a finite expiration window (reflected in the
+      `expiration` field). Quotes that are not submitted before expiry must
+      be regenerated.
+
+  - tier: any
+    name: Cross-Chain Streaming Quotes
+    scope: connection
+    metric: stream_duration_seconds
+    limit: 300
+    timeFrame: per_stream
+    applies:
+      - https://api.0x.org/cross-chain/quotes/stream
+    description: >-
+      Streaming quote sessions are time-limited; reconnect periodically and
+      respect server-sent close events.
+
+recoveryStrategies:
+  - name: Honour Retry-After
+    description: When you receive HTTP 429, wait the number of seconds in the Retry-After response header before retrying.
+  - name: Exponential Backoff
+    description: If Retry-After is absent, back off exponentially starting at 1s up to a 30s ceiling.
+  - name: Coalesce Pricing Requests
+    description: For UI use cases, debounce /price calls to no more than one per typing pause and cache responses for 5-15 seconds.
+  - name: Use /price Before /quote
+    description: Only call /quote once the user is ready to submit; /quote is the more expensive call and triggers RFQ market makers.
+
+notes:
+  - Rate limits are enforced per API key, not per IP. Multiple servers using the same key share the envelope.
+  - For higher rate limits, contact sales via the 0x dashboard to upgrade to the Custom plan.
+  - The free tier value is a conservative scaffold value; reconcile against the dashboard's published key limits at issue time.

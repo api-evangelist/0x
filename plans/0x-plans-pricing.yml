@@ -1,0 +1,197 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: 0x
+providerId: 0x
+created: '2026-05-28'
+modified: '2026-05-28'
+tags:
+  - Cryptocurrency
+  - DeFi
+  - DEX Aggregator
+  - Swap
+  - Gasless
+  - Cross-Chain
+description: >-
+  Commercial pricing plans for the 0x API surface as published at
+  https://0x.org/pricing. Two retail tiers (Standard and Custom) plus a free
+  development tier. The 0x revenue model also includes a 0.15% swap fee on the
+  Standard plan and trade-surplus capture on positive price improvement.
+plans:
+  - id: 0x-free
+    name: Free / Developer
+    type: freemium
+    description: >-
+      Free entry tier intended for evaluation, prototyping, and low-volume
+      integrations. Create an API key at dashboard.0x.org. Specific request
+      limits and feature gating are not publicly documented; reconcile with
+      the dashboard.
+    entries:
+      - label: API Key
+        description: Free API key for evaluation
+        name: api_key
+        type: feature
+        metric: feature
+        limit: 1
+        timeFrame: account
+        geo: global
+        domains:
+          - https://api.0x.org
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+      - label: Rate Limit
+        description: Conservative rate limit on the free tier (reconcile with dashboard)
+        name: rate_limit
+        type: rate
+        metric: requests_per_second
+        limit: 1
+        timeFrame: second
+        geo: global
+        domains:
+          - https://api.0x.org
+        unit: 1
+        price: '0.00'
+
+  - id: 0x-standard
+    name: Standard
+    type: subscription
+    description: >-
+      Standard commercial tier — $1,000 / month (20% discount on annual
+      billing). Includes 0.15% swap fee, 5 requests per second, 150+ liquidity
+      sources across 9+ chains, 99.99% uptime SLA, real-time Trade Analytics,
+      native monetisation (integrator fee + trade surplus capture), and
+      technical/account support.
+    pricing:
+      currency: USD
+      basePrice: '1000.00'
+      basePeriod: month
+      discounts:
+        - name: Annual Billing
+          percentage: 20
+    entries:
+      - label: Monthly Subscription
+        description: Standard plan recurring fee
+        name: monthly_fee
+        type: subscription
+        metric: subscription
+        limit: 1
+        timeFrame: month
+        geo: global
+        domains:
+          - https://api.0x.org
+        unit: 1
+        price: '1000.00'
+      - label: Rate Limit
+        description: 5 requests per second on the Standard plan
+        name: rate_limit
+        type: rate
+        metric: requests_per_second
+        limit: 5
+        timeFrame: second
+        geo: global
+        domains:
+          - https://api.0x.org
+        unit: 1
+        price: '0.00'
+      - label: Swap Fee
+        description: 0.15% (15 bps) fee on swap volume routed through 0x
+        name: swap_fee_bps
+        type: usage
+        metric: percent_of_volume
+        limit: null
+        timeFrame: per_swap
+        geo: global
+        domains:
+          - https://api.0x.org
+        unit: '0.0015'
+        price: '0.0015'
+      - label: Trade Surplus Capture
+        description: 0x retains the positive price improvement (trade surplus) when orders fill better than quoted
+        name: trade_surplus
+        type: usage
+        metric: surplus_capture
+        limit: null
+        timeFrame: per_swap
+        geo: global
+        domains:
+          - https://api.0x.org
+        unit: 1
+        price: 'variable'
+      - label: Native Monetisation
+        description: Integrator can charge swapFeeBps to swapFeeRecipient
+        name: native_monetisation
+        type: feature
+        metric: feature
+        limit: 1
+        timeFrame: account
+      - label: Trade Analytics API
+        description: Real-time access to swap and gasless trade history with integrator fee accrual
+        name: trade_analytics
+        type: feature
+        metric: feature
+        limit: 1
+        timeFrame: account
+      - label: Uptime SLA
+        description: 99.99% API uptime commitment across 9+ chains
+        name: uptime_sla
+        type: feature
+        metric: percent
+        limit: 99.99
+        timeFrame: month
+
+  - id: 0x-custom
+    name: Custom (Enterprise)
+    type: enterprise
+    description: >-
+      Custom / Enterprise tier starting at $2,500 / month, scaling with usage.
+      Includes volume-based pricing discounts, 100+ requests per second
+      capacity, support for millions of users, dedicated technical and account
+      support, and bespoke commercial terms.
+    pricing:
+      currency: USD
+      basePrice: '2500.00'
+      basePeriod: month
+      notes: Starting price; final price negotiated based on volume and feature scope.
+    entries:
+      - label: Monthly Subscription
+        description: Custom plan starting fee — scales with usage
+        name: monthly_fee
+        type: subscription
+        metric: subscription
+        limit: 1
+        timeFrame: month
+        geo: global
+        domains:
+          - https://api.0x.org
+        unit: 1
+        price: '2500.00'
+      - label: Rate Limit
+        description: 100+ requests per second; bespoke quotas available
+        name: rate_limit
+        type: rate
+        metric: requests_per_second
+        limit: 100
+        timeFrame: second
+        geo: global
+        domains:
+          - https://api.0x.org
+        unit: 1
+        price: '0.00'
+      - label: Volume Discounts
+        description: Discounted swap-fee rates negotiated against committed volume
+        name: volume_discount
+        type: discount
+        metric: percent
+        limit: null
+        timeFrame: month
+references:
+  - name: 0x Pricing Page
+    url: https://0x.org/pricing
+  - name: 0x apis.yml
+    url: https://raw.githubusercontent.com/api-evangelist/0x/refs/heads/main/apis.yml
+  - name: 0x Dashboard (sign up)
+    url: https://dashboard.0x.org/create-account
+notes:
+  - All paid plans operate against the single api.0x.org base URL across Swap, Gasless, Cross-Chain (private beta), Trade Analytics, and Sources surfaces using a unified `0x-api-key` header.
+  - 0x's revenue model layers three streams on top of the subscription fee on the Standard plan, integrator and 0x volume fees configured per request, and trade-surplus capture by 0x on positive price improvement.

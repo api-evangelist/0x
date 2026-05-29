@@ -1,0 +1,37 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "https://api.0x.org/swap/chains",
+    "headers": {
+      "0x-api-key": "YOUR_API_KEY",
+      "0x-version": "v2"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "chains": [
+        {"chainId": 1, "name": "Ethereum", "shortName": "eth"},
+        {"chainId": 2741, "name": "Abstract", "shortName": "abstract"},
+        {"chainId": 42161, "name": "Arbitrum One", "shortName": "arb"},
+        {"chainId": 43114, "name": "Avalanche C-Chain", "shortName": "avax"},
+        {"chainId": 8453, "name": "Base", "shortName": "base"},
+        {"chainId": 80094, "name": "Berachain", "shortName": "bera"},
+        {"chainId": 56, "name": "BNB Smart Chain", "shortName": "bnb"},
+        {"chainId": 999, "name": "HyperEVM", "shortName": "hyperevm"},
+        {"chainId": 57073, "name": "Ink", "shortName": "ink"},
+        {"chainId": 59144, "name": "Linea", "shortName": "linea"},
+        {"chainId": 5000, "name": "Mantle", "shortName": "mantle"},
+        {"chainId": 143, "name": "Monad", "shortName": "monad"},
+        {"chainId": 10, "name": "OP Mainnet", "shortName": "op"},
+        {"chainId": 9745, "name": "Plasma", "shortName": "plasma"},
+        {"chainId": 137, "name": "Polygon", "shortName": "polygon"},
+        {"chainId": 534352, "name": "Scroll", "shortName": "scroll"},
+        {"chainId": 146, "name": "Sonic", "shortName": "sonic"},
+        {"chainId": 4217, "name": "Tempo", "shortName": "tempo"},
+        {"chainId": 130, "name": "Unichain", "shortName": "unichain"},
+        {"chainId": 480, "name": "World Chain", "shortName": "world"}
+      ]
+    }
+  }
+}

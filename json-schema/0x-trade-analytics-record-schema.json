@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/0x/main/json-schema/0x-trade-analytics-record-schema.json",
+  "title": "0x Trade Analytics Record",
+  "description": "A single trade record returned by GET /trade-analytics/swap or /trade-analytics/gasless. Surfaces integrator fee, trade surplus, and on-chain settlement metadata.",
+  "type": "object",
+  "properties": {
+    "tradeHash": {
+      "type": "string"
+    },
+    "transactionHash": {
+      "type": "string",
+      "pattern": "^0x[a-fA-F0-9]{64}$"
+    },
+    "chainId": {
+      "type": "integer"
+    },
+    "timestamp": {
+      "type": "integer"
+    },
+    "taker": {
+      "type": "string",
+      "pattern": "^0x[a-fA-F0-9]{40}$"
+    },
+    "buyToken": {
+      "type": "string",
+      "pattern": "^0x[a-fA-F0-9]{40}$"
+    },
+    "sellToken": {
+      "type": "string",
+      "pattern": "^0x[a-fA-F0-9]{40}$"
+    },
+    "buyAmount": {
+      "type": "string",
+      "pattern": "^[0-9]+$"
+    },
+    "sellAmount": {
+      "type": "string",
+      "pattern": "^[0-9]+$"
+    },
+    "integratorFeeAmount": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[0-9]+$"
+    },
+    "integratorFeeRecipient": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^0x[a-fA-F0-9]{40}$"
+    },
+    "surplus": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[0-9]+$"
+    },
+    "gasUsed": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[0-9]+$"
+    },
+    "route": {
+      "type": "object"
+    },
+    "blockNumber": {
+      "type": "string",
+      "pattern": "^[0-9]+$"
+    }
+  },
+  "required": [
+    "chainId",
+    "buyToken",
+    "sellToken"
+  ]
+}

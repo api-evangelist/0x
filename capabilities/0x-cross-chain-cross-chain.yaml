@@ -1,0 +1,566 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: 0x Cross-Chain API — Cross-Chain
+  description: '0x Cross-Chain API — Cross-Chain. 5 operations. Lead operation: Get Cross-Chain Quotes. Self-contained Naftiko
+    capability covering one 0x business surface.'
+  tags:
+  - 0x
+  - 0X Cross Chain
+  - Cross-Chain
+  created: '2026-05-28'
+  modified: '2026-05-28'
+binds:
+- namespace: env
+  keys:
+    0X_API_KEY: 0X_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: 0x-cross-chain-cross-chain
+    baseUri: https://api.0x.org
+    description: 0x Cross-Chain API — Cross-Chain business capability. Self-contained, no shared references.
+    authentication:
+      type: apiKey
+      in: header
+      name: 0x-api-key
+      value: '{{env.0X_API_KEY}}'
+    defaultHeaders:
+      0x-version: v2
+    resources:
+    - name: cross-chain-quotes
+      path: /cross-chain/quotes
+      operations:
+      - name: crosschain-getquotes
+        method: GET
+        path: /cross-chain/quotes
+        description: Get Cross-Chain Quotes
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: 0x-api-key
+          in: header
+          type: string
+          required: true
+          description: Visit dashboard.0x.org to get your API Key
+        - name: originChain
+          in: query
+          type: string
+          required: true
+          description: The source chain from which the cross-chain swap will originate. Can be specified as chain ID or name.
+            See [here](https://0x-docs.gitbook.io/0x-cross-chain-api-beta/developer-resources/supported-chains-and-providers)
+            for the list of supported chains
+        - name: destinationChain
+          in: query
+          type: string
+          required: true
+          description: The destination chain where tokens will be received after the cross-chain swap. Can be specified as
+            chain ID or name. See [here](https://0x-docs.gitbook.io/0x-cross-chain-api-beta/developer-resources/supported-chains-and-providers)
+            for the list of supported chains
+        - name: sellToken
+          in: query
+          type: string
+          required: true
+          description: The contract address of the token to sell on the origin chain. Format varies by chain type (EVM address
+            for EVM/HyperCore chains, token mint address for Solana, base58check address for Tron)
+        - name: buyToken
+          in: query
+          type: string
+          required: true
+          description: The contract address of the token to buy on the destination chain. Format varies by chain type (EVM
+            address for EVM/HyperCore chains, token mint address for Solana, base58check address for Tron)
+        - name: sellAmount
+          in: query
+          type: string
+          required: true
+          description: The amount of `sellToken` (in `sellToken`'s base units) to sell on the origin chain
+        - name: originAddress
+          in: query
+          type: string
+          required: true
+          description: The wallet address on the origin chain that holds the sellToken balance and will initiate the cross-chain
+            transaction
+        - name: destinationAddress
+          in: query
+          type: string
+          required: false
+          description: The wallet address on the destination chain that will receive the buyToken. If not specified, defaults
+            to originAddress on the destination chain
+        - name: gasPayer
+          in: query
+          type: string
+          required: false
+          description: The Solana address that will pay for transaction fees when the origin chain is Solana. Only applicable
+            for Solana origin chains
+        - name: slippageBps
+          in: query
+          type: integer
+          required: false
+          description: The maximum acceptable slippage for each swap or bridge step of the cross-chain swap in basis points
+            (100 = 1%)
+        - name: excludedBridges
+          in: query
+          type: string
+          required: false
+          description: Comma-separated list of bridge providers to exclude from routing
+        - name: includedBridges
+          in: query
+          type: string
+          required: false
+          description: Comma-separated list of bridge providers to include in routing. Mutually exclusive with excludedBridges
+        - name: excludedSwapSources
+          in: query
+          type: string
+          required: false
+          description: Comma-separated list of DEX sources to exclude from routing on both chains
+        - name: feeBps
+          in: query
+          type: string
+          required: false
+          description: 'The trading fee amounts in basis points to charge on the origin chain (supports single or comma-separated
+            values). Must be used together with feeRecipient. When multiple values are provided, must match the length of
+            feeRecipient. Note: integrator fee collection is not yet supported for Tron-originated routes.'
+        - name: feeRecipient
+          in: query
+          type: string
+          required: false
+          description: 'The wallet addresses to receive trading fees on the origin chain (supports single or comma-separated
+            values). Must be used together with feeBps. When multiple values are provided, must match the length of feeBps.
+            Note: integrator fee collection is not yet supported for Tron-originated routes.'
+        - name: feeToken
+          in: query
+          type: string
+          required: false
+          description: 'The token addresses for fee collection on the origin chain (supports single or comma-separated values).
+            Must be the same as sellToken. When multiple values are provided, must match the length of feeBps. If omitted,
+            defaults to sellToken. Note: integrator fee collection is not yet supported for Tron-originated routes.'
+        - name: sortQuotesBy
+          in: query
+          type: string
+          required: true
+          description: How to sort the returned quotes - either by speed (fastest execution time) or price (best exchange
+            rate)
+        - name: maxNumQuotes
+          in: query
+          type: integer
+          required: false
+          description: The maximum number of cross-chain quotes to return, between 1 and 10. Each quote represents a different
+            combination of bridges and DEXs
+    - name: cross-chain-status
+      path: /cross-chain/status
+      operations:
+      - name: crosschain-getstatus
+        method: GET
+        path: /cross-chain/status
+        description: Get Gasless Trade Status
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: 0x-api-key
+          in: header
+          type: string
+          required: true
+          description: Visit dashboard.0x.org to get your API Key
+        - name: originChain
+          in: query
+          type: string
+          required: true
+          description: The origin chain where the cross-chain transaction was initiated
+        - name: originTxHash
+          in: query
+          type: string
+          required: true
+          description: The transaction hash on the origin chain to track. Format varies by chain type (32-byte hex for EVM/HyperCore,
+            base58 signature for Solana, 64-char hex for Tron)
+        - name: quoteId
+          in: query
+          type: string
+          required: false
+          description: The quote ID associated with the cross-chain transaction
+    - name: cross-chain-sources
+      path: /cross-chain/sources
+      operations:
+      - name: crosschain-listsources
+        method: GET
+        path: /cross-chain/sources
+        description: List Bridge Sources
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: 0x-api-key
+          in: header
+          type: string
+          required: true
+          description: Visit dashboard.0x.org to get your API Key
+    - name: cross-chain-tx-history-beta
+      path: /cross-chain/tx-history-beta
+      operations:
+      - name: crosschain-gettxhistory
+        method: GET
+        path: /cross-chain/tx-history-beta
+        description: Get Cross-Chain Transaction History
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: 0x-api-key
+          in: header
+          type: string
+          required: true
+          description: Visit dashboard.0x.org to get your API Key
+        - name: user
+          in: query
+          type: string
+          required: true
+          description: The wallet address of the user to get transaction history for. Accepts EVM (0x...), Solana, and Tron
+            addresses
+        - name: limit
+          in: query
+          type: integer
+          required: false
+          description: Maximum number of transactions to return
+        - name: cursor
+          in: query
+          type: string
+          required: false
+    - name: cross-chain-quotes-stream
+      path: /cross-chain/quotes/stream
+      operations:
+      - name: crosschain-streamquotes
+        method: GET
+        path: /cross-chain/quotes/stream
+        description: Stream Cross-Chain Quotes
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: 0x-api-key
+          in: header
+          type: string
+          required: true
+          description: Visit dashboard.0x.org to get your API Key
+        - name: originChain
+          in: query
+          type: string
+          required: true
+          description: The source chain from which the cross-chain swap will originate. Can be specified as chain ID or name.
+            See [here](https://0x-docs.gitbook.io/0x-cross-chain-api-beta/developer-resources/supported-chains-and-providers)
+            for the list of supported chains
+        - name: destinationChain
+          in: query
+          type: string
+          required: true
+          description: The destination chain where tokens will be received after the cross-chain swap. Can be specified as
+            chain ID or name. See [here](https://0x-docs.gitbook.io/0x-cross-chain-api-beta/developer-resources/supported-chains-and-providers)
+            for the list of supported chains
+        - name: sellToken
+          in: query
+          type: string
+          required: true
+          description: The contract address of the token to sell on the origin chain. Format varies by chain type (EVM address
+            for EVM/HyperCore chains, token mint address for Solana, base58check address for Tron)
+        - name: buyToken
+          in: query
+          type: string
+          required: true
+          description: The contract address of the token to buy on the destination chain. Format varies by chain type (EVM
+            address for EVM/HyperCore chains, token mint address for Solana, base58check address for Tron)
+        - name: sellAmount
+          in: query
+          type: string
+          required: true
+          description: The amount of `sellToken` (in `sellToken`'s base units) to sell on the origin chain
+        - name: originAddress
+          in: query
+          type: string
+          required: true
+          description: The wallet address on the origin chain that holds the sellToken balance and will initiate the cross-chain
+            transaction
+        - name: destinationAddress
+          in: query
+          type: string
+          required: false
+          description: The wallet address on the destination chain that will receive the buyToken. If not specified, defaults
+            to originAddress on the destination chain
+        - name: gasPayer
+          in: query
+          type: string
+          required: false
+          description: The Solana address that will pay for transaction fees when the origin chain is Solana. Only applicable
+            for Solana origin chains
+        - name: slippageBps
+          in: query
+          type: integer
+          required: false
+          description: The maximum acceptable slippage for each swap or bridge step of the cross-chain swap in basis points
+            (100 = 1%)
+        - name: excludedBridges
+          in: query
+          type: string
+          required: false
+          description: Comma-separated list of bridge providers to exclude from routing
+        - name: includedBridges
+          in: query
+          type: string
+          required: false
+          description: Comma-separated list of bridge providers to include in routing. Mutually exclusive with excludedBridges
+        - name: excludedSwapSources
+          in: query
+          type: string
+          required: false
+          description: Comma-separated list of DEX sources to exclude from routing on both chains
+        - name: feeBps
+          in: query
+          type: string
+          required: false
+          description: 'The trading fee amounts in basis points to charge on the origin chain (supports single or comma-separated
+            values). Must be used together with feeRecipient. When multiple values are provided, must match the length of
+            feeRecipient. Note: integrator fee collection is not yet supported for Tron-originated routes.'
+        - name: feeRecipient
+          in: query
+          type: string
+          required: false
+          description: 'The wallet addresses to receive trading fees on the origin chain (supports single or comma-separated
+            values). Must be used together with feeBps. When multiple values are provided, must match the length of feeBps.
+            Note: integrator fee collection is not yet supported for Tron-originated routes.'
+        - name: feeToken
+          in: query
+          type: string
+          required: false
+          description: 'The token addresses for fee collection on the origin chain (supports single or comma-separated values).
+            Must be the same as sellToken. When multiple values are provided, must match the length of feeBps. If omitted,
+            defaults to sellToken. Note: integrator fee collection is not yet supported for Tron-originated routes.'
+        - name: maxNumQuotes
+          in: query
+          type: integer
+          required: false
+          description: The maximum number of cross-chain quotes to return, between 1 and 10. Each quote represents a different
+            combination of bridges and DEXs
+  exposes:
+  - type: rest
+    namespace: 0x-cross-chain-cross-chain-rest
+    port: 8080
+    description: REST adapter for 0x Cross-Chain API — Cross-Chain. One Spectral-compliant resource per consumed operation.
+    resources:
+    - path: /cross-chain/quotes
+      name: cross-chain-quotes
+      description: REST surface for cross-chain-quotes.
+      operations:
+      - method: GET
+        name: crosschain-getquotes
+        description: Get Cross-Chain Quotes
+        call: 0x-cross-chain-cross-chain.crosschain-getquotes
+        with:
+          0x-api-key: rest.0x-api-key
+          originChain: rest.originChain
+          destinationChain: rest.destinationChain
+          sellToken: rest.sellToken
+          buyToken: rest.buyToken
+          sellAmount: rest.sellAmount
+          originAddress: rest.originAddress
+          destinationAddress: rest.destinationAddress
+          gasPayer: rest.gasPayer
+          slippageBps: rest.slippageBps
+          excludedBridges: rest.excludedBridges
+          includedBridges: rest.includedBridges
+          excludedSwapSources: rest.excludedSwapSources
+          feeBps: rest.feeBps
+          feeRecipient: rest.feeRecipient
+          feeToken: rest.feeToken
+          sortQuotesBy: rest.sortQuotesBy
+          maxNumQuotes: rest.maxNumQuotes
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /cross-chain/status
+      name: cross-chain-status
+      description: REST surface for cross-chain-status.
+      operations:
+      - method: GET
+        name: crosschain-getstatus
+        description: Get Gasless Trade Status
+        call: 0x-cross-chain-cross-chain.crosschain-getstatus
+        with:
+          0x-api-key: rest.0x-api-key
+          originChain: rest.originChain
+          originTxHash: rest.originTxHash
+          quoteId: rest.quoteId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /cross-chain/sources
+      name: cross-chain-sources
+      description: REST surface for cross-chain-sources.
+      operations:
+      - method: GET
+        name: crosschain-listsources
+        description: List Bridge Sources
+        call: 0x-cross-chain-cross-chain.crosschain-listsources
+        with:
+          0x-api-key: rest.0x-api-key
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /cross-chain/tx-history-beta
+      name: cross-chain-tx-history-beta
+      description: REST surface for cross-chain-tx-history-beta.
+      operations:
+      - method: GET
+        name: crosschain-gettxhistory
+        description: Get Cross-Chain Transaction History
+        call: 0x-cross-chain-cross-chain.crosschain-gettxhistory
+        with:
+          0x-api-key: rest.0x-api-key
+          user: rest.user
+          limit: rest.limit
+          cursor: rest.cursor
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /cross-chain/quotes/stream
+      name: cross-chain-quotes-stream
+      description: REST surface for cross-chain-quotes-stream.
+      operations:
+      - method: GET
+        name: crosschain-streamquotes
+        description: Stream Cross-Chain Quotes
+        call: 0x-cross-chain-cross-chain.crosschain-streamquotes
+        with:
+          0x-api-key: rest.0x-api-key
+          originChain: rest.originChain
+          destinationChain: rest.destinationChain
+          sellToken: rest.sellToken
+          buyToken: rest.buyToken
+          sellAmount: rest.sellAmount
+          originAddress: rest.originAddress
+          destinationAddress: rest.destinationAddress
+          gasPayer: rest.gasPayer
+          slippageBps: rest.slippageBps
+          excludedBridges: rest.excludedBridges
+          includedBridges: rest.includedBridges
+          excludedSwapSources: rest.excludedSwapSources
+          feeBps: rest.feeBps
+          feeRecipient: rest.feeRecipient
+          feeToken: rest.feeToken
+          maxNumQuotes: rest.maxNumQuotes
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: 0x-cross-chain-cross-chain-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for 0x Cross-Chain API — Cross-Chain. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: 0x-crosschain-getquotes
+      description: Get Cross-Chain Quotes
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: 0x-cross-chain-cross-chain.crosschain-getquotes
+      with:
+        0x-api-key: tools.0x-api-key
+        originChain: tools.originChain
+        destinationChain: tools.destinationChain
+        sellToken: tools.sellToken
+        buyToken: tools.buyToken
+        sellAmount: tools.sellAmount
+        originAddress: tools.originAddress
+        destinationAddress: tools.destinationAddress
+        gasPayer: tools.gasPayer
+        slippageBps: tools.slippageBps
+        excludedBridges: tools.excludedBridges
+        includedBridges: tools.includedBridges
+        excludedSwapSources: tools.excludedSwapSources
+        feeBps: tools.feeBps
+        feeRecipient: tools.feeRecipient
+        feeToken: tools.feeToken
+        sortQuotesBy: tools.sortQuotesBy
+        maxNumQuotes: tools.maxNumQuotes
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: 0x-crosschain-getstatus
+      description: Get Gasless Trade Status
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: 0x-cross-chain-cross-chain.crosschain-getstatus
+      with:
+        0x-api-key: tools.0x-api-key
+        originChain: tools.originChain
+        originTxHash: tools.originTxHash
+        quoteId: tools.quoteId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: 0x-crosschain-listsources
+      description: List Bridge Sources
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: 0x-cross-chain-cross-chain.crosschain-listsources
+      with:
+        0x-api-key: tools.0x-api-key
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: 0x-crosschain-gettxhistory
+      description: Get Cross-Chain Transaction History
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: 0x-cross-chain-cross-chain.crosschain-gettxhistory
+      with:
+        0x-api-key: tools.0x-api-key
+        user: tools.user
+        limit: tools.limit
+        cursor: tools.cursor
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: 0x-crosschain-streamquotes
+      description: Stream Cross-Chain Quotes
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: 0x-cross-chain-cross-chain.crosschain-streamquotes
+      with:
+        0x-api-key: tools.0x-api-key
+        originChain: tools.originChain
+        destinationChain: tools.destinationChain
+        sellToken: tools.sellToken
+        buyToken: tools.buyToken
+        sellAmount: tools.sellAmount
+        originAddress: tools.originAddress
+        destinationAddress: tools.destinationAddress
+        gasPayer: tools.gasPayer
+        slippageBps: tools.slippageBps
+        excludedBridges: tools.excludedBridges
+        includedBridges: tools.includedBridges
+        excludedSwapSources: tools.excludedSwapSources
+        feeBps: tools.feeBps
+        feeRecipient: tools.feeRecipient
+        feeToken: tools.feeToken
+        maxNumQuotes: tools.maxNumQuotes
+      outputParameters:
+      - type: object
+        mapping: $.

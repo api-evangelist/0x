@@ -1,0 +1,64 @@
+{
+  "title": "0x Gasless Trade Structure",
+  "description": "Field-level documentation for the gasless trade lifecycle: quote → submit → status.",
+  "type": "object",
+  "fields": [
+    {
+      "name": "tradeHash",
+      "type": "string (32-byte hex)",
+      "required": true,
+      "description": "Unique hash identifying the gasless trade. Used to poll status via GET /gasless/status/{tradeHash}."
+    },
+    {
+      "name": "chainId",
+      "type": "integer",
+      "required": true,
+      "description": "Chain on which the gasless trade settles."
+    },
+    {
+      "name": "approval",
+      "type": "object | null",
+      "required": false,
+      "description": "EIP-712 approval payload (Permit, Permit2, or ExecuteMetaTransaction). Required only when the taker has not pre-approved the Settler.",
+      "fields": [
+        {"name": "type", "type": "string", "description": "One of permit | permit2 | executeMetaTransaction."},
+        {"name": "hash", "type": "string", "description": "Hash of the typed data."},
+        {"name": "eip712", "type": "object", "description": "EIP-712 typed data the taker signs off-chain."}
+      ]
+    },
+    {
+      "name": "trade",
+      "type": "object",
+      "required": true,
+      "description": "The Permit2-based meta-transaction the taker signs and 0x relayers submit on-chain."
+    },
+    {
+      "name": "fees",
+      "type": "object",
+      "required": false,
+      "description": "Detailed fee breakdown — integratorFee, zeroExFee, gasFee.",
+      "fields": [
+        {"name": "integratorFee", "type": "object | null"},
+        {"name": "zeroExFee", "type": "object | null"},
+        {"name": "gasFee", "type": "object | null", "description": "Gas fee deducted from the sell token to compensate the relayer."}
+      ]
+    },
+    {
+      "name": "status",
+      "type": "string",
+      "required": false,
+      "description": "Lifecycle: pending → submitted → succeeded → confirmed | failed | expired."
+    },
+    {
+      "name": "transactions",
+      "type": "array<object>",
+      "required": false,
+      "description": "On-chain transaction(s) emitted by the relayer for this trade.",
+      "fields": [
+        {"name": "hash", "type": "string (32-byte hex)"},
+        {"name": "timestamp", "type": "integer (unix seconds)"},
+        {"name": "blockNumber", "type": "string (decimal) | null"}
+      ]
+    }
+  ]
+}
