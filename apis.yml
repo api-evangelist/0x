@@ -30,7 +30,7 @@ tags:
   - Settlement
   - Smart Contracts
 created: '2026-05-28'
-modified: '2026-05-28'
+modified: '2026-05-30'
 specificationVersion: '0.20'
 x-source: public-apis/public-apis
 x-category: Cryptocurrency
@@ -250,6 +250,9 @@ common:
     url: vocabulary/0x-vocabulary.yml
   - type: JSONLD
     url: json-ld/0x-context.jsonld
+  - type: Review
+    title: Streaming Availability Review
+    url: review.yml
 integrations:
   - name: Coinbase
   - name: MetaMask

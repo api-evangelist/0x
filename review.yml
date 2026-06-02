@@ -1,0 +1,176 @@
+aid: 0x
+name: 0x
+review_type: streaming-availability
+question: Does 0x expose a documented, first-party public streaming surface (WebSocket, Server-Sent Events, or webhooks)?
+answer: Partial
+summary: |
+  0x's primary public API surface (Swap API, Gasless API, Trade Analytics API,
+  Sources API) is REST over HTTPS. The legacy Standard Relayer API (SRA v4) did
+  expose a WebSocket channel for 0x order events, but the SRA / open orderbook
+  product line has been sunset and is not part of the current 0x developer
+  surface. The current 0x Cross-Chain API (beta) does expose one documented
+  first-party streaming endpoint — GET /cross-chain/quotes/stream — implemented
+  as Server-Sent Events (text/event-stream) that emits incremental quote events
+  followed by a terminal result event. No public 0x-operated WebSocket endpoint,
+  and no publicly documented outbound webhooks (subscription callbacks the
+  integrator registers to receive trade or gasless-status notifications) are
+  documented in the current developer area. Status for Gasless trades is
+  retrieved via REST polling, not via push.
+investigated_on: '2026-05-30'
+investigated_by: API Evangelist
+findings:
+  - name: Cross-Chain API streams quotes via Server-Sent Events
+    detail: |
+      The 0x Cross-Chain API documents GET /cross-chain/quotes/stream as a
+      streaming endpoint that delivers cross-chain quote updates as they become
+      available. The response is a Server-Sent Event stream
+      (text/event-stream). Each event carries a `zid` and an `event` envelope
+      whose `type` is either `quote` (incremental quote data) or `result` (final
+      `liquidityAvailable` flag). Authentication is the standard `0x-api-key`
+      header. This is the only documented first-party push/streaming surface in
+      the current 0x developer area.
+    sources:
+      - https://docs.0x.org/cross-chain-api/introduction
+      - openapi/0x-cross-chain.yaml#/paths/~1cross-chain~1quotes~1stream
+      - https://github.com/0xProject/0x-examples/tree/main/cross-chain-streaming-next-app
+  - name: Swap API and Gasless API are REST/HTTPS, no streaming
+    detail: |
+      The Swap API (price, quote, AllowanceHolder/Permit2 flows) and the
+      Gasless API (price, quote, submit, status, approval-tokens) are all
+      documented as REST endpoints over HTTPS with an `0x-api-key` header. The
+      OpenAPI description in this repo (openapi/0x-api.yaml) contains no
+      WebSocket, SSE, callbacks, or webhook objects. Gasless trade outcomes are
+      observed by polling GET /gasless/status/{tradeHash}, not by push.
+    sources:
+      - https://docs.0x.org/0x-swap-api/introduction
+      - https://docs.0x.org/gasless-api/introduction
+      - openapi/0x-api.yaml
+  - name: Trade Analytics API is read-only REST polling
+    detail: |
+      The Trade Analytics API is a read-only REST surface for retrieving the
+      integrator's Swap and Gasless trade history. There is no documented push
+      channel — integrators poll for new trade records. No webhook registration
+      endpoint is documented.
+    sources:
+      - https://docs.0x.org/trade-analytics-api
+  - name: Legacy SRA v4 WebSocket is sunset, not part of the current surface
+    detail: |
+      Historically, 0x operated the Standard Relayer API (SRA) v4, which
+      included a WebSocket channel for 0x v4 limit-order events on the open
+      orderbook. The 0x Labs orderbook / SRA product line has been deprecated
+      and is no longer part of the current developer documentation at
+      docs.0x.org, which is organized around Swap, Gasless, Cross-Chain, and
+      Trade Analytics. The current developer area does not document an SRA
+      WebSocket endpoint as supported.
+    sources:
+      - https://docs.0x.org
+  - name: No documented outbound webhooks
+    detail: |
+      The 0x developer documentation (docs.0x.org), the dashboard
+      (dashboard.0x.org), and the OpenAPI descriptions captured in this repo do
+      not document any webhook subscription mechanism — there is no endpoint
+      for registering a callback URL to receive Swap, Gasless, or Cross-Chain
+      lifecycle events, and the OpenAPI files contain no `callbacks` objects.
+      Lifecycle/status visibility is achieved via REST polling (e.g. Gasless
+      `/gasless/status/{tradeHash}`) and via the Cross-Chain SSE stream during
+      quote discovery.
+    sources:
+      - openapi/0x-api.yaml
+      - openapi/0x-cross-chain.yaml
+      - https://docs.0x.org
+documented_apis:
+  - name: 0x Swap API
+    protocol: REST/HTTPS
+    websocket: false
+    sse: false
+    webhooks: false
+    notes: Price, quote, AllowanceHolder, Permit2. Polling only.
+  - name: 0x Gasless API
+    protocol: REST/HTTPS
+    websocket: false
+    sse: false
+    webhooks: false
+    notes: |
+      Trade status retrieved via GET /gasless/status/{tradeHash} polling. No
+      push notifications.
+  - name: 0x Cross-Chain API
+    protocol: REST/HTTPS + Server-Sent Events
+    websocket: false
+    sse: true
+    webhooks: false
+    notes: |
+      GET /cross-chain/quotes/stream is text/event-stream. Emits incremental
+      `quote` events and a terminal `result` event. Sole documented first-party
+      streaming surface.
+  - name: 0x Trade Analytics API
+    protocol: REST/HTTPS
+    websocket: false
+    sse: false
+    webhooks: false
+    notes: Read-only history. Polling only.
+  - name: 0x Sources API
+    protocol: REST/HTTPS
+    websocket: false
+    sse: false
+    webhooks: false
+    notes: Reference data for active liquidity sources.
+streaming_surface:
+  sse:
+    - path: /cross-chain/quotes/stream
+      method: GET
+      content_type: text/event-stream
+      api: 0x Cross-Chain API
+      auth_header: 0x-api-key
+      event_types:
+        - quote
+        - result
+      spec: openapi/0x-cross-chain.yaml
+  websocket: []
+  webhooks: []
+recommendations_for_realtime:
+  - For Cross-Chain quote discovery, consume GET /cross-chain/quotes/stream as
+    SSE and react to `quote` events as they arrive; treat the `result` event as
+    end-of-stream.
+  - For Swap and Gasless trade outcomes, poll the documented REST status
+    endpoints (e.g. /gasless/status/{tradeHash}) on a reasonable cadence. Do
+    not represent 0x as exposing a WebSocket or webhook for these flows.
+  - For on-chain settlement confirmation (0x Settler contract execution), use a
+    JSON-RPC node provider's WebSocket / eth_subscribe — that WS endpoint
+    belongs to the node provider, not to 0x.
+asyncapi_recommendation:
+  produce: true
+  reason: |
+    The Cross-Chain `/cross-chain/quotes/stream` Server-Sent Events surface is
+    a real, first-party, documented push channel with a well-defined message
+    envelope (`zid` + `event{type,data}`) and two event types (`quote`,
+    `result`). An AsyncAPI 3.x description with an SSE binding can be produced
+    from the existing OpenAPI without fabrication. Do not extend the AsyncAPI
+    to Swap / Gasless / Trade Analytics / Sources — those are REST polling and
+    have no push channel.
+  scope:
+    - channel: cross-chain/quotes/stream
+      protocol: sse
+      source_spec: openapi/0x-cross-chain.yaml
+      messages:
+        - quote
+        - result
+sources_checked:
+  - url: https://docs.0x.org
+    note: Developer documentation root. Sections are Swap, Gasless, Cross-Chain, Trade Analytics. No WebSocket or webhook sections.
+  - url: https://docs.0x.org/0x-swap-api/introduction
+    note: Swap API documented as REST. No streaming.
+  - url: https://docs.0x.org/gasless-api/introduction
+    note: Gasless API documented as REST with polled status. No streaming.
+  - url: https://docs.0x.org/cross-chain-api/introduction
+    note: Cross-Chain API documents streaming quotes endpoint.
+  - url: https://docs.0x.org/trade-analytics-api
+    note: Read-only REST history. No streaming.
+  - url: openapi/0x-api.yaml
+    note: Local OpenAPI for Swap / Gasless / Trade Analytics / Sources. No webhook callbacks, no SSE, no WS.
+  - url: openapi/0x-cross-chain.yaml
+    note: Local OpenAPI for Cross-Chain. Contains /cross-chain/quotes/stream with text/event-stream response and quote/result event types.
+  - url: https://github.com/0xProject/0x-examples/tree/main/cross-chain-streaming-next-app
+    note: Official 0x example consuming the Cross-Chain streaming endpoint from a Next.js app.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
