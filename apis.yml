@@ -15,7 +15,7 @@ description: >-
   using the Permit2 standard, and integrators get a unified API key, a
   TypeScript SDK, an official Agent Skill, and an MCP server for AI-assisted
   development.
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 tags:
   - Cryptocurrency
   - DeFi
