@@ -4,8 +4,8 @@
     {
       "source": "https://0x.org/post",
       "feed_url": "https://0x.org/post/rss.xml",
-      "title": "",
-      "saved": 1,
+      "title": "0x Blog",
+      "saved": 2,
       "method": "discovered"
     },
     {
@@ -16,6 +16,6 @@
       "method": "none"
     }
   ],
-  "post_count": 2,
-  "fetched": "2026-06-14T20:42:17Z"
+  "post_count": 4,
+  "fetched": "2026-06-21T17:00:00Z"
 }
