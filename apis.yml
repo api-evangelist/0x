@@ -59,9 +59,9 @@ apis:
         url: https://docs.0x.org/0x-swap-api/introduction
       - type: OpenAPI
         url: openapi/0x-api.yaml
-      - type: SignUp
+      - type: Signup
         url: https://dashboard.0x.org/create-account
-      - type: SDK
+      - type: SDKs
         title: TypeScript SDK (OpenAPI-generated)
         url: https://github.com/0xProject/0x-swap-ts-sdk-migration
       - type: CodeExamples
@@ -104,7 +104,7 @@ apis:
         url: https://docs.0x.org/gasless-api/introduction
       - type: OpenAPI
         url: openapi/0x-api.yaml
-      - type: SignUp
+      - type: Signup
         url: https://dashboard.0x.org/create-account
       - type: CodeExamples
         title: Gasless v2 Headless Example
@@ -139,7 +139,7 @@ apis:
         url: https://docs.0x.org/cross-chain-api/introduction
       - type: OpenAPI
         url: openapi/0x-cross-chain.yaml
-      - type: SignUp
+      - type: Signup
         url: https://0x.org/products/cross-chain
       - type: CodeExamples
         title: Cross-Chain Headless Example
@@ -166,7 +166,7 @@ apis:
         url: https://docs.0x.org/trade-analytics-api
       - type: OpenAPI
         url: openapi/0x-api.yaml
-      - type: SignUp
+      - type: Signup
         url: https://dashboard.0x.org/create-account
   - aid: 0x:sources-api
     name: 0x Sources API
@@ -192,7 +192,7 @@ common:
     url: https://docs.0x.org
   - type: Portal
     url: https://dashboard.0x.org
-  - type: SignUp
+  - type: Signup
     url: https://dashboard.0x.org/create-account
   - type: Pricing
     url: https://0x.org/pricing
@@ -223,7 +223,7 @@ common:
   - type: CodeExamples
     title: 0x API Code Examples Collection
     url: https://github.com/0xProject/0x-examples
-  - type: SDK
+  - type: SDKs
     title: '@0x/0x-parser (npm)'
     url: https://www.npmjs.com/package/@0x/0x-parser
   - type: Tutorials

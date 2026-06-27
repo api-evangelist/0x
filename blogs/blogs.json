@@ -2,11 +2,11 @@
   "repo": "0x",
   "feeds": [
     {
-      "source": "https://0x.org/post",
+      "source": "https://0x.org/post/rss.xml",
       "feed_url": "https://0x.org/post/rss.xml",
-      "title": "0x Blog",
+      "title": "",
       "saved": 2,
-      "method": "discovered"
+      "method": "feed"
     },
     {
       "source": "https://0x.org/pricing",
@@ -16,6 +16,6 @@
       "method": "none"
     }
   ],
-  "post_count": 4,
-  "fetched": "2026-06-21T17:00:00Z"
+  "post_count": 6,
+  "fetched": "2026-06-27T12:03:07Z"
 }
