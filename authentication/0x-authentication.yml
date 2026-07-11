@@ -1,0 +1,16 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/0x-api.yaml, openapi/0x-cross-chain.yaml
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - header
+schemes:
+- name: ApiKeyAuth
+  type: apiKey
+  in: header
+  parameter: 0x-api-key
+  sources:
+  - openapi/0x-api.yaml
+  - openapi/0x-cross-chain.yaml

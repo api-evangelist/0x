@@ -186,6 +186,10 @@ apis:
       - type: OpenAPI
         url: openapi/0x-api.yaml
 common:
+  - type: DomainSecurity
+    url: security/0x-domain-security.yml
+  - type: Authentication
+    url: authentication/0x-authentication.yml
   - type: Website
     url: https://0x.org
   - type: Documentation
