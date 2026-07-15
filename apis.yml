@@ -186,6 +186,8 @@ apis:
       - type: OpenAPI
         url: openapi/0x-api.yaml
 common:
+  - type: AgenticAccess
+    url: agentic-access/0x-agentic-access.yml
   - type: DomainSecurity
     url: security/0x-domain-security.yml
   - type: Authentication
