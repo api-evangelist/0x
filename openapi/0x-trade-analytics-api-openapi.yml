@@ -1,0 +1,660 @@
+openapi: 3.0.3
+info:
+  title: 0x Cross-Chain Trade Analytics API
+  description: This is the official API reference for the latest 0x API (v2).
+  version: v2
+  x-source-url: https://github.com/0xProject/0x-docs/blob/main/fern/openapi.json
+  x-last-validated: '2026-05-28'
+servers:
+- url: https://api.0x.org
+tags:
+- name: Trade Analytics
+  description: Trade Analytics API endpoints
+paths:
+  /trade-analytics/swap:
+    get:
+      operationId: tradeAnalytics::swap
+      summary: Get Swap Trade Analytics
+      description: Get the list of completed swap trades. Returns a maximum of 200 trades per request. Visit [here](https://docs.0x.org/docs/trade-analytics-api/introduction) for more details about how the API works.
+      tags:
+      - Trade Analytics
+      parameters:
+      - description: Visit dashboard.0x.org to get your API Key
+        in: header
+        name: 0x-api-key
+        required: true
+        schema:
+          type: string
+      - description: API version
+        in: header
+        name: 0x-version
+        required: true
+        schema:
+          type: string
+          example: v2
+      - name: cursor
+        in: query
+        required: false
+        schema:
+          type: string
+        description: A pagination cursor used to fetch the next page of trades. It should be set to `null` for the initial request; otherwise, it should be the value of `nextCursor` that is returned from `getSwapTrades` or `getGaslessTrades` calls.
+        example: eyJ0aW1lc3RhbXAiOjE3MjkwMzIyMTAsInppZCI6IjB4N2FjM2NlMzExNjA2NzU5MGY5M2U3MWVmIn0=
+      - name: startTimestamp
+        in: query
+        required: false
+        schema:
+          type: integer
+          exclusiveMinimum: true
+          minimum: 0
+        description: Unix timestamp in seconds, specifying the starting point of the time range filter. Only trades completed on or after this timestamp will be included in the response.
+        example: 1729032210
+      - name: endTimestamp
+        in: query
+        required: false
+        schema:
+          type: integer
+          exclusiveMinimum: true
+          minimum: 0
+        description: Unix timestamp in seconds, specifying the end point of the time range filter. Only trades completed on or before this timestamp will be included in the response.
+        example: 1729032211
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  nextCursor:
+                    type: string
+                    nullable: true
+                    description: The cursor to fetch the next page of trades. If not present, there are no more trades to fetch for given parameters.
+                  trades:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        appName:
+                          type: string
+                          description: The name of the app that initiated the trade
+                        blockNumber:
+                          type: string
+                          description: The block number at which the trade was executed
+                        buyToken:
+                          type: string
+                          pattern: ^0x[a-fA-F0-9]{40}$
+                          description: The contract address of the token received by the taker
+                        buyAmount:
+                          type: string
+                          nullable: true
+                          description: The settled amount on the `buyToken`, formatted by the token decimals
+                        chainId:
+                          type: integer
+                          exclusiveMinimum: true
+                          minimum: 0
+                          description: The ID of the chain where the trade was executed
+                        chainName:
+                          type: string
+                          description: The name of the chain where the trade was executed
+                        fees:
+                          type: object
+                          properties:
+                            integratorFee:
+                              type: object
+                              properties:
+                                token:
+                                  type: string
+                                  pattern: ^0x[a-fA-F0-9]{40}$
+                                  description: The contract address of the token in which the integrator collected a fee
+                                  nullable: true
+                                amount:
+                                  type: string
+                                  nullable: true
+                                  description: The amount of the integrator fee, formatted by the token decimals
+                                amountUsd:
+                                  type: string
+                                  nullable: true
+                                  description: The amount of the integrator fee in USD.
+                              required:
+                              - token
+                              - amount
+                              - amountUsd
+                              additionalProperties: false
+                              description: The details about the fee collected by integrator
+                              nullable: true
+                            zeroExFee:
+                              type: object
+                              properties:
+                                token:
+                                  type: string
+                                  pattern: ^0x[a-fA-F0-9]{40}$
+                                  description: The contract address of the token in which 0x collected a fee
+                                  nullable: true
+                                amount:
+                                  type: string
+                                  nullable: true
+                                  description: The amount of the 0x fee, formatted by the token decimals
+                                amountUsd:
+                                  type: string
+                                  nullable: true
+                                  description: The amount of the 0x fee in USD.
+                              required:
+                              - token
+                              - amount
+                              - amountUsd
+                              additionalProperties: false
+                              description: The details about the fee collected by 0x
+                              nullable: true
+                          required:
+                          - integratorFee
+                          - zeroExFee
+                          additionalProperties: false
+                          description: The details about fees collected for the trade
+                        gasUsed:
+                          type: string
+                          description: The amount of gas used in the trade
+                        protocolVersion:
+                          type: string
+                          enum:
+                          - 0xv4
+                          - Settler
+                          description: The version of the 0x protocol used to execute the trade
+                        sellToken:
+                          type: string
+                          pattern: ^0x[a-fA-F0-9]{40}$
+                          description: The contract address of the token spent by the taker
+                        sellAmount:
+                          type: string
+                          nullable: true
+                          description: The amount of the `sellToken`, formatted by the token decimals
+                        slippageBps:
+                          type: string
+                          nullable: true
+                          description: The slippage of the `buyToken` in bps
+                        taker:
+                          type: string
+                          pattern: ^0x[a-fA-F0-9]{40}$
+                          description: The wallet address of the taker​
+                        timestamp:
+                          type: integer
+                          exclusiveMinimum: true
+                          minimum: 0
+                          description: The timestamp of the block containing the trade
+                        tokens:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              address:
+                                type: string
+                                pattern: ^0x[a-fA-F0-9]{40}$
+                                description: The contract address of the token
+                              symbol:
+                                type: string
+                                nullable: true
+                                description: The symbol of the token
+                            required:
+                            - address
+                            - symbol
+                            additionalProperties: false
+                            description: Properties of the token involved in the trade
+                          description: Properties of the tokens involved in the trade
+                        transactionHash:
+                          type: string
+                          description: The trade's transaction hash
+                        volumeUsd:
+                          type: string
+                          nullable: true
+                          description: The total volume of the trade in USD. This value is based on an estimate of the token price at the point of execution.
+                        zid:
+                          type: string
+                          description: The `zid` corresponding to the trade
+                        service:
+                          type: string
+                          enum:
+                          - swap
+                      required:
+                      - appName
+                      - blockNumber
+                      - buyToken
+                      - buyAmount
+                      - chainId
+                      - chainName
+                      - fees
+                      - gasUsed
+                      - protocolVersion
+                      - sellToken
+                      - sellAmount
+                      - slippageBps
+                      - taker
+                      - timestamp
+                      - tokens
+                      - transactionHash
+                      - volumeUsd
+                      - zid
+                      - service
+                      additionalProperties: false
+                  zid:
+                    type: string
+                    description: The unique ZeroEx identifier of the request
+                required:
+                - nextCursor
+                - trades
+                - zid
+                additionalProperties: false
+              example:
+                nextCursor: null
+                trades:
+                - appName: Example app
+                  blockNumber: '123456'
+                  buyToken: '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
+                  buyAmount: '0.0512'
+                  chainId: 1
+                  fees:
+                    integratorFee: null
+                    zeroExFee: null
+                  gasUsed: '141111'
+                  protocolVersion: Settler
+                  sellToken: 0x4d1c297d39c5c1277964d0e3f8aqqqq493664530
+                  sellAmount: '123.111'
+                  slippageBps: '1'
+                  taker: '0x23f2ad8e04dfdc0000a3e80891e3ae43f322000a'
+                  timestamp: 1777772227
+                  tokens:
+                  - address: '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
+                    symbol: ETH
+                  - address: '0xaaaaaaaaaaaaaa277964d0e3f8aa901493664530'
+                    symbol: TKN
+                  transactionHash: '0x42bad789ddd64aaaaaaaaaaaceb795063f5623558f130e0f4d30ad399b041411'
+                  volumeUsd: '139.73'
+                  zid: '0x04baaaaaaa1f1af0304eb412'
+                  service: swap
+                zid: '0xaaaaaae1b3bf43f082d5012d'
+        '400':
+          description: 400 error response
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/INPUT_INVALID'
+        '500':
+          description: 500 error response
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/INTERNAL_SERVER_ERROR'
+                - $ref: '#/components/schemas/UNCATEGORIZED'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /trade-analytics/gasless:
+    get:
+      operationId: tradeAnalytics::gasless
+      summary: Get Gasless Trade Analytics
+      description: Get the list of completed gasless trades. Returns a maximum of 200 trades per request. Visit [here](https://docs.0x.org/docs/trade-analytics-api/introduction) for more details about how the API works.
+      tags:
+      - Trade Analytics
+      parameters:
+      - description: Visit dashboard.0x.org to get your API Key
+        in: header
+        name: 0x-api-key
+        required: true
+        schema:
+          type: string
+      - description: API version
+        in: header
+        name: 0x-version
+        required: true
+        schema:
+          type: string
+          example: v2
+      - name: cursor
+        in: query
+        required: false
+        schema:
+          type: string
+        description: A pagination cursor used to fetch the next page of trades. It should be set to `null` for the initial request; otherwise, it should be the value of `nextCursor` that is returned from `getSwapTrades` or `getGaslessTrades` calls.
+        example: eyJ0aW1lc3RhbXAiOjE3MjkwMzIyMTAsInppZCI6IjB4N2FjM2NlMzExNjA2NzU5MGY5M2U3MWVmIn0=
+      - name: startTimestamp
+        in: query
+        required: false
+        schema:
+          type: integer
+          exclusiveMinimum: true
+          minimum: 0
+        description: Unix timestamp in seconds, specifying the starting point of the time range filter. Only trades completed on or after this timestamp will be included in the response.
+        example: 1729032210
+      - name: endTimestamp
+        in: query
+        required: false
+        schema:
+          type: integer
+          exclusiveMinimum: true
+          minimum: 0
+        description: Unix timestamp in seconds, specifying the end point of the time range filter. Only trades completed on or before this timestamp will be included in the response.
+        example: 1729032211
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  nextCursor:
+                    type: string
+                    nullable: true
+                    description: The cursor to fetch the next page of trades. If not present, there are no more trades to fetch for given parameters.
+                  trades:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        appName:
+                          type: string
+                          description: The name of the app that initiated the trade
+                        blockNumber:
+                          type: string
+                          description: The block number at which the trade was executed
+                        buyToken:
+                          type: string
+                          pattern: ^0x[a-fA-F0-9]{40}$
+                          description: The contract address of the token received by the taker
+                        buyAmount:
+                          type: string
+                          nullable: true
+                          description: The settled amount on the `buyToken`, formatted by the token decimals
+                        chainId:
+                          type: integer
+                          exclusiveMinimum: true
+                          minimum: 0
+                          description: The ID of the chain where the trade was executed
+                        chainName:
+                          type: string
+                          description: The name of the chain where the trade was executed
+                        fees:
+                          type: object
+                          properties:
+                            integratorFee:
+                              type: object
+                              properties:
+                                token:
+                                  type: string
+                                  pattern: ^0x[a-fA-F0-9]{40}$
+                                  description: The contract address of the token in which the integrator collected a fee
+                                  nullable: true
+                                amount:
+                                  type: string
+                                  nullable: true
+                                  description: The amount of the integrator fee, formatted by the token decimals
+                                amountUsd:
+                                  type: string
+                                  nullable: true
+                                  description: The amount of the integrator fee in USD.
+                              required:
+                              - token
+                              - amount
+                              - amountUsd
+                              additionalProperties: false
+                              description: The details about the fee collected by integrator
+                              nullable: true
+                            zeroExFee:
+                              type: object
+                              properties:
+                                token:
+                                  type: string
+                                  pattern: ^0x[a-fA-F0-9]{40}$
+                                  description: The contract address of the token in which 0x collected a fee
+                                  nullable: true
+                                amount:
+                                  type: string
+                                  nullable: true
+                                  description: The amount of the 0x fee, formatted by the token decimals
+                                amountUsd:
+                                  type: string
+                                  nullable: true
+                                  description: The amount of the 0x fee in USD.
+                              required:
+                              - token
+                              - amount
+                              - amountUsd
+                              additionalProperties: false
+                              description: The details about the fee collected by 0x
+                              nullable: true
+                          required:
+                          - integratorFee
+                          - zeroExFee
+                          additionalProperties: false
+                          description: The details about fees collected for the trade
+                        gasUsed:
+                          type: string
+                          description: The amount of gas used in the trade
+                        protocolVersion:
+                          type: string
+                          enum:
+                          - 0xv4
+                          - Settler
+                          description: The version of the 0x protocol used to execute the trade
+                        sellToken:
+                          type: string
+                          pattern: ^0x[a-fA-F0-9]{40}$
+                          description: The contract address of the token spent by the taker
+                        sellAmount:
+                          type: string
+                          nullable: true
+                          description: The amount of the `sellToken`, formatted by the token decimals
+                        slippageBps:
+                          type: string
+                          nullable: true
+                          description: The slippage of the `buyToken` in bps
+                        taker:
+                          type: string
+                          pattern: ^0x[a-fA-F0-9]{40}$
+                          description: The wallet address of the taker​
+                        timestamp:
+                          type: integer
+                          exclusiveMinimum: true
+                          minimum: 0
+                          description: The timestamp of the block containing the trade
+                        tokens:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              address:
+                                type: string
+                                pattern: ^0x[a-fA-F0-9]{40}$
+                                description: The contract address of the token
+                              symbol:
+                                type: string
+                                nullable: true
+                                description: The symbol of the token
+                            required:
+                            - address
+                            - symbol
+                            additionalProperties: false
+                            description: Properties of the token involved in the trade
+                          description: Properties of the tokens involved in the trade
+                        transactionHash:
+                          type: string
+                          description: The trade's transaction hash
+                        volumeUsd:
+                          type: string
+                          nullable: true
+                          description: The total volume of the trade in USD. This value is based on an estimate of the token price at the point of execution.
+                        zid:
+                          type: string
+                          description: The `zid` corresponding to the trade
+                        service:
+                          type: string
+                          enum:
+                          - gasless
+                      required:
+                      - appName
+                      - blockNumber
+                      - buyToken
+                      - buyAmount
+                      - chainId
+                      - chainName
+                      - fees
+                      - gasUsed
+                      - protocolVersion
+                      - sellToken
+                      - sellAmount
+                      - slippageBps
+                      - taker
+                      - timestamp
+                      - tokens
+                      - transactionHash
+                      - volumeUsd
+                      - zid
+                      - service
+                      additionalProperties: false
+                  zid:
+                    type: string
+                    description: The unique ZeroEx identifier of the request
+                required:
+                - nextCursor
+                - trades
+                - zid
+                additionalProperties: false
+              example:
+                nextCursor: null
+                trades:
+                - appName: Example app
+                  blockNumber: '123456'
+                  buyToken: '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
+                  buyAmount: '0.0512'
+                  chainId: 1
+                  fees:
+                    integratorFee: null
+                    zeroExFee: null
+                  gasUsed: '141111'
+                  protocolVersion: Settler
+                  sellToken: 0x4d1c297d39c5c1277964d0e3f8aqqqq493664530
+                  sellAmount: '123.111'
+                  slippageBps: '1'
+                  taker: '0x23f2ad8e04dfdc0000a3e80891e3ae43f322000a'
+                  timestamp: 1777772227
+                  tokens:
+                  - address: '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
+                    symbol: ETH
+                  - address: '0xaaaaaaaaaaaaaa277964d0e3f8aa901493664530'
+                    symbol: TKN
+                  transactionHash: '0x42bad789ddd64aaaaaaaaaaaceb795063f5623558f130e0f4d30ad399b041411'
+                  volumeUsd: '139.73'
+                  zid: '0x04baaaaaaa1f1af0304eb412'
+                  service: gasless
+                zid: '0xaaaaaae1b3bf43f082d5012d'
+        '400':
+          description: 400 error response
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/INPUT_INVALID'
+        '500':
+          description: 500 error response
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/INTERNAL_SERVER_ERROR'
+                - $ref: '#/components/schemas/UNCATEGORIZED'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    UNCATEGORIZED:
+      type: object
+      properties:
+        name:
+          type: string
+          enum:
+          - UNCATEGORIZED
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            zid:
+              type: string
+              description: The unique ZeroEx identifier of the request
+          required:
+          - zid
+          additionalProperties: false
+      required:
+      - name
+      - message
+      - data
+      additionalProperties: false
+    INPUT_INVALID:
+      type: object
+      properties:
+        name:
+          type: string
+          enum:
+          - INPUT_INVALID
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            zid:
+              type: string
+              description: The unique ZeroEx identifier of the request
+            details:
+              type: array
+              items:
+                type: object
+                properties:
+                  field:
+                    type: string
+                    description: The input field name
+                  reason:
+                    type: string
+                    description: The validation failure reason
+                required:
+                - field
+                - reason
+                additionalProperties: false
+              description: The list of invalid inputs
+          required:
+          - zid
+          - details
+          additionalProperties: false
+      required:
+      - name
+      - message
+      - data
+      additionalProperties: false
+    INTERNAL_SERVER_ERROR:
+      type: object
+      properties:
+        name:
+          type: string
+          enum:
+          - INTERNAL_SERVER_ERROR
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            zid:
+              type: string
+              description: The unique ZeroEx identifier of the request
+          required:
+          - zid
+          additionalProperties: false
+      required:
+      - name
+      - message
+      - data
+      additionalProperties: false
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: 0x-api-key

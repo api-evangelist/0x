@@ -1,12 +1,15 @@
 openapi: 3.0.3
 info:
   title: 0x Cross-Chain API
-  description: This is the official API reference for the 0x Cross-Chain API (v1).
-  version: v1
-  x-source-url: https://github.com/0xProject/0x-docs/blob/main/fern/openapi-cross-chain.json
+  description: This is the official API reference for the latest 0x API (v2).
+  version: v2
+  x-source-url: https://github.com/0xProject/0x-docs/blob/main/fern/openapi.json
   x-last-validated: '2026-05-28'
 servers:
 - url: https://api.0x.org
+tags:
+- name: Cross-Chain
+  description: Cross-Chain API endpoints
 paths:
   /cross-chain/quotes:
     get:
@@ -27,34 +30,28 @@ paths:
         required: true
         schema:
           type: string
-        description: The source chain from which the cross-chain swap will originate. Can be specified as chain ID or name.
-          See [here](https://0x-docs.gitbook.io/0x-cross-chain-api-beta/developer-resources/supported-chains-and-providers)
-          for the list of supported chains
+        description: The source chain from which the cross-chain swap will originate. Can be specified as chain ID or name. See [here](https://0x-docs.gitbook.io/0x-cross-chain-api-beta/developer-resources/supported-chains-and-providers) for the list of supported chains
         example: 8453
       - name: destinationChain
         in: query
         required: true
         schema:
           type: string
-        description: The destination chain where tokens will be received after the cross-chain swap. Can be specified as chain
-          ID or name. See [here](https://0x-docs.gitbook.io/0x-cross-chain-api-beta/developer-resources/supported-chains-and-providers)
-          for the list of supported chains
+        description: The destination chain where tokens will be received after the cross-chain swap. Can be specified as chain ID or name. See [here](https://0x-docs.gitbook.io/0x-cross-chain-api-beta/developer-resources/supported-chains-and-providers) for the list of supported chains
         example: 42161
       - name: sellToken
         in: query
         required: true
         schema:
           type: string
-        description: The contract address of the token to sell on the origin chain. Format varies by chain type (EVM address
-          for EVM/HyperCore chains, token mint address for Solana, base58check address for Tron)
+        description: The contract address of the token to sell on the origin chain. Format varies by chain type (EVM address for EVM/HyperCore chains, token mint address for Solana, base58check address for Tron)
         example: '0xcbb7c0000ab88b473b1f5afd9ef808440eed33bf'
       - name: buyToken
         in: query
         required: true
         schema:
           type: string
-        description: The contract address of the token to buy on the destination chain. Format varies by chain type (EVM address
-          for EVM/HyperCore chains, token mint address for Solana, base58check address for Tron)
+        description: The contract address of the token to buy on the destination chain. Format varies by chain type (EVM address for EVM/HyperCore chains, token mint address for Solana, base58check address for Tron)
         example: '0xaf88d065e77c8cc2239327c5edb3a432268e5831'
       - name: sellAmount
         in: query
@@ -69,24 +66,21 @@ paths:
         required: true
         schema:
           type: string
-        description: The wallet address on the origin chain that holds the sellToken balance and will initiate the cross-chain
-          transaction
+        description: The wallet address on the origin chain that holds the sellToken balance and will initiate the cross-chain transaction
         example: '0x56EB0aD2dC746540Fab5C02478B31e2AA9DdC38C'
       - name: destinationAddress
         in: query
         required: false
         schema:
           type: string
-        description: The wallet address on the destination chain that will receive the buyToken. If not specified, defaults
-          to originAddress on the destination chain
+        description: The wallet address on the destination chain that will receive the buyToken. If not specified, defaults to originAddress on the destination chain
         example: '0x56EB0aD2dC746540Fab5C02478B31e2AA9DdC38C'
       - name: gasPayer
         in: query
         required: false
         schema:
           type: string
-        description: The Solana address that will pay for transaction fees when the origin chain is Solana. Only applicable
-          for Solana origin chains
+        description: The Solana address that will pay for transaction fees when the origin chain is Solana. Only applicable for Solana origin chains
       - name: slippageBps
         in: query
         required: false
@@ -95,8 +89,7 @@ paths:
           minimum: 0
           maximum: 10000
           default: 100
-        description: The maximum acceptable slippage for each swap or bridge step of the cross-chain swap in basis points
-          (100 = 1%)
+        description: The maximum acceptable slippage for each swap or bridge step of the cross-chain swap in basis points (100 = 1%)
       - name: excludedBridges
         in: query
         required: false
@@ -121,27 +114,21 @@ paths:
         schema:
           type: string
           default: ''
-        description: 'The trading fee amounts in basis points to charge on the origin chain (supports single or comma-separated
-          values). Must be used together with feeRecipient. When multiple values are provided, must match the length of feeRecipient.
-          Note: integrator fee collection is not yet supported for Tron-originated routes.'
+        description: 'The trading fee amounts in basis points to charge on the origin chain (supports single or comma-separated values). Must be used together with feeRecipient. When multiple values are provided, must match the length of feeRecipient. Note: integrator fee collection is not yet supported for Tron-originated routes.'
       - name: feeRecipient
         in: query
         required: false
         schema:
           type: string
           default: ''
-        description: 'The wallet addresses to receive trading fees on the origin chain (supports single or comma-separated
-          values). Must be used together with feeBps. When multiple values are provided, must match the length of feeBps.
-          Note: integrator fee collection is not yet supported for Tron-originated routes.'
+        description: 'The wallet addresses to receive trading fees on the origin chain (supports single or comma-separated values). Must be used together with feeBps. When multiple values are provided, must match the length of feeBps. Note: integrator fee collection is not yet supported for Tron-originated routes.'
       - name: feeToken
         in: query
         required: false
         schema:
           type: string
           default: ''
-        description: 'The token addresses for fee collection on the origin chain (supports single or comma-separated values).
-          Must be the same as sellToken. When multiple values are provided, must match the length of feeBps. If omitted, defaults
-          to sellToken. Note: integrator fee collection is not yet supported for Tron-originated routes.'
+        description: 'The token addresses for fee collection on the origin chain (supports single or comma-separated values). Must be the same as sellToken. When multiple values are provided, must match the length of feeBps. If omitted, defaults to sellToken. Note: integrator fee collection is not yet supported for Tron-originated routes.'
       - name: sortQuotesBy
         in: query
         required: true
@@ -160,8 +147,7 @@ paths:
           minimum: 1
           maximum: 10
           default: 3
-        description: The maximum number of cross-chain quotes to return, between 1 and 10. Each quote represents a different
-          combination of bridges and DEXs
+        description: The maximum number of cross-chain quotes to return, between 1 and 10. Each quote represents a different combination of bridges and DEXs
       responses:
         '200':
           description: Successful response
@@ -175,8 +161,7 @@ paths:
                       type: boolean
                       enum:
                       - true
-                      description: Whether sufficient liquidity exists across bridges and DEXs to execute the cross-chain
-                        swap
+                      description: Whether sufficient liquidity exists across bridges and DEXs to execute the cross-chain swap
                     allowanceTarget:
                       anyOf:
                       - type: string
@@ -243,8 +228,7 @@ paths:
                           - actual
                           - spender
                           additionalProperties: false
-                          description: The allowances that the `originAddress` must set in order to execute the swap successfully.
-                            Null if no allowance is required
+                          description: The allowances that the `originAddress` must set in order to execute the swap successfully. Null if no allowance is required
                           nullable: true
                         balance:
                           type: object
@@ -277,15 +261,11 @@ paths:
                           - actual
                           - expected
                           additionalProperties: false
-                          description: The balance of `sellToken` that the `originAddress` must hold. Null if the `originAddress`
-                            has sufficient balance
+                          description: The balance of `sellToken` that the `originAddress` must hold. Null if the `originAddress` has sufficient balance
                           nullable: true
                         simulationIncomplete:
                           type: boolean
-                          description: This is set to `true` when 0x cannot validate the transaction. This happens when the
-                            `originAddress` has an insufficient balance of `sellToken` and 0x is unable to perform enhanced
-                            quote validation with such low balance. Note that this does not necessarily mean that the trade
-                            will revert
+                          description: This is set to `true` when 0x cannot validate the transaction. This happens when the `originAddress` has an insufficient balance of `sellToken` and 0x is unable to perform enhanced quote validation with such low balance. Note that this does not necessarily mean that the trade will revert
                         invalidSwapSourcesPassed:
                           type: array
                           items:
@@ -295,8 +275,7 @@ paths:
                           type: array
                           items:
                             type: string
-                          description: List of invalid bridge providers specified in the `excludedBridges` or `includedBridges`
-                            parameter
+                          description: List of invalid bridge providers specified in the `excludedBridges` or `includedBridges` parameter
                       required:
                       - allowance
                       - balance
@@ -325,16 +304,14 @@ paths:
                               format: int64
                             - type: string
                               pattern: ^[-+]?(0|[1-9]\d*)(\.\d+)?$
-                            description: The estimated amount of `buyToken` (in `buyToken`'s base units) to be received on
-                              the destination chain
+                            description: The estimated amount of `buyToken` (in `buyToken`'s base units) to be received on the destination chain
                           minBuyAmount:
                             allOf:
                             - type: integer
                               format: int64
                             - type: string
                               pattern: ^[-+]?(0|[1-9]\d*)(\.\d+)?$
-                            description: The minimum amount of buyToken guaranteed across the entire cross-chain quote. This
-                              price is influenced by the `slippageBps` parameter
+                            description: The minimum amount of buyToken guaranteed across the entire cross-chain quote. This price is influenced by the `slippageBps` parameter
                           fees:
                             type: object
                             properties:
@@ -439,8 +416,7 @@ paths:
                                       format: int64
                                     - type: string
                                       pattern: ^[-+]?(0|[1-9]\d*)(\.\d+)?$
-                                    description: The bridge fee amount in token's base units that will be added to the transaction
-                                      value
+                                    description: The bridge fee amount in token's base units that will be added to the transaction value
                                   token:
                                     anyOf:
                                     - type: string
@@ -461,8 +437,7 @@ paths:
                                 - type
                                 additionalProperties: false
                                 nullable: true
-                                description: Native fee required by the bridge provider for cross-chain message passing that
-                                  will be added to the transaction value
+                                description: Native fee required by the bridge provider for cross-chain message passing that will be added to the transaction value
                               reimbursementFee:
                                 type: object
                                 properties:
@@ -494,8 +469,7 @@ paths:
                             - zeroExFee
                             - bridgeNativeFee
                             additionalProperties: false
-                            description: All fees associated with this cross-chain quote, including integrator fees, 0x protocol
-                              fees, and bridge native fees
+                            description: All fees associated with this cross-chain quote, including integrator fees, 0x protocol fees, and bridge native fees
                           gasCosts:
                             anyOf:
                             - type: object
@@ -527,9 +501,7 @@ paths:
                                   - type: string
                                     pattern: ^[-+]?(0|[1-9]\d*)(\.\d+)?$
                                   nullable: true
-                                  description: The estimated total network cost of the swap. On chains where there is no L1
-                                    data cost, it is calculated as `gas` * `gasPrice`. On chains where there is an L1 data
-                                    cost, it is calculated as `gas` * `gasPrice + L1 data`
+                                  description: The estimated total network cost of the swap. On chains where there is no L1 data cost, it is calculated as `gas` * `gasPrice`. On chains where there is an L1 data cost, it is calculated as `gas` * `gasPrice + L1 data`
                               required:
                               - chainType
                               - gasPrice
@@ -605,8 +577,7 @@ paths:
                               - bandwidthFee
                               - total
                               additionalProperties: false
-                            description: Estimated gas costs for executing the transaction on the origin chain, formatted
-                              by chain type
+                            description: Estimated gas costs for executing the transaction on the origin chain, formatted by chain type
                           steps:
                             type: array
                             items:
@@ -769,16 +740,14 @@ paths:
                                       format: int64
                                     - type: string
                                       pattern: ^[-+]?(0|[1-9]\d*)(\.\d+)?$
-                                    description: The amount of tokens to be received on the destination chain in token base
-                                      units
+                                    description: The amount of tokens to be received on the destination chain in token base units
                                   minBuyAmount:
                                     allOf:
                                     - type: integer
                                       format: int64
                                     - type: string
                                       pattern: ^[-+]?(0|[1-9]\d*)(\.\d+)?$
-                                    description: The minimum amount of tokens guaranteed on the destination chain in token
-                                      base units
+                                    description: The minimum amount of tokens guaranteed on the destination chain in token base units
                                   provider:
                                     type: string
                                     description: The bridge provider name handling this cross-chain transfer
@@ -799,8 +768,7 @@ paths:
                                 - provider
                                 - estimatedTimeSeconds
                                 additionalProperties: false
-                            description: Sequential steps required to complete the cross-chain swap, including wrapping, swaps,
-                              and bridge operations
+                            description: Sequential steps required to complete the cross-chain swap, including wrapping, swaps, and bridge operations
                           transaction:
                             anyOf:
                             - type: object
@@ -913,14 +881,12 @@ paths:
                               - chainType
                               - details
                               additionalProperties: false
-                            description: The transaction details to execute on the origin chain to initiate the cross-chain
-                              swap
+                            description: The transaction details to execute on the origin chain to initiate the cross-chain swap
                           estimatedTimeSeconds:
                             type: number
                             minimum: 0
                             nullable: true
-                            description: Estimated total time in seconds for the cross-chain swap to complete, including bridge
-                              confirmation time
+                            description: Estimated total time in seconds for the cross-chain swap to complete, including bridge confirmation time
                           issues:
                             type: object
                             properties:
@@ -947,8 +913,7 @@ paths:
                                 - actual
                                 - spender
                                 additionalProperties: false
-                                description: The allowances that the `originAddress` must set in order to execute the swap
-                                  successfully. Null if no allowance is required
+                                description: The allowances that the `originAddress` must set in order to execute the swap successfully. Null if no allowance is required
                                 nullable: true
                               balance:
                                 type: object
@@ -981,15 +946,11 @@ paths:
                                 - actual
                                 - expected
                                 additionalProperties: false
-                                description: The balance of `sellToken` that the `originAddress` must hold. Null if the `originAddress`
-                                  has sufficient balance
+                                description: The balance of `sellToken` that the `originAddress` must hold. Null if the `originAddress` has sufficient balance
                                 nullable: true
                               simulationIncomplete:
                                 type: boolean
-                                description: This is set to `true` when 0x cannot validate the transaction. This happens when
-                                  the `originAddress` has an insufficient balance of `sellToken` and 0x is unable to perform
-                                  enhanced quote validation with such low balance. Note that this does not necessarily mean
-                                  that the trade will revert
+                                description: This is set to `true` when 0x cannot validate the transaction. This happens when the `originAddress` has an insufficient balance of `sellToken` and 0x is unable to perform enhanced quote validation with such low balance. Note that this does not necessarily mean that the trade will revert
                             required:
                             - allowance
                             - balance
@@ -1011,8 +972,7 @@ paths:
                         - quoteId
                         additionalProperties: false
                       minItems: 1
-                      description: Array of available cross-chain quotes, each representing a different combination of bridges
-                        and DEXs
+                      description: Array of available cross-chain quotes, each representing a different combination of bridges and DEXs
                   required:
                   - liquidityAvailable
                   - allowanceTarget
@@ -1032,8 +992,7 @@ paths:
                       type: boolean
                       enum:
                       - false
-                      description: Whether sufficient liquidity exists across bridges and DEXs to execute the cross-chain
-                        swap
+                      description: Whether sufficient liquidity exists across bridges and DEXs to execute the cross-chain swap
                     zid:
                       type: string
                       description: The unique ZeroEx identifier of the request
@@ -1155,8 +1114,7 @@ paths:
         required: true
         schema:
           type: string
-        description: The transaction hash on the origin chain to track. Format varies by chain type (32-byte hex for EVM/HyperCore,
-          base58 signature for Solana, 64-char hex for Tron)
+        description: The transaction hash on the origin chain to track. Format varies by chain type (32-byte hex for EVM/HyperCore, base58 signature for Solana, 64-char hex for Tron)
         example: '0xe347e66b1d9793a11a962c1483f9eef03272c362c41dc1f21c87577ef5ec1a7c'
       - name: quoteId
         in: query
@@ -1567,14 +1525,12 @@ paths:
                             type: integer
                             minimum: 0
                             nullable: true
-                            description: Estimated time for this recovery step to finish, measured from when the recovery
-                              process begins
+                            description: Estimated time for this recovery step to finish, measured from when the recovery process begins
                           deadline:
                             type: integer
                             minimum: 0
                             nullable: true
-                            description: The deadline timestamp of which the funds are available for recovery, if applicable.
-                              Not initiating the recovery process within this deadline may result in funds being forever lost
+                            description: The deadline timestamp of which the funds are available for recovery, if applicable. Not initiating the recovery process within this deadline may result in funds being forever lost
                           manualTransaction:
                             anyOf:
                             - type: object
@@ -1688,8 +1644,7 @@ paths:
                               - details
                               additionalProperties: false
                             nullable: true
-                            description: The manual transaction for submission, if applicable. This transaction may be submitted
-                              by anyone to initiate the recovery process
+                            description: The manual transaction for submission, if applicable. This transaction may be submitted by anyone to initiate the recovery process
                           settledAmount:
                             allOf:
                             - type: integer
@@ -1924,8 +1879,7 @@ paths:
     get:
       operationId: crossChain::getTxHistory
       summary: Get Cross-Chain Transaction History
-      description: "Get cross-chain transaction history for a user wallet address. Note: this endpoint is in beta and still\
-        \ a work in progress \u2014 please reach out to the 0x team if you or your users run into any issues."
+      description: 'Get cross-chain transaction history for a user wallet address. Note: this endpoint is in beta and still a work in progress — please reach out to the 0x team if you or your users run into any issues.'
       tags:
       - Cross-Chain
       parameters:
@@ -1944,8 +1898,7 @@ paths:
             pattern: ^0x[a-fA-F0-9]{40}$
           - type: string
           - type: string
-        description: The wallet address of the user to get transaction history for. Accepts EVM (0x...), Solana, and Tron
-          addresses
+        description: The wallet address of the user to get transaction history for. Accepts EVM (0x...), Solana, and Tron addresses
       - name: limit
         in: query
         required: false
@@ -2074,34 +2027,28 @@ paths:
         required: true
         schema:
           type: string
-        description: The source chain from which the cross-chain swap will originate. Can be specified as chain ID or name.
-          See [here](https://0x-docs.gitbook.io/0x-cross-chain-api-beta/developer-resources/supported-chains-and-providers)
-          for the list of supported chains
+        description: The source chain from which the cross-chain swap will originate. Can be specified as chain ID or name. See [here](https://0x-docs.gitbook.io/0x-cross-chain-api-beta/developer-resources/supported-chains-and-providers) for the list of supported chains
         example: 8453
       - name: destinationChain
         in: query
         required: true
         schema:
           type: string
-        description: The destination chain where tokens will be received after the cross-chain swap. Can be specified as chain
-          ID or name. See [here](https://0x-docs.gitbook.io/0x-cross-chain-api-beta/developer-resources/supported-chains-and-providers)
-          for the list of supported chains
+        description: The destination chain where tokens will be received after the cross-chain swap. Can be specified as chain ID or name. See [here](https://0x-docs.gitbook.io/0x-cross-chain-api-beta/developer-resources/supported-chains-and-providers) for the list of supported chains
         example: 42161
       - name: sellToken
         in: query
         required: true
         schema:
           type: string
-        description: The contract address of the token to sell on the origin chain. Format varies by chain type (EVM address
-          for EVM/HyperCore chains, token mint address for Solana, base58check address for Tron)
+        description: The contract address of the token to sell on the origin chain. Format varies by chain type (EVM address for EVM/HyperCore chains, token mint address for Solana, base58check address for Tron)
         example: '0xcbb7c0000ab88b473b1f5afd9ef808440eed33bf'
       - name: buyToken
         in: query
         required: true
         schema:
           type: string
-        description: The contract address of the token to buy on the destination chain. Format varies by chain type (EVM address
-          for EVM/HyperCore chains, token mint address for Solana, base58check address for Tron)
+        description: The contract address of the token to buy on the destination chain. Format varies by chain type (EVM address for EVM/HyperCore chains, token mint address for Solana, base58check address for Tron)
         example: '0xaf88d065e77c8cc2239327c5edb3a432268e5831'
       - name: sellAmount
         in: query
@@ -2116,24 +2063,21 @@ paths:
         required: true
         schema:
           type: string
-        description: The wallet address on the origin chain that holds the sellToken balance and will initiate the cross-chain
-          transaction
+        description: The wallet address on the origin chain that holds the sellToken balance and will initiate the cross-chain transaction
         example: '0x56EB0aD2dC746540Fab5C02478B31e2AA9DdC38C'
       - name: destinationAddress
         in: query
         required: false
         schema:
           type: string
-        description: The wallet address on the destination chain that will receive the buyToken. If not specified, defaults
-          to originAddress on the destination chain
+        description: The wallet address on the destination chain that will receive the buyToken. If not specified, defaults to originAddress on the destination chain
         example: '0x56EB0aD2dC746540Fab5C02478B31e2AA9DdC38C'
       - name: gasPayer
         in: query
         required: false
         schema:
           type: string
-        description: The Solana address that will pay for transaction fees when the origin chain is Solana. Only applicable
-          for Solana origin chains
+        description: The Solana address that will pay for transaction fees when the origin chain is Solana. Only applicable for Solana origin chains
       - name: slippageBps
         in: query
         required: false
@@ -2142,8 +2086,7 @@ paths:
           minimum: 0
           maximum: 10000
           default: 100
-        description: The maximum acceptable slippage for each swap or bridge step of the cross-chain swap in basis points
-          (100 = 1%)
+        description: The maximum acceptable slippage for each swap or bridge step of the cross-chain swap in basis points (100 = 1%)
       - name: excludedBridges
         in: query
         required: false
@@ -2168,27 +2111,21 @@ paths:
         schema:
           type: string
           default: ''
-        description: 'The trading fee amounts in basis points to charge on the origin chain (supports single or comma-separated
-          values). Must be used together with feeRecipient. When multiple values are provided, must match the length of feeRecipient.
-          Note: integrator fee collection is not yet supported for Tron-originated routes.'
+        description: 'The trading fee amounts in basis points to charge on the origin chain (supports single or comma-separated values). Must be used together with feeRecipient. When multiple values are provided, must match the length of feeRecipient. Note: integrator fee collection is not yet supported for Tron-originated routes.'
       - name: feeRecipient
         in: query
         required: false
         schema:
           type: string
           default: ''
-        description: 'The wallet addresses to receive trading fees on the origin chain (supports single or comma-separated
-          values). Must be used together with feeBps. When multiple values are provided, must match the length of feeBps.
-          Note: integrator fee collection is not yet supported for Tron-originated routes.'
+        description: 'The wallet addresses to receive trading fees on the origin chain (supports single or comma-separated values). Must be used together with feeBps. When multiple values are provided, must match the length of feeBps. Note: integrator fee collection is not yet supported for Tron-originated routes.'
       - name: feeToken
         in: query
         required: false
         schema:
           type: string
           default: ''
-        description: 'The token addresses for fee collection on the origin chain (supports single or comma-separated values).
-          Must be the same as sellToken. When multiple values are provided, must match the length of feeBps. If omitted, defaults
-          to sellToken. Note: integrator fee collection is not yet supported for Tron-originated routes.'
+        description: 'The token addresses for fee collection on the origin chain (supports single or comma-separated values). Must be the same as sellToken. When multiple values are provided, must match the length of feeBps. If omitted, defaults to sellToken. Note: integrator fee collection is not yet supported for Tron-originated routes.'
       - name: maxNumQuotes
         in: query
         required: false
@@ -2197,8 +2134,7 @@ paths:
           minimum: 1
           maximum: 10
           default: 5
-        description: The maximum number of cross-chain quotes to return, between 1 and 10. Each quote represents a different
-          combination of bridges and DEXs
+        description: The maximum number of cross-chain quotes to return, between 1 and 10. Each quote represents a different combination of bridges and DEXs
       responses:
         '200':
           description: Successful response
@@ -2238,16 +2174,14 @@ paths:
                                     format: int64
                                   - type: string
                                     pattern: ^[-+]?(0|[1-9]\d*)(\.\d+)?$
-                                  description: The estimated amount of `buyToken` (in `buyToken`'s base units) to be received
-                                    on the destination chain
+                                  description: The estimated amount of `buyToken` (in `buyToken`'s base units) to be received on the destination chain
                                 minBuyAmount:
                                   allOf:
                                   - type: integer
                                     format: int64
                                   - type: string
                                     pattern: ^[-+]?(0|[1-9]\d*)(\.\d+)?$
-                                  description: The minimum amount of buyToken guaranteed across the entire cross-chain quote.
-                                    This price is influenced by the `slippageBps` parameter
+                                  description: The minimum amount of buyToken guaranteed across the entire cross-chain quote. This price is influenced by the `slippageBps` parameter
                                 fees:
                                   type: object
                                   properties:
@@ -2266,8 +2200,7 @@ paths:
                                           - type: string
                                             pattern: ^0x(?!0{40})[a-fA-F0-9]{40}$
                                           - type: string
-                                          description: The contract address of the token in which the integrator collected
-                                            a fee
+                                          description: The contract address of the token in which the integrator collected a fee
                                         type:
                                           type: string
                                           enum:
@@ -2300,14 +2233,12 @@ paths:
                                             - type: string
                                               pattern: ^0x(?!0{40})[a-fA-F0-9]{40}$
                                             - type: string
-                                            description: The contract address of the token in which the integrator collected
-                                              a fee
+                                            description: The contract address of the token in which the integrator collected a fee
                                           type:
                                             type: string
                                             enum:
                                             - volume
-                                            description: The fee type indicating it is calculated as a percentage of trade
-                                              volume
+                                            description: The fee type indicating it is calculated as a percentage of trade volume
                                           chainId:
                                             type: number
                                             description: The chain ID where this fee will be collected
@@ -2355,8 +2286,7 @@ paths:
                                             format: int64
                                           - type: string
                                             pattern: ^[-+]?(0|[1-9]\d*)(\.\d+)?$
-                                          description: The bridge fee amount in token's base units that will be added to the
-                                            transaction value
+                                          description: The bridge fee amount in token's base units that will be added to the transaction value
                                         token:
                                           anyOf:
                                           - type: string
@@ -2377,8 +2307,7 @@ paths:
                                       - type
                                       additionalProperties: false
                                       nullable: true
-                                      description: Native fee required by the bridge provider for cross-chain message passing
-                                        that will be added to the transaction value
+                                      description: Native fee required by the bridge provider for cross-chain message passing that will be added to the transaction value
                                     reimbursementFee:
                                       type: object
                                       properties:
@@ -2394,8 +2323,7 @@ paths:
                                           - type: string
                                             pattern: ^0x(?!0{40})[a-fA-F0-9]{40}$
                                           - type: string
-                                          description: The contract address of the token in which the reimbursement fee is
-                                            collected
+                                          description: The contract address of the token in which the reimbursement fee is collected
                                         recipient:
                                           type: string
                                           pattern: ^0x(?!0{40})[a-fA-F0-9]{40}$
@@ -2411,8 +2339,7 @@ paths:
                                   - zeroExFee
                                   - bridgeNativeFee
                                   additionalProperties: false
-                                  description: All fees associated with this cross-chain quote, including integrator fees,
-                                    0x protocol fees, and bridge native fees
+                                  description: All fees associated with this cross-chain quote, including integrator fees, 0x protocol fees, and bridge native fees
                                 gasCosts:
                                   anyOf:
                                   - type: object
@@ -2444,9 +2371,7 @@ paths:
                                         - type: string
                                           pattern: ^[-+]?(0|[1-9]\d*)(\.\d+)?$
                                         nullable: true
-                                        description: The estimated total network cost of the swap. On chains where there is
-                                          no L1 data cost, it is calculated as `gas` * `gasPrice`. On chains where there is
-                                          an L1 data cost, it is calculated as `gas` * `gasPrice + L1 data`
+                                        description: The estimated total network cost of the swap. On chains where there is no L1 data cost, it is calculated as `gas` * `gasPrice`. On chains where there is an L1 data cost, it is calculated as `gas` * `gasPrice + L1 data`
                                     required:
                                     - chainType
                                     - gasPrice
@@ -2522,8 +2447,7 @@ paths:
                                     - bandwidthFee
                                     - total
                                     additionalProperties: false
-                                  description: Estimated gas costs for executing the transaction on the origin chain, formatted
-                                    by chain type
+                                  description: Estimated gas costs for executing the transaction on the origin chain, formatted by chain type
                                 steps:
                                   type: array
                                   items:
@@ -2679,24 +2603,21 @@ paths:
                                             format: int64
                                           - type: string
                                             pattern: ^[-+]?(0|[1-9]\d*)(\.\d+)?$
-                                          description: The amount of tokens to bridge from the origin chain in token base
-                                            units
+                                          description: The amount of tokens to bridge from the origin chain in token base units
                                         buyAmount:
                                           allOf:
                                           - type: integer
                                             format: int64
                                           - type: string
                                             pattern: ^[-+]?(0|[1-9]\d*)(\.\d+)?$
-                                          description: The amount of tokens to be received on the destination chain in token
-                                            base units
+                                          description: The amount of tokens to be received on the destination chain in token base units
                                         minBuyAmount:
                                           allOf:
                                           - type: integer
                                             format: int64
                                           - type: string
                                             pattern: ^[-+]?(0|[1-9]\d*)(\.\d+)?$
-                                          description: The minimum amount of tokens guaranteed on the destination chain in
-                                            token base units
+                                          description: The minimum amount of tokens guaranteed on the destination chain in token base units
                                         provider:
                                           type: string
                                           description: The bridge provider name handling this cross-chain transfer
@@ -2717,8 +2638,7 @@ paths:
                                       - provider
                                       - estimatedTimeSeconds
                                       additionalProperties: false
-                                  description: Sequential steps required to complete the cross-chain swap, including wrapping,
-                                    swaps, and bridge operations
+                                  description: Sequential steps required to complete the cross-chain swap, including wrapping, swaps, and bridge operations
                                 transaction:
                                   anyOf:
                                   - type: object
@@ -2831,14 +2751,12 @@ paths:
                                     - chainType
                                     - details
                                     additionalProperties: false
-                                  description: The transaction details to execute on the origin chain to initiate the cross-chain
-                                    swap
+                                  description: The transaction details to execute on the origin chain to initiate the cross-chain swap
                                 estimatedTimeSeconds:
                                   type: number
                                   minimum: 0
                                   nullable: true
-                                  description: Estimated total time in seconds for the cross-chain swap to complete, including
-                                    bridge confirmation time
+                                  description: Estimated total time in seconds for the cross-chain swap to complete, including bridge confirmation time
                                 issues:
                                   type: object
                                   properties:
@@ -2865,8 +2783,7 @@ paths:
                                       - actual
                                       - spender
                                       additionalProperties: false
-                                      description: The allowances that the `originAddress` must set in order to execute the
-                                        swap successfully. Null if no allowance is required
+                                      description: The allowances that the `originAddress` must set in order to execute the swap successfully. Null if no allowance is required
                                       nullable: true
                                     balance:
                                       type: object
@@ -2899,15 +2816,11 @@ paths:
                                       - actual
                                       - expected
                                       additionalProperties: false
-                                      description: The balance of `sellToken` that the `originAddress` must hold. Null if
-                                        the `originAddress` has sufficient balance
+                                      description: The balance of `sellToken` that the `originAddress` must hold. Null if the `originAddress` has sufficient balance
                                       nullable: true
                                     simulationIncomplete:
                                       type: boolean
-                                      description: This is set to `true` when 0x cannot validate the transaction. This happens
-                                        when the `originAddress` has an insufficient balance of `sellToken` and 0x is unable
-                                        to perform enhanced quote validation with such low balance. Note that this does not
-                                        necessarily mean that the trade will revert
+                                      description: This is set to `true` when 0x cannot validate the transaction. This happens when the `originAddress` has an insufficient balance of `sellToken` and 0x is unable to perform enhanced quote validation with such low balance. Note that this does not necessarily mean that the trade will revert
                                   required:
                                   - allowance
                                   - balance
@@ -3044,38 +2957,60 @@ paths:
         delay: 0
         dispatcher: FALLBACK
 components:
-  securitySchemes:
-    0x-api-key:
-      type: apiKey
-      in: header
-      name: 0x-api-key
-  responses:
-    error:
-      description: Error response
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              message:
-                type: string
-              code:
-                type: string
-              issues:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    message:
-                      type: string
-                  required:
-                  - message
-                  additionalProperties: false
-            required:
-            - message
-            - code
-            additionalProperties: false
   schemas:
+    TRANSACTION_NOT_FOUND:
+      type: object
+      properties:
+        name:
+          type: string
+          enum:
+          - TRANSACTION_NOT_FOUND
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            zid:
+              type: string
+              description: The unique ZeroEx identifier of the request
+            originChain:
+              type: string
+            originTxHash:
+              type: string
+              description: The hash of the transaction on the origin chain
+          required:
+          - zid
+          - originChain
+          - originTxHash
+          additionalProperties: false
+      required:
+      - name
+      - message
+      - data
+      additionalProperties: false
+    UNCATEGORIZED:
+      type: object
+      properties:
+        name:
+          type: string
+          enum:
+          - UNCATEGORIZED
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            zid:
+              type: string
+              description: The unique ZeroEx identifier of the request
+          required:
+          - zid
+          additionalProperties: false
+      required:
+      - name
+      - message
+      - data
+      additionalProperties: false
     BRIDGE_PROVIDER_ERROR:
       type: object
       properties:
@@ -3197,59 +3132,8 @@ components:
       - message
       - data
       additionalProperties: false
-    TRANSACTION_NOT_FOUND:
-      type: object
-      properties:
-        name:
-          type: string
-          enum:
-          - TRANSACTION_NOT_FOUND
-        message:
-          type: string
-        data:
-          type: object
-          properties:
-            zid:
-              type: string
-              description: The unique ZeroEx identifier of the request
-            originChain:
-              type: string
-            originTxHash:
-              type: string
-              description: The hash of the transaction on the origin chain
-          required:
-          - zid
-          - originChain
-          - originTxHash
-          additionalProperties: false
-      required:
-      - name
-      - message
-      - data
-      additionalProperties: false
-    UNCATEGORIZED:
-      type: object
-      properties:
-        name:
-          type: string
-          enum:
-          - UNCATEGORIZED
-        message:
-          type: string
-        data:
-          type: object
-          properties:
-            zid:
-              type: string
-              description: The unique ZeroEx identifier of the request
-          required:
-          - zid
-          additionalProperties: false
-      required:
-      - name
-      - message
-      - data
-      additionalProperties: false
-tags:
-- name: Cross-Chain
-  description: Cross-Chain API endpoints
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: 0x-api-key
