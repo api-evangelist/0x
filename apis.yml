@@ -15,7 +15,20 @@ description: >-
   using the Permit2 standard, and integrators get a unified API key, a
   TypeScript SDK, an official Agent Skill, and an MCP server for AI-assisted
   development.
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/0x.png
 tags:
   - Cryptocurrency
   - DeFi
@@ -37,155 +50,254 @@ x-category: Cryptocurrency
 x-tier: 1
 x-type: company
 apis:
-  - aid: 0x:swap-api
-    name: 0x Swap API
-    description: >-
-      Institutional-grade DEX aggregation API that returns indicative prices and
-      firm quotes plus ready-to-sign transaction calldata for token swaps across
-      150+ liquidity sources on 20+ supported EVM chains. Supports two
-      allowance models: the simple AllowanceHolder pattern (recommended,
-      multisig-friendly) and the gas-optimised Permit2 pattern with EIP-712
-      signing.
-    humanURL: https://0x.org/products/swap
-    baseURL: https://api.0x.org
-    tags:
-      - Swap
-      - DEX Aggregation
-      - Permit2
-      - AllowanceHolder
-      - Liquidity
-    properties:
-      - type: Documentation
-        url: https://docs.0x.org/0x-swap-api/introduction
-      - type: OpenAPI
-        url: openapi/0x-api.yaml
-      - type: Signup
-        url: https://dashboard.0x.org/create-account
-      - type: SDKs
-        title: TypeScript SDK (OpenAPI-generated)
-        url: https://github.com/0xProject/0x-swap-ts-sdk-migration
-      - type: CodeExamples
-        title: Swap v2 AllowanceHolder Headless Example
-        url: https://github.com/0xProject/0x-examples/tree/main/swap-v2-allowance-holder-headless-example
-      - type: CodeExamples
-        title: Swap v2 Permit2 Headless Example
-        url: https://github.com/0xProject/0x-examples/tree/main/swap-v2-permit2-headless-example
-      - type: CodeExamples
-        title: Swap v2 AllowanceHolder Next.js App
-        url: https://github.com/0xProject/0x-examples/tree/main/swap-v2-allowance-holder-next-app
-      - type: CodeExamples
-        title: Swap v2 Permit2 Next.js App
-        url: https://github.com/0xProject/0x-examples/tree/main/swap-v2-permit2-next-app
-      - type: CodeExamples
-        title: Swap v2 with Foundry
-        url: https://github.com/0xProject/0x-examples/tree/main/swap-v2-with-foundry
-      - type: Tutorials
-        title: Swap Tokens with 0x Swap API
-        url: https://docs.0x.org/0x-swap-api/guides/swap-tokens-with-0x-swap-api
-  - aid: 0x:gasless-api
-    name: 0x Gasless API
-    description: >-
-      Lets end users swap tokens without holding the chain's native gas asset
-      (ETH, BNB, AVAX, etc.). Fees are deducted from the sell token via a
-      meta-transaction signed off-chain (Permit2 EIP-712) and submitted by 0x
-      relayers to the Settler contract. Includes endpoints for indicative price,
-      firm quote, trade submission, status polling, and supported approval
-      tokens.
-    humanURL: https://0x.org/products/gasless
-    baseURL: https://api.0x.org
-    tags:
-      - Gasless
-      - Meta-Transactions
-      - Permit2
-      - Relay
-      - Swap
-    properties:
-      - type: Documentation
-        url: https://docs.0x.org/gasless-api/introduction
-      - type: OpenAPI
-        url: openapi/0x-api.yaml
-      - type: Signup
-        url: https://dashboard.0x.org/create-account
-      - type: CodeExamples
-        title: Gasless v2 Headless Example
-        url: https://github.com/0xProject/0x-examples/tree/main/gasless-v2-headless-example
-      - type: CodeExamples
-        title: Gasless v2 ERC-4337 Smart Account
-        url: https://github.com/0xProject/0x-examples/tree/main/gasless-v2-erc4337-smart-account
-      - type: CodeExamples
-        title: Gasless v2 Trading Bot
-        url: https://github.com/0xProject/0x-examples/tree/main/gasless-v2-trading-bot
-  - aid: 0x:cross-chain-api
-    name: 0x Cross-Chain API
-    description: >-
-      Any-token, any-chain bridging API (currently private beta) that returns
-      cross-chain quotes, real-time streaming quote updates, transaction status,
-      transaction history, and the list of supported bridge providers (Across
-      V4, Relay, Bungee, CCIP, Squid Coral, NEAR Intents, OFT, Mayan, Circle
-      CCTP, Arbitrum/Linea/Superchain canonical bridges, and HyperCore). Covers
-      EVM chains plus Solana, HyperCore, and Tron.
-    humanURL: https://0x.org/products/cross-chain
-    baseURL: https://api.0x.org
-    tags:
-      - Cross-Chain
-      - Bridging
-      - Quotes
-      - Streaming
-      - Intents
-      - Solana
-      - HyperCore
-    properties:
-      - type: Documentation
-        url: https://docs.0x.org/cross-chain-api/introduction
-      - type: OpenAPI
-        url: openapi/0x-cross-chain.yaml
-      - type: Signup
-        url: https://0x.org/products/cross-chain
-      - type: CodeExamples
-        title: Cross-Chain Headless Example
-        url: https://github.com/0xProject/0x-examples/tree/main/cross-chain-headless-example
-      - type: CodeExamples
-        title: Cross-Chain Streaming Next.js App
-        url: https://github.com/0xProject/0x-examples/tree/main/cross-chain-streaming-next-app
-  - aid: 0x:trade-analytics-api
-    name: 0x Trade Analytics API
-    description: >-
-      Read-only API for retrieving the integrator's Swap and Gasless trade
-      history with surplus, fees, taker, route, and per-trade settlement
-      detail — used for monetisation reporting, accounting reconciliation, and
-      dashboarding.
-    humanURL: https://docs.0x.org/trade-analytics-api
-    baseURL: https://api.0x.org
-    tags:
-      - Trade Analytics
-      - Reporting
-      - Monetization
-      - Fees
-    properties:
-      - type: Documentation
-        url: https://docs.0x.org/trade-analytics-api
-      - type: OpenAPI
-        url: openapi/0x-api.yaml
-      - type: Signup
-        url: https://dashboard.0x.org/create-account
-  - aid: 0x:sources-api
-    name: 0x Sources API
-    description: >-
-      Lists the active aggregated liquidity sources (AMMs, RFQ market makers,
-      private liquidity venues) currently routed against by the Swap and
-      Gasless engines for a given chain.
-    humanURL: https://docs.0x.org/api-reference
-    baseURL: https://api.0x.org
-    tags:
-      - Liquidity
-      - Sources
-      - Reference
-    properties:
-      - type: Documentation
-        url: https://docs.0x.org/api-reference
-      - type: OpenAPI
-        url: openapi/0x-api.yaml
+- aid: 0x:0x-cross-chain-api
+  name: 0x Cross-Chain API
+  description: Cross-Chain API endpoints
+  humanURL: https://0x.org/products/swap
+  baseURL: https://api.0x.org
+  tags:
+  - Cross-Chain
+  properties:
+  - type: OpenAPI
+    url: openapi/0x-cross-chain-api-openapi.yml
+  - type: Documentation
+    url: https://docs.0x.org/0x-swap-api/introduction
+  - type: Signup
+    url: https://dashboard.0x.org/create-account
+  - type: SDKs
+    url: https://github.com/0xProject/0x-swap-ts-sdk-migration
+  - type: CodeExamples
+    url: >-
+      https://github.com/0xProject/0x-examples/tree/main/swap-v2-allowance-holder-headless-example
+  - type: CodeExamples
+    url: https://github.com/0xProject/0x-examples/tree/main/swap-v2-permit2-headless-example
+  - type: CodeExamples
+    url: https://github.com/0xProject/0x-examples/tree/main/swap-v2-allowance-holder-next-app
+  - type: CodeExamples
+    url: https://github.com/0xProject/0x-examples/tree/main/swap-v2-permit2-next-app
+  - type: CodeExamples
+    url: https://github.com/0xProject/0x-examples/tree/main/swap-v2-with-foundry
+  - type: Tutorials
+    url: https://docs.0x.org/0x-swap-api/guides/swap-tokens-with-0x-swap-api
+  - type: Documentation
+    url: https://docs.0x.org/gasless-api/introduction
+  - type: CodeExamples
+    url: https://github.com/0xProject/0x-examples/tree/main/gasless-v2-headless-example
+  - type: CodeExamples
+    url: https://github.com/0xProject/0x-examples/tree/main/gasless-v2-erc4337-smart-account
+  - type: CodeExamples
+    url: https://github.com/0xProject/0x-examples/tree/main/gasless-v2-trading-bot
+  - type: Documentation
+    url: https://docs.0x.org/cross-chain-api/introduction
+  - type: Signup
+    url: https://0x.org/products/cross-chain
+  - type: CodeExamples
+    url: https://github.com/0xProject/0x-examples/tree/main/cross-chain-headless-example
+  - type: CodeExamples
+    url: https://github.com/0xProject/0x-examples/tree/main/cross-chain-streaming-next-app
+  - type: Documentation
+    url: https://docs.0x.org/trade-analytics-api
+  - type: Documentation
+    url: https://docs.0x.org/api-reference
+- aid: 0x:0x-gasless-api
+  name: 0x Gasless API
+  description: Gasless API endpoints
+  humanURL: https://0x.org/products/swap
+  baseURL: https://api.0x.org
+  tags:
+  - Gasless
+  properties:
+  - type: OpenAPI
+    url: openapi/0x-gasless-api-openapi.yml
+  - type: Documentation
+    url: https://docs.0x.org/0x-swap-api/introduction
+  - type: Signup
+    url: https://dashboard.0x.org/create-account
+  - type: SDKs
+    url: https://github.com/0xProject/0x-swap-ts-sdk-migration
+  - type: CodeExamples
+    url: >-
+      https://github.com/0xProject/0x-examples/tree/main/swap-v2-allowance-holder-headless-example
+  - type: CodeExamples
+    url: https://github.com/0xProject/0x-examples/tree/main/swap-v2-permit2-headless-example
+  - type: CodeExamples
+    url: https://github.com/0xProject/0x-examples/tree/main/swap-v2-allowance-holder-next-app
+  - type: CodeExamples
+    url: https://github.com/0xProject/0x-examples/tree/main/swap-v2-permit2-next-app
+  - type: CodeExamples
+    url: https://github.com/0xProject/0x-examples/tree/main/swap-v2-with-foundry
+  - type: Tutorials
+    url: https://docs.0x.org/0x-swap-api/guides/swap-tokens-with-0x-swap-api
+  - type: Documentation
+    url: https://docs.0x.org/gasless-api/introduction
+  - type: CodeExamples
+    url: https://github.com/0xProject/0x-examples/tree/main/gasless-v2-headless-example
+  - type: CodeExamples
+    url: https://github.com/0xProject/0x-examples/tree/main/gasless-v2-erc4337-smart-account
+  - type: CodeExamples
+    url: https://github.com/0xProject/0x-examples/tree/main/gasless-v2-trading-bot
+  - type: Documentation
+    url: https://docs.0x.org/cross-chain-api/introduction
+  - type: Signup
+    url: https://0x.org/products/cross-chain
+  - type: CodeExamples
+    url: https://github.com/0xProject/0x-examples/tree/main/cross-chain-headless-example
+  - type: CodeExamples
+    url: https://github.com/0xProject/0x-examples/tree/main/cross-chain-streaming-next-app
+  - type: Documentation
+    url: https://docs.0x.org/trade-analytics-api
+  - type: Documentation
+    url: https://docs.0x.org/api-reference
+- aid: 0x:0x-sources-api
+  name: 0x Sources API
+  description: Sources API endpoints
+  humanURL: https://0x.org/products/swap
+  baseURL: https://api.0x.org
+  tags:
+  - Sources
+  properties:
+  - type: OpenAPI
+    url: openapi/0x-sources-api-openapi.yml
+  - type: Documentation
+    url: https://docs.0x.org/0x-swap-api/introduction
+  - type: Signup
+    url: https://dashboard.0x.org/create-account
+  - type: SDKs
+    url: https://github.com/0xProject/0x-swap-ts-sdk-migration
+  - type: CodeExamples
+    url: >-
+      https://github.com/0xProject/0x-examples/tree/main/swap-v2-allowance-holder-headless-example
+  - type: CodeExamples
+    url: https://github.com/0xProject/0x-examples/tree/main/swap-v2-permit2-headless-example
+  - type: CodeExamples
+    url: https://github.com/0xProject/0x-examples/tree/main/swap-v2-allowance-holder-next-app
+  - type: CodeExamples
+    url: https://github.com/0xProject/0x-examples/tree/main/swap-v2-permit2-next-app
+  - type: CodeExamples
+    url: https://github.com/0xProject/0x-examples/tree/main/swap-v2-with-foundry
+  - type: Tutorials
+    url: https://docs.0x.org/0x-swap-api/guides/swap-tokens-with-0x-swap-api
+  - type: Documentation
+    url: https://docs.0x.org/gasless-api/introduction
+  - type: CodeExamples
+    url: https://github.com/0xProject/0x-examples/tree/main/gasless-v2-headless-example
+  - type: CodeExamples
+    url: https://github.com/0xProject/0x-examples/tree/main/gasless-v2-erc4337-smart-account
+  - type: CodeExamples
+    url: https://github.com/0xProject/0x-examples/tree/main/gasless-v2-trading-bot
+  - type: Documentation
+    url: https://docs.0x.org/cross-chain-api/introduction
+  - type: Signup
+    url: https://0x.org/products/cross-chain
+  - type: CodeExamples
+    url: https://github.com/0xProject/0x-examples/tree/main/cross-chain-headless-example
+  - type: CodeExamples
+    url: https://github.com/0xProject/0x-examples/tree/main/cross-chain-streaming-next-app
+  - type: Documentation
+    url: https://docs.0x.org/trade-analytics-api
+  - type: Documentation
+    url: https://docs.0x.org/api-reference
+- aid: 0x:0x-swap-api
+  name: 0x Swap API
+  description: Swap API endpoints
+  humanURL: https://0x.org/products/swap
+  baseURL: https://api.0x.org
+  tags:
+  - Swap
+  properties:
+  - type: OpenAPI
+    url: openapi/0x-swap-api-openapi.yml
+  - type: Documentation
+    url: https://docs.0x.org/0x-swap-api/introduction
+  - type: Signup
+    url: https://dashboard.0x.org/create-account
+  - type: SDKs
+    url: https://github.com/0xProject/0x-swap-ts-sdk-migration
+  - type: CodeExamples
+    url: >-
+      https://github.com/0xProject/0x-examples/tree/main/swap-v2-allowance-holder-headless-example
+  - type: CodeExamples
+    url: https://github.com/0xProject/0x-examples/tree/main/swap-v2-permit2-headless-example
+  - type: CodeExamples
+    url: https://github.com/0xProject/0x-examples/tree/main/swap-v2-allowance-holder-next-app
+  - type: CodeExamples
+    url: https://github.com/0xProject/0x-examples/tree/main/swap-v2-permit2-next-app
+  - type: CodeExamples
+    url: https://github.com/0xProject/0x-examples/tree/main/swap-v2-with-foundry
+  - type: Tutorials
+    url: https://docs.0x.org/0x-swap-api/guides/swap-tokens-with-0x-swap-api
+  - type: Documentation
+    url: https://docs.0x.org/gasless-api/introduction
+  - type: CodeExamples
+    url: https://github.com/0xProject/0x-examples/tree/main/gasless-v2-headless-example
+  - type: CodeExamples
+    url: https://github.com/0xProject/0x-examples/tree/main/gasless-v2-erc4337-smart-account
+  - type: CodeExamples
+    url: https://github.com/0xProject/0x-examples/tree/main/gasless-v2-trading-bot
+  - type: Documentation
+    url: https://docs.0x.org/cross-chain-api/introduction
+  - type: Signup
+    url: https://0x.org/products/cross-chain
+  - type: CodeExamples
+    url: https://github.com/0xProject/0x-examples/tree/main/cross-chain-headless-example
+  - type: CodeExamples
+    url: https://github.com/0xProject/0x-examples/tree/main/cross-chain-streaming-next-app
+  - type: Documentation
+    url: https://docs.0x.org/trade-analytics-api
+  - type: Documentation
+    url: https://docs.0x.org/api-reference
+- aid: 0x:0x-trade-analytics-api
+  name: 0x Trade Analytics API
+  description: Trade Analytics API endpoints
+  humanURL: https://0x.org/products/swap
+  baseURL: https://api.0x.org
+  tags:
+  - Trade Analytics
+  properties:
+  - type: OpenAPI
+    url: openapi/0x-trade-analytics-api-openapi.yml
+  - type: Documentation
+    url: https://docs.0x.org/0x-swap-api/introduction
+  - type: Signup
+    url: https://dashboard.0x.org/create-account
+  - type: SDKs
+    url: https://github.com/0xProject/0x-swap-ts-sdk-migration
+  - type: CodeExamples
+    url: >-
+      https://github.com/0xProject/0x-examples/tree/main/swap-v2-allowance-holder-headless-example
+  - type: CodeExamples
+    url: https://github.com/0xProject/0x-examples/tree/main/swap-v2-permit2-headless-example
+  - type: CodeExamples
+    url: https://github.com/0xProject/0x-examples/tree/main/swap-v2-allowance-holder-next-app
+  - type: CodeExamples
+    url: https://github.com/0xProject/0x-examples/tree/main/swap-v2-permit2-next-app
+  - type: CodeExamples
+    url: https://github.com/0xProject/0x-examples/tree/main/swap-v2-with-foundry
+  - type: Tutorials
+    url: https://docs.0x.org/0x-swap-api/guides/swap-tokens-with-0x-swap-api
+  - type: Documentation
+    url: https://docs.0x.org/gasless-api/introduction
+  - type: CodeExamples
+    url: https://github.com/0xProject/0x-examples/tree/main/gasless-v2-headless-example
+  - type: CodeExamples
+    url: https://github.com/0xProject/0x-examples/tree/main/gasless-v2-erc4337-smart-account
+  - type: CodeExamples
+    url: https://github.com/0xProject/0x-examples/tree/main/gasless-v2-trading-bot
+  - type: Documentation
+    url: https://docs.0x.org/cross-chain-api/introduction
+  - type: Signup
+    url: https://0x.org/products/cross-chain
+  - type: CodeExamples
+    url: https://github.com/0xProject/0x-examples/tree/main/cross-chain-headless-example
+  - type: CodeExamples
+    url: https://github.com/0xProject/0x-examples/tree/main/cross-chain-streaming-next-app
+  - type: Documentation
+    url: https://docs.0x.org/trade-analytics-api
+  - type: Documentation
+    url: https://docs.0x.org/api-reference
 common:
+  - type: PostmanWorkspace
+    url: https://www.postman.com/kinlaneapi/0x/overview
   - type: AgenticAccess
     url: agentic-access/0x-agentic-access.yml
   - type: DomainSecurity
