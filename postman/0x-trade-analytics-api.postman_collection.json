@@ -1,0 +1,555 @@
+{
+  "info": {
+    "_postman_id": "fb9c868c-225a-45b6-a5b0-0fc0e74f3102",
+    "name": "0x Cross-Chain Trade Analytics API",
+    "description": "This is the official API reference for the latest 0x API (v2).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T00:25:44.000Z",
+    "updatedAt": "2026-07-28T00:25:45.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-fb9c868c-225a-45b6-a5b0-0fc0e74f3102"
+  },
+  "item": [
+    {
+      "name": "trade-analytics",
+      "item": [
+        {
+          "name": "swap",
+          "item": [
+            {
+              "name": "Get Swap Trade Analytics",
+              "id": "b7298de0-b5f3-42d1-aa46-58c3f8753d2b",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                    "key": "0x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "description": "(Required) API version",
+                    "key": "0x-version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/trade-analytics/swap?cursor=<string>&startTimestamp=<integer>&endTimestamp=<integer>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "trade-analytics",
+                    "swap"
+                  ],
+                  "query": [
+                    {
+                      "description": "A pagination cursor used to fetch the next page of trades. It should be set to `null` for the initial request; otherwise, it should be the value of `nextCursor` that is returned from `getSwapTrades` or `getGaslessTrades` calls.",
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Unix timestamp in seconds, specifying the starting point of the time range filter. Only trades completed on or after this timestamp will be included in the response.",
+                      "key": "startTimestamp",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "Unix timestamp in seconds, specifying the end point of the time range filter. Only trades completed on or before this timestamp will be included in the response.",
+                      "key": "endTimestamp",
+                      "value": "<integer>"
+                    }
+                  ]
+                },
+                "description": "Get the list of completed swap trades. Returns a maximum of 200 trades per request. Visit [here](https://docs.0x.org/docs/trade-analytics-api/introduction) for more details about how the API works."
+              },
+              "response": [
+                {
+                  "id": "726ffba2-c1fe-4039-960c-47493f3225bc",
+                  "name": "Successful response",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                        "key": "0x-api-key",
+                        "value": "<string>"
+                      },
+                      {
+                        "description": "(Required) API version",
+                        "key": "0x-version",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/trade-analytics/swap?cursor=<string>&startTimestamp=<integer>&endTimestamp=<integer>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "trade-analytics",
+                        "swap"
+                      ],
+                      "query": [
+                        {
+                          "description": "A pagination cursor used to fetch the next page of trades. It should be set to `null` for the initial request; otherwise, it should be the value of `nextCursor` that is returned from `getSwapTrades` or `getGaslessTrades` calls.",
+                          "key": "cursor",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Unix timestamp in seconds, specifying the starting point of the time range filter. Only trades completed on or after this timestamp will be included in the response.",
+                          "key": "startTimestamp",
+                          "value": "<integer>"
+                        },
+                        {
+                          "description": "Unix timestamp in seconds, specifying the end point of the time range filter. Only trades completed on or before this timestamp will be included in the response.",
+                          "key": "endTimestamp",
+                          "value": "<integer>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"nextCursor\": \"<string>\",\n  \"trades\": [\n    {\n      \"appName\": \"<string>\",\n      \"blockNumber\": \"<string>\",\n      \"buyToken\": \"0xb7F9a6BC2dde52356D2A8Aa2A67Faf090fDC52bD\",\n      \"buyAmount\": \"<string>\",\n      \"chainId\": \"<integer>\",\n      \"chainName\": \"<string>\",\n      \"fees\": {\n        \"integratorFee\": {\n          \"token\": \"0xDf90BfE3af077AE67F4aA3B98ebE6CD8bbf50c92\",\n          \"amount\": \"<string>\",\n          \"amountUsd\": \"<string>\"\n        },\n        \"zeroExFee\": {\n          \"token\": \"0xcCBA803Ce38b3C6d4a575D94cEcCf7A200337A74\",\n          \"amount\": \"<string>\",\n          \"amountUsd\": \"<string>\"\n        }\n      },\n      \"gasUsed\": \"<string>\",\n      \"protocolVersion\": \"Settler\",\n      \"sellToken\": \"0xBAfaFeFacBfDa96eA2EBfaA0BdbF2bccA0bCda4f\",\n      \"sellAmount\": \"<string>\",\n      \"slippageBps\": \"<string>\",\n      \"taker\": \"0x16263A211226557aF78d20DDCDfA7BdDbe5b2c6b\",\n      \"timestamp\": \"<integer>\",\n      \"tokens\": [\n        {\n          \"address\": \"0xd7DB2Bfc60f0b5cB0FBd78eA4ec0Efc9E0694fcB\",\n          \"symbol\": \"<string>\"\n        },\n        {\n          \"address\": \"0x361ea1Fdda4DB5aB8387d16Af9E215dedF5a2e1d\",\n          \"symbol\": \"<string>\"\n        }\n      ],\n      \"transactionHash\": \"<string>\",\n      \"volumeUsd\": \"<string>\",\n      \"zid\": \"<string>\",\n      \"service\": \"swap\"\n    },\n    {\n      \"appName\": \"<string>\",\n      \"blockNumber\": \"<string>\",\n      \"buyToken\": \"0x1e2934b51BAB43107EdE698bb66fcCAcd90738ec\",\n      \"buyAmount\": \"<string>\",\n      \"chainId\": \"<integer>\",\n      \"chainName\": \"<string>\",\n      \"fees\": {\n        \"integratorFee\": {\n          \"token\": \"0xeE796dccfECCDBA629CDE625Bad6eBe77C960cf8\",\n          \"amount\": \"<string>\",\n          \"amountUsd\": \"<string>\"\n        },\n        \"zeroExFee\": {\n          \"token\": \"0xbCe44cf1DAb9Cd59b1EAEb16B937d8bcfD0A0CdC\",\n          \"amount\": \"<string>\",\n          \"amountUsd\": \"<string>\"\n        }\n      },\n      \"gasUsed\": \"<string>\",\n      \"protocolVersion\": \"Settler\",\n      \"sellToken\": \"0xfBc3fE155C42e8FB7CF31ABaFf02b2864870B7E0\",\n      \"sellAmount\": \"<string>\",\n      \"slippageBps\": \"<string>\",\n      \"taker\": \"0x0ef6aDda3aae9b6AcfB9Dd9317C9D3C0bbCD0dbA\",\n      \"timestamp\": \"<integer>\",\n      \"tokens\": [\n        {\n          \"address\": \"0xdBFcBa4aa86eDdB7c8cAAA7f7dcA7E617DbC8Fe2\",\n          \"symbol\": \"<string>\"\n        },\n        {\n          \"address\": \"0xf64b10DeCCf6853D3A11Ec6E7dE8C766dB38Bcb9\",\n          \"symbol\": \"<string>\"\n        }\n      ],\n      \"transactionHash\": \"<string>\",\n      \"volumeUsd\": \"<string>\",\n      \"zid\": \"<string>\",\n      \"service\": \"swap\"\n    }\n  ],\n  \"zid\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T00:25:45.000Z",
+                  "updatedAt": "2026-07-28T00:25:45.000Z",
+                  "uid": "35240-726ffba2-c1fe-4039-960c-47493f3225bc"
+                },
+                {
+                  "id": "814f3d33-b1d6-43b1-9c4a-5c9463c1086b",
+                  "name": "400 error response",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                        "key": "0x-api-key",
+                        "value": "<string>"
+                      },
+                      {
+                        "description": "(Required) API version",
+                        "key": "0x-version",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/trade-analytics/swap?cursor=<string>&startTimestamp=<integer>&endTimestamp=<integer>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "trade-analytics",
+                        "swap"
+                      ],
+                      "query": [
+                        {
+                          "description": "A pagination cursor used to fetch the next page of trades. It should be set to `null` for the initial request; otherwise, it should be the value of `nextCursor` that is returned from `getSwapTrades` or `getGaslessTrades` calls.",
+                          "key": "cursor",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Unix timestamp in seconds, specifying the starting point of the time range filter. Only trades completed on or after this timestamp will be included in the response.",
+                          "key": "startTimestamp",
+                          "value": "<integer>"
+                        },
+                        {
+                          "description": "Unix timestamp in seconds, specifying the end point of the time range filter. Only trades completed on or before this timestamp will be included in the response.",
+                          "key": "endTimestamp",
+                          "value": "<integer>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"name\": \"INPUT_INVALID\",\n  \"message\": \"<string>\",\n  \"data\": {\n    \"zid\": \"<string>\",\n    \"details\": [\n      {\n        \"field\": \"<string>\",\n        \"reason\": \"<string>\"\n      },\n      {\n        \"field\": \"<string>\",\n        \"reason\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-07-28T00:25:45.000Z",
+                  "updatedAt": "2026-07-28T00:25:45.000Z",
+                  "uid": "35240-814f3d33-b1d6-43b1-9c4a-5c9463c1086b"
+                },
+                {
+                  "id": "46c94e02-ad1e-415d-9a59-8abff96d278c",
+                  "name": "500 error response",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                        "key": "0x-api-key",
+                        "value": "<string>"
+                      },
+                      {
+                        "description": "(Required) API version",
+                        "key": "0x-version",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/trade-analytics/swap?cursor=<string>&startTimestamp=<integer>&endTimestamp=<integer>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "trade-analytics",
+                        "swap"
+                      ],
+                      "query": [
+                        {
+                          "description": "A pagination cursor used to fetch the next page of trades. It should be set to `null` for the initial request; otherwise, it should be the value of `nextCursor` that is returned from `getSwapTrades` or `getGaslessTrades` calls.",
+                          "key": "cursor",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Unix timestamp in seconds, specifying the starting point of the time range filter. Only trades completed on or after this timestamp will be included in the response.",
+                          "key": "startTimestamp",
+                          "value": "<integer>"
+                        },
+                        {
+                          "description": "Unix timestamp in seconds, specifying the end point of the time range filter. Only trades completed on or before this timestamp will be included in the response.",
+                          "key": "endTimestamp",
+                          "value": "<integer>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"name\": \"INTERNAL_SERVER_ERROR\",\n  \"message\": \"<string>\",\n  \"data\": {\n    \"zid\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T00:25:45.000Z",
+                  "updatedAt": "2026-07-28T00:25:45.000Z",
+                  "uid": "35240-46c94e02-ad1e-415d-9a59-8abff96d278c"
+                }
+              ],
+              "createdAt": "2026-07-28T00:25:45.000Z",
+              "updatedAt": "2026-07-28T00:25:45.000Z",
+              "uid": "35240-b7298de0-b5f3-42d1-aa46-58c3f8753d2b"
+            }
+          ],
+          "id": "36f996e8-d0e0-49f0-92c2-5855f8ab3714",
+          "createdAt": "2026-07-28T00:25:45.000Z",
+          "updatedAt": "2026-07-28T00:25:45.000Z",
+          "uid": "35240-36f996e8-d0e0-49f0-92c2-5855f8ab3714"
+        },
+        {
+          "name": "gasless",
+          "item": [
+            {
+              "name": "Get Gasless Trade Analytics",
+              "id": "5d99a87f-9f75-4467-a81f-e66747c7a066",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                    "key": "0x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "description": "(Required) API version",
+                    "key": "0x-version",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/trade-analytics/gasless?cursor=<string>&startTimestamp=<integer>&endTimestamp=<integer>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "trade-analytics",
+                    "gasless"
+                  ],
+                  "query": [
+                    {
+                      "description": "A pagination cursor used to fetch the next page of trades. It should be set to `null` for the initial request; otherwise, it should be the value of `nextCursor` that is returned from `getSwapTrades` or `getGaslessTrades` calls.",
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Unix timestamp in seconds, specifying the starting point of the time range filter. Only trades completed on or after this timestamp will be included in the response.",
+                      "key": "startTimestamp",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "Unix timestamp in seconds, specifying the end point of the time range filter. Only trades completed on or before this timestamp will be included in the response.",
+                      "key": "endTimestamp",
+                      "value": "<integer>"
+                    }
+                  ]
+                },
+                "description": "Get the list of completed gasless trades. Returns a maximum of 200 trades per request. Visit [here](https://docs.0x.org/docs/trade-analytics-api/introduction) for more details about how the API works."
+              },
+              "response": [
+                {
+                  "id": "9f8fa2c7-8e1c-4ae7-b393-eb2f42086be0",
+                  "name": "Successful response",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                        "key": "0x-api-key",
+                        "value": "<string>"
+                      },
+                      {
+                        "description": "(Required) API version",
+                        "key": "0x-version",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/trade-analytics/gasless?cursor=<string>&startTimestamp=<integer>&endTimestamp=<integer>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "trade-analytics",
+                        "gasless"
+                      ],
+                      "query": [
+                        {
+                          "description": "A pagination cursor used to fetch the next page of trades. It should be set to `null` for the initial request; otherwise, it should be the value of `nextCursor` that is returned from `getSwapTrades` or `getGaslessTrades` calls.",
+                          "key": "cursor",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Unix timestamp in seconds, specifying the starting point of the time range filter. Only trades completed on or after this timestamp will be included in the response.",
+                          "key": "startTimestamp",
+                          "value": "<integer>"
+                        },
+                        {
+                          "description": "Unix timestamp in seconds, specifying the end point of the time range filter. Only trades completed on or before this timestamp will be included in the response.",
+                          "key": "endTimestamp",
+                          "value": "<integer>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"nextCursor\": \"<string>\",\n  \"trades\": [\n    {\n      \"appName\": \"<string>\",\n      \"blockNumber\": \"<string>\",\n      \"buyToken\": \"0xCC2fC8AC8b9c6B883e0C2e2BF25cAB2BDB53bCDf\",\n      \"buyAmount\": \"<string>\",\n      \"chainId\": \"<integer>\",\n      \"chainName\": \"<string>\",\n      \"fees\": {\n        \"integratorFee\": {\n          \"token\": \"0xD83F64B2B2b46f7aaed6A7fC6a6eD6b036Ef5A95\",\n          \"amount\": \"<string>\",\n          \"amountUsd\": \"<string>\"\n        },\n        \"zeroExFee\": {\n          \"token\": \"0x60C0D9eA932998AcD3bFD0975deaBDbD68B2b3aE\",\n          \"amount\": \"<string>\",\n          \"amountUsd\": \"<string>\"\n        }\n      },\n      \"gasUsed\": \"<string>\",\n      \"protocolVersion\": \"Settler\",\n      \"sellToken\": \"0xE625F9DcaeBA876D1CD4DdfD56D88A37DdaAF3Af\",\n      \"sellAmount\": \"<string>\",\n      \"slippageBps\": \"<string>\",\n      \"taker\": \"0x255dee702dD6ED5Fc665dBfd08329a79F8f59c0F\",\n      \"timestamp\": \"<integer>\",\n      \"tokens\": [\n        {\n          \"address\": \"0xCE6D4cEc5cab99A42faCaf500CB4Ccd3aF8Bfa0a\",\n          \"symbol\": \"<string>\"\n        },\n        {\n          \"address\": \"0xFb9dB8FCEcC7e1f62bf6BC70dFd204EeCacebd15\",\n          \"symbol\": \"<string>\"\n        }\n      ],\n      \"transactionHash\": \"<string>\",\n      \"volumeUsd\": \"<string>\",\n      \"zid\": \"<string>\",\n      \"service\": \"gasless\"\n    },\n    {\n      \"appName\": \"<string>\",\n      \"blockNumber\": \"<string>\",\n      \"buyToken\": \"0xeBdB7CDFD0974D6c855ecfFd37DeEaC063CB5f1F\",\n      \"buyAmount\": \"<string>\",\n      \"chainId\": \"<integer>\",\n      \"chainName\": \"<string>\",\n      \"fees\": {\n        \"integratorFee\": {\n          \"token\": \"0x0e222DcFdE8d7CcF7Cd7ccEE8E7F52f2eCcdcabb\",\n          \"amount\": \"<string>\",\n          \"amountUsd\": \"<string>\"\n        },\n        \"zeroExFee\": {\n          \"token\": \"0xeA2f55a171e1b93DdD24af45622ef2a7C5d0DEB0\",\n          \"amount\": \"<string>\",\n          \"amountUsd\": \"<string>\"\n        }\n      },\n      \"gasUsed\": \"<string>\",\n      \"protocolVersion\": \"Settler\",\n      \"sellToken\": \"0x900F3843fdbd5eCfcFEcA3eeeD0BcD27549EE53B\",\n      \"sellAmount\": \"<string>\",\n      \"slippageBps\": \"<string>\",\n      \"taker\": \"0xf9B38d2889EEec3d73FC8dE5cEBd028c213144D5\",\n      \"timestamp\": \"<integer>\",\n      \"tokens\": [\n        {\n          \"address\": \"0x3f27C8f931Bf60EfCAeB6ebb9FcC1638Bff6c9bc\",\n          \"symbol\": \"<string>\"\n        },\n        {\n          \"address\": \"0xc458dB7Edd81Ae85964F3aAbd808EfAf288d8bf0\",\n          \"symbol\": \"<string>\"\n        }\n      ],\n      \"transactionHash\": \"<string>\",\n      \"volumeUsd\": \"<string>\",\n      \"zid\": \"<string>\",\n      \"service\": \"gasless\"\n    }\n  ],\n  \"zid\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T00:25:45.000Z",
+                  "updatedAt": "2026-07-28T00:25:45.000Z",
+                  "uid": "35240-9f8fa2c7-8e1c-4ae7-b393-eb2f42086be0"
+                },
+                {
+                  "id": "765889ba-5fa7-4622-9ee9-932a9571c268",
+                  "name": "400 error response",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                        "key": "0x-api-key",
+                        "value": "<string>"
+                      },
+                      {
+                        "description": "(Required) API version",
+                        "key": "0x-version",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/trade-analytics/gasless?cursor=<string>&startTimestamp=<integer>&endTimestamp=<integer>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "trade-analytics",
+                        "gasless"
+                      ],
+                      "query": [
+                        {
+                          "description": "A pagination cursor used to fetch the next page of trades. It should be set to `null` for the initial request; otherwise, it should be the value of `nextCursor` that is returned from `getSwapTrades` or `getGaslessTrades` calls.",
+                          "key": "cursor",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Unix timestamp in seconds, specifying the starting point of the time range filter. Only trades completed on or after this timestamp will be included in the response.",
+                          "key": "startTimestamp",
+                          "value": "<integer>"
+                        },
+                        {
+                          "description": "Unix timestamp in seconds, specifying the end point of the time range filter. Only trades completed on or before this timestamp will be included in the response.",
+                          "key": "endTimestamp",
+                          "value": "<integer>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"name\": \"INPUT_INVALID\",\n  \"message\": \"<string>\",\n  \"data\": {\n    \"zid\": \"<string>\",\n    \"details\": [\n      {\n        \"field\": \"<string>\",\n        \"reason\": \"<string>\"\n      },\n      {\n        \"field\": \"<string>\",\n        \"reason\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-07-28T00:25:45.000Z",
+                  "updatedAt": "2026-07-28T00:25:45.000Z",
+                  "uid": "35240-765889ba-5fa7-4622-9ee9-932a9571c268"
+                },
+                {
+                  "id": "8b16c8c3-d634-47fa-9c0e-4e1f2c671003",
+                  "name": "500 error response",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                        "key": "0x-api-key",
+                        "value": "<string>"
+                      },
+                      {
+                        "description": "(Required) API version",
+                        "key": "0x-version",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/trade-analytics/gasless?cursor=<string>&startTimestamp=<integer>&endTimestamp=<integer>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "trade-analytics",
+                        "gasless"
+                      ],
+                      "query": [
+                        {
+                          "description": "A pagination cursor used to fetch the next page of trades. It should be set to `null` for the initial request; otherwise, it should be the value of `nextCursor` that is returned from `getSwapTrades` or `getGaslessTrades` calls.",
+                          "key": "cursor",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Unix timestamp in seconds, specifying the starting point of the time range filter. Only trades completed on or after this timestamp will be included in the response.",
+                          "key": "startTimestamp",
+                          "value": "<integer>"
+                        },
+                        {
+                          "description": "Unix timestamp in seconds, specifying the end point of the time range filter. Only trades completed on or before this timestamp will be included in the response.",
+                          "key": "endTimestamp",
+                          "value": "<integer>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"name\": \"INTERNAL_SERVER_ERROR\",\n  \"message\": \"<string>\",\n  \"data\": {\n    \"zid\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T00:25:45.000Z",
+                  "updatedAt": "2026-07-28T00:25:45.000Z",
+                  "uid": "35240-8b16c8c3-d634-47fa-9c0e-4e1f2c671003"
+                }
+              ],
+              "createdAt": "2026-07-28T00:25:45.000Z",
+              "updatedAt": "2026-07-28T00:25:45.000Z",
+              "uid": "35240-5d99a87f-9f75-4467-a81f-e66747c7a066"
+            }
+          ],
+          "id": "1e255aee-fc5a-4425-a21b-29a5e96fdae3",
+          "createdAt": "2026-07-28T00:25:45.000Z",
+          "updatedAt": "2026-07-28T00:25:45.000Z",
+          "uid": "35240-1e255aee-fc5a-4425-a21b-29a5e96fdae3"
+        }
+      ],
+      "id": "dc7fdf75-038a-4fbd-8383-93d0375bffe2",
+      "createdAt": "2026-07-28T00:25:45.000Z",
+      "updatedAt": "2026-07-28T00:25:45.000Z",
+      "uid": "35240-dc7fdf75-038a-4fbd-8383-93d0375bffe2"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.0x.org"
+    }
+  ]
+}

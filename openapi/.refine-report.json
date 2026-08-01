@@ -1,0 +1,22 @@
+{
+  "provider": "0x",
+  "sources": [
+    "0x-cross-chain-api-openapi.yml",
+    "0x-gasless-api-openapi.yml",
+    "0x-sources-api-openapi.yml",
+    "0x-swap-api-openapi.yml",
+    "0x-trade-analytics-api-openapi.yml"
+  ],
+  "outputs": [
+    "0x-cross-chain-api-openapi.yml",
+    "0x-gasless-api-openapi.yml",
+    "0x-sources-api-openapi.yml",
+    "0x-swap-api-openapi.yml",
+    "0x-trade-analytics-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

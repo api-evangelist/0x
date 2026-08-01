@@ -1,0 +1,1835 @@
+{
+  "info": {
+    "_postman_id": "96385963-790c-432e-a82c-acffa44d581e",
+    "name": "0x Cross-Chain API",
+    "description": "This is the official API reference for the latest 0x API (v2).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T00:25:38.000Z",
+    "updatedAt": "2026-07-28T00:25:39.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-96385963-790c-432e-a82c-acffa44d581e"
+  },
+  "item": [
+    {
+      "name": "cross-chain",
+      "item": [
+        {
+          "name": "quotes",
+          "item": [
+            {
+              "name": "stream",
+              "item": [
+                {
+                  "name": "Stream Cross-Chain Quotes",
+                  "id": "fb16ae10-6a86-4b22-9fe8-50cfad4f3192",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                        "key": "0x-api-key",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/cross-chain/quotes/stream?originChain=<string>&destinationChain=<string>&sellToken=<string>&buyToken=<string>&sellAmount=-964825429&originAddress=<string>&destinationAddress=<string>&gasPayer=<string>&slippageBps=100&excludedBridges=<string>&includedBridges=<string>&excludedSwapSources=<string>&feeBps=&feeRecipient=&feeToken=&maxNumQuotes=5",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "cross-chain",
+                        "quotes",
+                        "stream"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) The source chain from which the cross-chain swap will originate. Can be specified as chain ID or name. See [here](https://0x-docs.gitbook.io/0x-cross-chain-api-beta/developer-resources/supported-chains-and-providers) for the list of supported chains",
+                          "key": "originChain",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "(Required) The destination chain where tokens will be received after the cross-chain swap. Can be specified as chain ID or name. See [here](https://0x-docs.gitbook.io/0x-cross-chain-api-beta/developer-resources/supported-chains-and-providers) for the list of supported chains",
+                          "key": "destinationChain",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "(Required) The contract address of the token to sell on the origin chain. Format varies by chain type (EVM address for EVM/HyperCore chains, token mint address for Solana, base58check address for Tron)",
+                          "key": "sellToken",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "(Required) The contract address of the token to buy on the destination chain. Format varies by chain type (EVM address for EVM/HyperCore chains, token mint address for Solana, base58check address for Tron)",
+                          "key": "buyToken",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "(Required) The amount of `sellToken` (in `sellToken`'s base units) to sell on the origin chain",
+                          "key": "sellAmount",
+                          "value": "-964825429"
+                        },
+                        {
+                          "description": "(Required) The wallet address on the origin chain that holds the sellToken balance and will initiate the cross-chain transaction",
+                          "key": "originAddress",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The wallet address on the destination chain that will receive the buyToken. If not specified, defaults to originAddress on the destination chain",
+                          "key": "destinationAddress",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The Solana address that will pay for transaction fees when the origin chain is Solana. Only applicable for Solana origin chains",
+                          "key": "gasPayer",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The maximum acceptable slippage for each swap or bridge step of the cross-chain swap in basis points (100 = 1%)",
+                          "key": "slippageBps",
+                          "value": "100"
+                        },
+                        {
+                          "description": "Comma-separated list of bridge providers to exclude from routing",
+                          "key": "excludedBridges",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Comma-separated list of bridge providers to include in routing. Mutually exclusive with excludedBridges",
+                          "key": "includedBridges",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Comma-separated list of DEX sources to exclude from routing on both chains",
+                          "key": "excludedSwapSources",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The trading fee amounts in basis points to charge on the origin chain (supports single or comma-separated values). Must be used together with feeRecipient. When multiple values are provided, must match the length of feeRecipient. Note: integrator fee collection is not yet supported for Tron-originated routes.",
+                          "key": "feeBps",
+                          "value": ""
+                        },
+                        {
+                          "description": "The wallet addresses to receive trading fees on the origin chain (supports single or comma-separated values). Must be used together with feeBps. When multiple values are provided, must match the length of feeBps. Note: integrator fee collection is not yet supported for Tron-originated routes.",
+                          "key": "feeRecipient",
+                          "value": ""
+                        },
+                        {
+                          "description": "The token addresses for fee collection on the origin chain (supports single or comma-separated values). Must be the same as sellToken. When multiple values are provided, must match the length of feeBps. If omitted, defaults to sellToken. Note: integrator fee collection is not yet supported for Tron-originated routes.",
+                          "key": "feeToken",
+                          "value": ""
+                        },
+                        {
+                          "description": "The maximum number of cross-chain quotes to return, between 1 and 10. Each quote represents a different combination of bridges and DEXs",
+                          "key": "maxNumQuotes",
+                          "value": "5"
+                        }
+                      ]
+                    },
+                    "description": "Stream cross-chain quotes as they become available"
+                  },
+                  "response": [
+                    {
+                      "id": "09c3680d-5fe6-4cdc-a7ac-1dedb4f02be0",
+                      "name": "Successful response",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                            "key": "0x-api-key",
+                            "value": "<string>"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/cross-chain/quotes/stream?originChain=<string>&destinationChain=<string>&sellToken=<string>&buyToken=<string>&sellAmount=-964825429&originAddress=<string>&destinationAddress=<string>&gasPayer=<string>&slippageBps=100&excludedBridges=<string>&includedBridges=<string>&excludedSwapSources=<string>&feeBps=&feeRecipient=&feeToken=&maxNumQuotes=5",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "cross-chain",
+                            "quotes",
+                            "stream"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) The source chain from which the cross-chain swap will originate. Can be specified as chain ID or name. See [here](https://0x-docs.gitbook.io/0x-cross-chain-api-beta/developer-resources/supported-chains-and-providers) for the list of supported chains",
+                              "key": "originChain",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "(Required) The destination chain where tokens will be received after the cross-chain swap. Can be specified as chain ID or name. See [here](https://0x-docs.gitbook.io/0x-cross-chain-api-beta/developer-resources/supported-chains-and-providers) for the list of supported chains",
+                              "key": "destinationChain",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "(Required) The contract address of the token to sell on the origin chain. Format varies by chain type (EVM address for EVM/HyperCore chains, token mint address for Solana, base58check address for Tron)",
+                              "key": "sellToken",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "(Required) The contract address of the token to buy on the destination chain. Format varies by chain type (EVM address for EVM/HyperCore chains, token mint address for Solana, base58check address for Tron)",
+                              "key": "buyToken",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "(Required) The amount of `sellToken` (in `sellToken`'s base units) to sell on the origin chain",
+                              "key": "sellAmount",
+                              "value": "-964825429"
+                            },
+                            {
+                              "description": "(Required) The wallet address on the origin chain that holds the sellToken balance and will initiate the cross-chain transaction",
+                              "key": "originAddress",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "The wallet address on the destination chain that will receive the buyToken. If not specified, defaults to originAddress on the destination chain",
+                              "key": "destinationAddress",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "The Solana address that will pay for transaction fees when the origin chain is Solana. Only applicable for Solana origin chains",
+                              "key": "gasPayer",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "The maximum acceptable slippage for each swap or bridge step of the cross-chain swap in basis points (100 = 1%)",
+                              "key": "slippageBps",
+                              "value": "100"
+                            },
+                            {
+                              "description": "Comma-separated list of bridge providers to exclude from routing",
+                              "key": "excludedBridges",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Comma-separated list of bridge providers to include in routing. Mutually exclusive with excludedBridges",
+                              "key": "includedBridges",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Comma-separated list of DEX sources to exclude from routing on both chains",
+                              "key": "excludedSwapSources",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "The trading fee amounts in basis points to charge on the origin chain (supports single or comma-separated values). Must be used together with feeRecipient. When multiple values are provided, must match the length of feeRecipient. Note: integrator fee collection is not yet supported for Tron-originated routes.",
+                              "key": "feeBps",
+                              "value": ""
+                            },
+                            {
+                              "description": "The wallet addresses to receive trading fees on the origin chain (supports single or comma-separated values). Must be used together with feeBps. When multiple values are provided, must match the length of feeBps. Note: integrator fee collection is not yet supported for Tron-originated routes.",
+                              "key": "feeRecipient",
+                              "value": ""
+                            },
+                            {
+                              "description": "The token addresses for fee collection on the origin chain (supports single or comma-separated values). Must be the same as sellToken. When multiple values are provided, must match the length of feeBps. If omitted, defaults to sellToken. Note: integrator fee collection is not yet supported for Tron-originated routes.",
+                              "key": "feeToken",
+                              "value": ""
+                            },
+                            {
+                              "description": "The maximum number of cross-chain quotes to return, between 1 and 10. Each quote represents a different combination of bridges and DEXs",
+                              "key": "maxNumQuotes",
+                              "value": "5"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"zid\": \"<string>\",\n  \"event\": {\n    \"type\": \"quote\",\n    \"data\": {\n      \"quote\": {\n        \"sellAmount\": {\n          \"value\": \"<Error: Could not resolve allOf schema\"\n        },\n        \"buyAmount\": {\n          \"value\": \"<Error: Could not resolve allOf schema\"\n        },\n        \"minBuyAmount\": {\n          \"value\": \"<Error: Could not resolve allOf schema\"\n        },\n        \"fees\": {\n          \"integratorFee\": {\n            \"amount\": {\n              \"value\": \"<Error: Could not resolve allOf schema\"\n            },\n            \"token\": \"0xd6Ae8Dc3D7C8AD2bb0A5Ede37c981aF31d445C0f\",\n            \"type\": \"volume\",\n            \"chainId\": \"<number>\"\n          },\n          \"integratorFees\": [\n            {\n              \"amount\": {\n                \"value\": \"<Error: Could not resolve allOf schema\"\n              },\n              \"token\": \"0x288F4aD6def12fAf8ebdEC541cADecA410ca4FBf\",\n              \"type\": \"volume\",\n              \"chainId\": \"<number>\"\n            },\n            {\n              \"amount\": {\n                \"value\": \"<Error: Could not resolve allOf schema\"\n              },\n              \"token\": \"0xbF928BB61bfBa29C45a7118F8c49b8032DeA3864\",\n              \"type\": \"volume\",\n              \"chainId\": \"<number>\"\n            }\n          ],\n          \"zeroExFee\": {\n            \"amount\": {\n              \"value\": \"<Error: Could not resolve allOf schema\"\n            },\n            \"token\": \"0x6404EFA223D9A5A1aF5D7AB7FFC4fEe9db7EAfdF\",\n            \"type\": \"volume\"\n          },\n          \"bridgeNativeFee\": {\n            \"amount\": {\n              \"value\": \"<Error: Could not resolve allOf schema\"\n            },\n            \"token\": \"0x2C6CDdb07bC856Cd6AcC53f2A0c3dc7c8721F25B\",\n            \"type\": \"native\"\n          },\n          \"reimbursementFee\": {\n            \"amount\": {\n              \"value\": \"<Error: Could not resolve allOf schema\"\n            },\n            \"token\": \"0xf6082e4e5aea929Aa6A0895221aa1a02C37F8804\",\n            \"recipient\": \"0xDeec3d3ac35cd71A6D5dbfa68FBc156854BaA079\"\n          }\n        },\n        \"gasCosts\": {\n          \"chainType\": \"evm\",\n          \"gasPrice\": {\n            \"value\": \"<Error: Could not resolve allOf schema\"\n          },\n          \"gasLimit\": {\n            \"value\": \"<Error: Could not resolve allOf schema\"\n          },\n          \"totalNetworkFee\": {\n            \"value\": \"<Error: Could not resolve allOf schema\"\n          }\n        },\n        \"steps\": [\n          {\n            \"chainId\": \"<number>\",\n            \"sellToken\": \"0xb4450F9ED31D23e4d311B03bD33f8fa5E2e9E5E0\",\n            \"buyToken\": \"0xD9C4fB1DAFd7D0fDcbD1FC58D99C112FdC80a53b\",\n            \"amount\": {\n              \"value\": \"<Error: Could not resolve allOf schema\"\n            },\n            \"type\": \"wrap\"\n          },\n          {\n            \"chainId\": \"<number>\",\n            \"sellToken\": \"0x9faFFDfdDcE8Cd8Fb45eAbF6AbFfE6C1bC5aC6Fc\",\n            \"buyToken\": \"0x8DffFD1FBe5DdDB3Bca5dfdCbC3A5D05DaeCBB9F\",\n            \"amount\": {\n              \"value\": \"<Error: Could not resolve allOf schema\"\n            },\n            \"type\": \"wrap\"\n          }\n        ],\n        \"transaction\": {\n          \"chainType\": \"evm\",\n          \"details\": {\n            \"to\": \"0xeCcdA65B90500be646d9BA3fCFACd85a9067cFf1\",\n            \"data\": \"<string>\",\n            \"gas\": {\n              \"value\": \"<Error: Could not resolve allOf schema\"\n            },\n            \"gasPrice\": {\n              \"value\": \"<Error: Could not resolve allOf schema\"\n            },\n            \"value\": {\n              \"value\": \"<Error: Could not resolve allOf schema\"\n            }\n          }\n        },\n        \"estimatedTimeSeconds\": \"<number>\",\n        \"issues\": {\n          \"allowance\": {\n            \"actual\": {\n              \"value\": \"<Error: Could not resolve allOf schema\"\n            },\n            \"spender\": \"0xFd7Ef3d10329dAAD73EFFDF71E063bA7beaf8848\"\n          },\n          \"balance\": {\n            \"token\": \"0xA12ED63bB8FDfc87aaf3e71972e1FdcBa0E2CE9B\",\n            \"actual\": {\n              \"value\": \"<Error: Could not resolve allOf schema\"\n            },\n            \"expected\": {\n              \"value\": \"<Error: Could not resolve allOf schema\"\n            }\n          },\n          \"simulationIncomplete\": \"<boolean>\"\n        },\n        \"quoteId\": \"<string>\"\n      },\n      \"allowanceTarget\": \"<string>\"\n    }\n  }\n}",
+                      "createdAt": "2026-07-28T00:25:39.000Z",
+                      "updatedAt": "2026-07-28T00:25:39.000Z",
+                      "uid": "35240-09c3680d-5fe6-4cdc-a7ac-1dedb4f02be0"
+                    },
+                    {
+                      "id": "445a4cf8-c879-4d1d-ab61-3a01b8ed62ac",
+                      "name": "400 error response",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                            "key": "0x-api-key",
+                            "value": "<string>"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/cross-chain/quotes/stream?originChain=<string>&destinationChain=<string>&sellToken=<string>&buyToken=<string>&sellAmount=-964825429&originAddress=<string>&destinationAddress=<string>&gasPayer=<string>&slippageBps=100&excludedBridges=<string>&includedBridges=<string>&excludedSwapSources=<string>&feeBps=&feeRecipient=&feeToken=&maxNumQuotes=5",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "cross-chain",
+                            "quotes",
+                            "stream"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) The source chain from which the cross-chain swap will originate. Can be specified as chain ID or name. See [here](https://0x-docs.gitbook.io/0x-cross-chain-api-beta/developer-resources/supported-chains-and-providers) for the list of supported chains",
+                              "key": "originChain",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "(Required) The destination chain where tokens will be received after the cross-chain swap. Can be specified as chain ID or name. See [here](https://0x-docs.gitbook.io/0x-cross-chain-api-beta/developer-resources/supported-chains-and-providers) for the list of supported chains",
+                              "key": "destinationChain",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "(Required) The contract address of the token to sell on the origin chain. Format varies by chain type (EVM address for EVM/HyperCore chains, token mint address for Solana, base58check address for Tron)",
+                              "key": "sellToken",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "(Required) The contract address of the token to buy on the destination chain. Format varies by chain type (EVM address for EVM/HyperCore chains, token mint address for Solana, base58check address for Tron)",
+                              "key": "buyToken",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "(Required) The amount of `sellToken` (in `sellToken`'s base units) to sell on the origin chain",
+                              "key": "sellAmount",
+                              "value": "-964825429"
+                            },
+                            {
+                              "description": "(Required) The wallet address on the origin chain that holds the sellToken balance and will initiate the cross-chain transaction",
+                              "key": "originAddress",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "The wallet address on the destination chain that will receive the buyToken. If not specified, defaults to originAddress on the destination chain",
+                              "key": "destinationAddress",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "The Solana address that will pay for transaction fees when the origin chain is Solana. Only applicable for Solana origin chains",
+                              "key": "gasPayer",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "The maximum acceptable slippage for each swap or bridge step of the cross-chain swap in basis points (100 = 1%)",
+                              "key": "slippageBps",
+                              "value": "100"
+                            },
+                            {
+                              "description": "Comma-separated list of bridge providers to exclude from routing",
+                              "key": "excludedBridges",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Comma-separated list of bridge providers to include in routing. Mutually exclusive with excludedBridges",
+                              "key": "includedBridges",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Comma-separated list of DEX sources to exclude from routing on both chains",
+                              "key": "excludedSwapSources",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "The trading fee amounts in basis points to charge on the origin chain (supports single or comma-separated values). Must be used together with feeRecipient. When multiple values are provided, must match the length of feeRecipient. Note: integrator fee collection is not yet supported for Tron-originated routes.",
+                              "key": "feeBps",
+                              "value": ""
+                            },
+                            {
+                              "description": "The wallet addresses to receive trading fees on the origin chain (supports single or comma-separated values). Must be used together with feeBps. When multiple values are provided, must match the length of feeBps. Note: integrator fee collection is not yet supported for Tron-originated routes.",
+                              "key": "feeRecipient",
+                              "value": ""
+                            },
+                            {
+                              "description": "The token addresses for fee collection on the origin chain (supports single or comma-separated values). Must be the same as sellToken. When multiple values are provided, must match the length of feeBps. If omitted, defaults to sellToken. Note: integrator fee collection is not yet supported for Tron-originated routes.",
+                              "key": "feeToken",
+                              "value": ""
+                            },
+                            {
+                              "description": "The maximum number of cross-chain quotes to return, between 1 and 10. Each quote represents a different combination of bridges and DEXs",
+                              "key": "maxNumQuotes",
+                              "value": "5"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"name\": \"INPUT_INVALID\",\n  \"message\": \"<string>\",\n  \"data\": {\n    \"zid\": \"<string>\",\n    \"details\": [\n      {\n        \"field\": \"<string>\",\n        \"reason\": \"<string>\"\n      },\n      {\n        \"field\": \"<string>\",\n        \"reason\": \"<string>\"\n      }\n    ]\n  }\n}",
+                      "createdAt": "2026-07-28T00:25:39.000Z",
+                      "updatedAt": "2026-07-28T00:25:39.000Z",
+                      "uid": "35240-445a4cf8-c879-4d1d-ab61-3a01b8ed62ac"
+                    },
+                    {
+                      "id": "dcc260e4-d6e8-4b07-ba73-6f3c5ffdb105",
+                      "name": "500 error response",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                            "key": "0x-api-key",
+                            "value": "<string>"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/cross-chain/quotes/stream?originChain=<string>&destinationChain=<string>&sellToken=<string>&buyToken=<string>&sellAmount=-964825429&originAddress=<string>&destinationAddress=<string>&gasPayer=<string>&slippageBps=100&excludedBridges=<string>&includedBridges=<string>&excludedSwapSources=<string>&feeBps=&feeRecipient=&feeToken=&maxNumQuotes=5",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "cross-chain",
+                            "quotes",
+                            "stream"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) The source chain from which the cross-chain swap will originate. Can be specified as chain ID or name. See [here](https://0x-docs.gitbook.io/0x-cross-chain-api-beta/developer-resources/supported-chains-and-providers) for the list of supported chains",
+                              "key": "originChain",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "(Required) The destination chain where tokens will be received after the cross-chain swap. Can be specified as chain ID or name. See [here](https://0x-docs.gitbook.io/0x-cross-chain-api-beta/developer-resources/supported-chains-and-providers) for the list of supported chains",
+                              "key": "destinationChain",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "(Required) The contract address of the token to sell on the origin chain. Format varies by chain type (EVM address for EVM/HyperCore chains, token mint address for Solana, base58check address for Tron)",
+                              "key": "sellToken",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "(Required) The contract address of the token to buy on the destination chain. Format varies by chain type (EVM address for EVM/HyperCore chains, token mint address for Solana, base58check address for Tron)",
+                              "key": "buyToken",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "(Required) The amount of `sellToken` (in `sellToken`'s base units) to sell on the origin chain",
+                              "key": "sellAmount",
+                              "value": "-964825429"
+                            },
+                            {
+                              "description": "(Required) The wallet address on the origin chain that holds the sellToken balance and will initiate the cross-chain transaction",
+                              "key": "originAddress",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "The wallet address on the destination chain that will receive the buyToken. If not specified, defaults to originAddress on the destination chain",
+                              "key": "destinationAddress",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "The Solana address that will pay for transaction fees when the origin chain is Solana. Only applicable for Solana origin chains",
+                              "key": "gasPayer",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "The maximum acceptable slippage for each swap or bridge step of the cross-chain swap in basis points (100 = 1%)",
+                              "key": "slippageBps",
+                              "value": "100"
+                            },
+                            {
+                              "description": "Comma-separated list of bridge providers to exclude from routing",
+                              "key": "excludedBridges",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Comma-separated list of bridge providers to include in routing. Mutually exclusive with excludedBridges",
+                              "key": "includedBridges",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Comma-separated list of DEX sources to exclude from routing on both chains",
+                              "key": "excludedSwapSources",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "The trading fee amounts in basis points to charge on the origin chain (supports single or comma-separated values). Must be used together with feeRecipient. When multiple values are provided, must match the length of feeRecipient. Note: integrator fee collection is not yet supported for Tron-originated routes.",
+                              "key": "feeBps",
+                              "value": ""
+                            },
+                            {
+                              "description": "The wallet addresses to receive trading fees on the origin chain (supports single or comma-separated values). Must be used together with feeBps. When multiple values are provided, must match the length of feeBps. Note: integrator fee collection is not yet supported for Tron-originated routes.",
+                              "key": "feeRecipient",
+                              "value": ""
+                            },
+                            {
+                              "description": "The token addresses for fee collection on the origin chain (supports single or comma-separated values). Must be the same as sellToken. When multiple values are provided, must match the length of feeBps. If omitted, defaults to sellToken. Note: integrator fee collection is not yet supported for Tron-originated routes.",
+                              "key": "feeToken",
+                              "value": ""
+                            },
+                            {
+                              "description": "The maximum number of cross-chain quotes to return, between 1 and 10. Each quote represents a different combination of bridges and DEXs",
+                              "key": "maxNumQuotes",
+                              "value": "5"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"name\": \"INTERNAL_SERVER_ERROR\",\n  \"message\": \"<string>\",\n  \"data\": {\n    \"zid\": \"<string>\"\n  }\n}",
+                      "createdAt": "2026-07-28T00:25:39.000Z",
+                      "updatedAt": "2026-07-28T00:25:39.000Z",
+                      "uid": "35240-dcc260e4-d6e8-4b07-ba73-6f3c5ffdb105"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T00:25:39.000Z",
+                  "updatedAt": "2026-07-28T00:25:39.000Z",
+                  "uid": "35240-fb16ae10-6a86-4b22-9fe8-50cfad4f3192"
+                }
+              ],
+              "id": "420f6ac6-224a-43f1-9632-873feb3c7375",
+              "createdAt": "2026-07-28T00:25:39.000Z",
+              "updatedAt": "2026-07-28T00:25:39.000Z",
+              "uid": "35240-420f6ac6-224a-43f1-9632-873feb3c7375"
+            },
+            {
+              "name": "Get Cross-Chain Quotes",
+              "id": "a1b92843-214b-4a2a-9af8-e06df5018f0e",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                    "key": "0x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/cross-chain/quotes?originChain=<string>&destinationChain=<string>&sellToken=<string>&buyToken=<string>&sellAmount=-964825429&originAddress=<string>&destinationAddress=<string>&gasPayer=<string>&slippageBps=100&excludedBridges=<string>&includedBridges=<string>&excludedSwapSources=<string>&feeBps=&feeRecipient=&feeToken=&sortQuotesBy=speed&maxNumQuotes=3",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "cross-chain",
+                    "quotes"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The source chain from which the cross-chain swap will originate. Can be specified as chain ID or name. See [here](https://0x-docs.gitbook.io/0x-cross-chain-api-beta/developer-resources/supported-chains-and-providers) for the list of supported chains",
+                      "key": "originChain",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "(Required) The destination chain where tokens will be received after the cross-chain swap. Can be specified as chain ID or name. See [here](https://0x-docs.gitbook.io/0x-cross-chain-api-beta/developer-resources/supported-chains-and-providers) for the list of supported chains",
+                      "key": "destinationChain",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "(Required) The contract address of the token to sell on the origin chain. Format varies by chain type (EVM address for EVM/HyperCore chains, token mint address for Solana, base58check address for Tron)",
+                      "key": "sellToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "(Required) The contract address of the token to buy on the destination chain. Format varies by chain type (EVM address for EVM/HyperCore chains, token mint address for Solana, base58check address for Tron)",
+                      "key": "buyToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "(Required) The amount of `sellToken` (in `sellToken`'s base units) to sell on the origin chain",
+                      "key": "sellAmount",
+                      "value": "-964825429"
+                    },
+                    {
+                      "description": "(Required) The wallet address on the origin chain that holds the sellToken balance and will initiate the cross-chain transaction",
+                      "key": "originAddress",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The wallet address on the destination chain that will receive the buyToken. If not specified, defaults to originAddress on the destination chain",
+                      "key": "destinationAddress",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The Solana address that will pay for transaction fees when the origin chain is Solana. Only applicable for Solana origin chains",
+                      "key": "gasPayer",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The maximum acceptable slippage for each swap or bridge step of the cross-chain swap in basis points (100 = 1%)",
+                      "key": "slippageBps",
+                      "value": "100"
+                    },
+                    {
+                      "description": "Comma-separated list of bridge providers to exclude from routing",
+                      "key": "excludedBridges",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Comma-separated list of bridge providers to include in routing. Mutually exclusive with excludedBridges",
+                      "key": "includedBridges",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Comma-separated list of DEX sources to exclude from routing on both chains",
+                      "key": "excludedSwapSources",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The trading fee amounts in basis points to charge on the origin chain (supports single or comma-separated values). Must be used together with feeRecipient. When multiple values are provided, must match the length of feeRecipient. Note: integrator fee collection is not yet supported for Tron-originated routes.",
+                      "key": "feeBps",
+                      "value": ""
+                    },
+                    {
+                      "description": "The wallet addresses to receive trading fees on the origin chain (supports single or comma-separated values). Must be used together with feeBps. When multiple values are provided, must match the length of feeBps. Note: integrator fee collection is not yet supported for Tron-originated routes.",
+                      "key": "feeRecipient",
+                      "value": ""
+                    },
+                    {
+                      "description": "The token addresses for fee collection on the origin chain (supports single or comma-separated values). Must be the same as sellToken. When multiple values are provided, must match the length of feeBps. If omitted, defaults to sellToken. Note: integrator fee collection is not yet supported for Tron-originated routes.",
+                      "key": "feeToken",
+                      "value": ""
+                    },
+                    {
+                      "description": "(Required) How to sort the returned quotes - either by speed (fastest execution time) or price (best exchange rate)",
+                      "key": "sortQuotesBy",
+                      "value": "speed"
+                    },
+                    {
+                      "description": "The maximum number of cross-chain quotes to return, between 1 and 10. Each quote represents a different combination of bridges and DEXs",
+                      "key": "maxNumQuotes",
+                      "value": "3"
+                    }
+                  ]
+                },
+                "description": "Get the quotes for a cross chain swap"
+              },
+              "response": [
+                {
+                  "id": "72ea2cb2-8ecc-4e28-86bd-471b1cb16a3c",
+                  "name": "Successful response",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                        "key": "0x-api-key",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/cross-chain/quotes?originChain=<string>&destinationChain=<string>&sellToken=<string>&buyToken=<string>&sellAmount=-964825429&originAddress=<string>&destinationAddress=<string>&gasPayer=<string>&slippageBps=100&excludedBridges=<string>&includedBridges=<string>&excludedSwapSources=<string>&feeBps=&feeRecipient=&feeToken=&sortQuotesBy=speed&maxNumQuotes=3",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "cross-chain",
+                        "quotes"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) The source chain from which the cross-chain swap will originate. Can be specified as chain ID or name. See [here](https://0x-docs.gitbook.io/0x-cross-chain-api-beta/developer-resources/supported-chains-and-providers) for the list of supported chains",
+                          "key": "originChain",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "(Required) The destination chain where tokens will be received after the cross-chain swap. Can be specified as chain ID or name. See [here](https://0x-docs.gitbook.io/0x-cross-chain-api-beta/developer-resources/supported-chains-and-providers) for the list of supported chains",
+                          "key": "destinationChain",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "(Required) The contract address of the token to sell on the origin chain. Format varies by chain type (EVM address for EVM/HyperCore chains, token mint address for Solana, base58check address for Tron)",
+                          "key": "sellToken",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "(Required) The contract address of the token to buy on the destination chain. Format varies by chain type (EVM address for EVM/HyperCore chains, token mint address for Solana, base58check address for Tron)",
+                          "key": "buyToken",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "(Required) The amount of `sellToken` (in `sellToken`'s base units) to sell on the origin chain",
+                          "key": "sellAmount",
+                          "value": "-964825429"
+                        },
+                        {
+                          "description": "(Required) The wallet address on the origin chain that holds the sellToken balance and will initiate the cross-chain transaction",
+                          "key": "originAddress",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The wallet address on the destination chain that will receive the buyToken. If not specified, defaults to originAddress on the destination chain",
+                          "key": "destinationAddress",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The Solana address that will pay for transaction fees when the origin chain is Solana. Only applicable for Solana origin chains",
+                          "key": "gasPayer",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The maximum acceptable slippage for each swap or bridge step of the cross-chain swap in basis points (100 = 1%)",
+                          "key": "slippageBps",
+                          "value": "100"
+                        },
+                        {
+                          "description": "Comma-separated list of bridge providers to exclude from routing",
+                          "key": "excludedBridges",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Comma-separated list of bridge providers to include in routing. Mutually exclusive with excludedBridges",
+                          "key": "includedBridges",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Comma-separated list of DEX sources to exclude from routing on both chains",
+                          "key": "excludedSwapSources",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The trading fee amounts in basis points to charge on the origin chain (supports single or comma-separated values). Must be used together with feeRecipient. When multiple values are provided, must match the length of feeRecipient. Note: integrator fee collection is not yet supported for Tron-originated routes.",
+                          "key": "feeBps",
+                          "value": ""
+                        },
+                        {
+                          "description": "The wallet addresses to receive trading fees on the origin chain (supports single or comma-separated values). Must be used together with feeBps. When multiple values are provided, must match the length of feeBps. Note: integrator fee collection is not yet supported for Tron-originated routes.",
+                          "key": "feeRecipient",
+                          "value": ""
+                        },
+                        {
+                          "description": "The token addresses for fee collection on the origin chain (supports single or comma-separated values). Must be the same as sellToken. When multiple values are provided, must match the length of feeBps. If omitted, defaults to sellToken. Note: integrator fee collection is not yet supported for Tron-originated routes.",
+                          "key": "feeToken",
+                          "value": ""
+                        },
+                        {
+                          "description": "(Required) How to sort the returned quotes - either by speed (fastest execution time) or price (best exchange rate)",
+                          "key": "sortQuotesBy",
+                          "value": "speed"
+                        },
+                        {
+                          "description": "The maximum number of cross-chain quotes to return, between 1 and 10. Each quote represents a different combination of bridges and DEXs",
+                          "key": "maxNumQuotes",
+                          "value": "3"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"liquidityAvailable\": true,\n  \"allowanceTarget\": \"0xEF62f9FAF6CeD06b4AB04bC22C7a90aaD12db89f\",\n  \"originChainId\": \"<number>\",\n  \"originChain\": \"<string>\",\n  \"destinationChainId\": \"<number>\",\n  \"destinationChain\": \"<string>\",\n  \"sellToken\": \"0x5E81cc5Da35eAf185D4aEe9Db2a5cf4a76EF5E37\",\n  \"buyToken\": \"0x890339C7C9c3B9dd34fa77389F0C3Db4dcACA798\",\n  \"issues\": {\n    \"allowance\": {\n      \"actual\": {\n        \"value\": \"<Error: Could not resolve allOf schema\"\n      },\n      \"spender\": \"0x9B14A8bE03Aa81dbFED4CA9ab4dee8Cb51edBe4E\"\n    },\n    \"balance\": {\n      \"token\": \"0xF4f5AeC401955e4ED10679EE36dd69F6Be3f84Bd\",\n      \"actual\": {\n        \"value\": \"<Error: Could not resolve allOf schema\"\n      },\n      \"expected\": {\n        \"value\": \"<Error: Could not resolve allOf schema\"\n      }\n    },\n    \"simulationIncomplete\": \"<boolean>\",\n    \"invalidSwapSourcesPassed\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"invalidBridgesPassed\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"zid\": \"<string>\",\n  \"quotes\": [\n    {\n      \"sellAmount\": {\n        \"value\": \"<Error: Could not resolve allOf schema\"\n      },\n      \"buyAmount\": {\n        \"value\": \"<Error: Could not resolve allOf schema\"\n      },\n      \"minBuyAmount\": {\n        \"value\": \"<Error: Could not resolve allOf schema\"\n      },\n      \"fees\": {\n        \"integratorFee\": {\n          \"amount\": {\n            \"value\": \"<Error: Could not resolve allOf schema\"\n          },\n          \"token\": \"0xE477f0CB3acc5bB852a9C8f3eA82a4D24AeBdD75\",\n          \"type\": \"volume\",\n          \"chainId\": \"<number>\"\n        },\n        \"integratorFees\": [\n          {\n            \"amount\": {\n              \"value\": \"<Error: Could not resolve allOf schema\"\n            },\n            \"token\": \"0xECDFc3de48beAA839b91DbdA3df1faA07a6DD02A\",\n            \"type\": \"volume\",\n            \"chainId\": \"<number>\"\n          },\n          {\n            \"amount\": {\n              \"value\": \"<Error: Could not resolve allOf schema\"\n            },\n            \"token\": \"0x35a9Df1eFABe2fCe11DdC15d97bf66273736Fbea\",\n            \"type\": \"volume\",\n            \"chainId\": \"<number>\"\n          }\n        ],\n        \"zeroExFee\": {\n          \"amount\": {\n            \"value\": \"<Error: Could not resolve allOf schema\"\n          },\n          \"token\": \"0xc969B114b668A7FEfd3CA5daEfADdbDa17cBE88f\",\n          \"type\": \"volume\"\n        },\n        \"bridgeNativeFee\": {\n          \"amount\": {\n            \"value\": \"<Error: Could not resolve allOf schema\"\n          },\n          \"token\": \"0xCb50d3f8dCAD84c8C850D2bCFd33E3AeBD8Ae8C0\",\n          \"type\": \"native\"\n        },\n        \"reimbursementFee\": {\n          \"amount\": {\n            \"value\": \"<Error: Could not resolve allOf schema\"\n          },\n          \"token\": \"0xF4cB7A7af955c3b2D577fE06DB0D693187Ab8516\",\n          \"recipient\": \"0xBfeB6cD0ADD30f36DaE7337BEAFcbb60c5AA7a5A\"\n        }\n      },\n      \"gasCosts\": {\n        \"chainType\": \"evm\",\n        \"gasPrice\": {\n          \"value\": \"<Error: Could not resolve allOf schema\"\n        },\n        \"gasLimit\": {\n          \"value\": \"<Error: Could not resolve allOf schema\"\n        },\n        \"totalNetworkFee\": {\n          \"value\": \"<Error: Could not resolve allOf schema\"\n        }\n      },\n      \"steps\": [\n        {\n          \"chainId\": \"<number>\",\n          \"sellToken\": \"0x50d805c1c040F6f97Cb04793F373c4091CdD1cCB\",\n          \"buyToken\": \"0xB60BeCcB89C03c05FF186D78a4a6afccb78fb1fA\",\n          \"amount\": {\n            \"value\": \"<Error: Could not resolve allOf schema\"\n          },\n          \"type\": \"wrap\"\n        },\n        {\n          \"chainId\": \"<number>\",\n          \"sellToken\": \"0x6B53fE8c0cB50E38DAADeC9E28b89a462DaC0c3C\",\n          \"buyToken\": \"0xeFADEFb7E5FcAb841963BaEa0a0fEB7b430341c1\",\n          \"amount\": {\n            \"value\": \"<Error: Could not resolve allOf schema\"\n          },\n          \"type\": \"wrap\"\n        }\n      ],\n      \"transaction\": {\n        \"chainType\": \"evm\",\n        \"details\": {\n          \"to\": \"0x9d5D1Bf0A0De17fdb976aB9d3D536cC5123E0D7c\",\n          \"data\": \"<string>\",\n          \"gas\": {\n            \"value\": \"<Error: Could not resolve allOf schema\"\n          },\n          \"gasPrice\": {\n            \"value\": \"<Error: Could not resolve allOf schema\"\n          },\n          \"value\": {\n            \"value\": \"<Error: Could not resolve allOf schema\"\n          }\n        }\n      },\n      \"estimatedTimeSeconds\": \"<number>\",\n      \"issues\": {\n        \"allowance\": {\n          \"actual\": {\n            \"value\": \"<Error: Could not resolve allOf schema\"\n          },\n          \"spender\": \"0xc4e8Bf8bF4cD2cBB7dC65b60dA8e28c1D3688Ef7\"\n        },\n        \"balance\": {\n          \"token\": \"0x6cC3e5Ff1D1eaC57e0dFEdeF7BEA243A7812EB25\",\n          \"actual\": {\n            \"value\": \"<Error: Could not resolve allOf schema\"\n          },\n          \"expected\": {\n            \"value\": \"<Error: Could not resolve allOf schema\"\n          }\n        },\n        \"simulationIncomplete\": \"<boolean>\"\n      },\n      \"quoteId\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T00:25:39.000Z",
+                  "updatedAt": "2026-07-28T00:25:39.000Z",
+                  "uid": "35240-72ea2cb2-8ecc-4e28-86bd-471b1cb16a3c"
+                },
+                {
+                  "id": "c677e61e-522b-4655-8ecd-56be3c81ec0d",
+                  "name": "400 error response",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                        "key": "0x-api-key",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/cross-chain/quotes?originChain=<string>&destinationChain=<string>&sellToken=<string>&buyToken=<string>&sellAmount=-964825429&originAddress=<string>&destinationAddress=<string>&gasPayer=<string>&slippageBps=100&excludedBridges=<string>&includedBridges=<string>&excludedSwapSources=<string>&feeBps=&feeRecipient=&feeToken=&sortQuotesBy=speed&maxNumQuotes=3",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "cross-chain",
+                        "quotes"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) The source chain from which the cross-chain swap will originate. Can be specified as chain ID or name. See [here](https://0x-docs.gitbook.io/0x-cross-chain-api-beta/developer-resources/supported-chains-and-providers) for the list of supported chains",
+                          "key": "originChain",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "(Required) The destination chain where tokens will be received after the cross-chain swap. Can be specified as chain ID or name. See [here](https://0x-docs.gitbook.io/0x-cross-chain-api-beta/developer-resources/supported-chains-and-providers) for the list of supported chains",
+                          "key": "destinationChain",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "(Required) The contract address of the token to sell on the origin chain. Format varies by chain type (EVM address for EVM/HyperCore chains, token mint address for Solana, base58check address for Tron)",
+                          "key": "sellToken",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "(Required) The contract address of the token to buy on the destination chain. Format varies by chain type (EVM address for EVM/HyperCore chains, token mint address for Solana, base58check address for Tron)",
+                          "key": "buyToken",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "(Required) The amount of `sellToken` (in `sellToken`'s base units) to sell on the origin chain",
+                          "key": "sellAmount",
+                          "value": "-964825429"
+                        },
+                        {
+                          "description": "(Required) The wallet address on the origin chain that holds the sellToken balance and will initiate the cross-chain transaction",
+                          "key": "originAddress",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The wallet address on the destination chain that will receive the buyToken. If not specified, defaults to originAddress on the destination chain",
+                          "key": "destinationAddress",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The Solana address that will pay for transaction fees when the origin chain is Solana. Only applicable for Solana origin chains",
+                          "key": "gasPayer",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The maximum acceptable slippage for each swap or bridge step of the cross-chain swap in basis points (100 = 1%)",
+                          "key": "slippageBps",
+                          "value": "100"
+                        },
+                        {
+                          "description": "Comma-separated list of bridge providers to exclude from routing",
+                          "key": "excludedBridges",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Comma-separated list of bridge providers to include in routing. Mutually exclusive with excludedBridges",
+                          "key": "includedBridges",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Comma-separated list of DEX sources to exclude from routing on both chains",
+                          "key": "excludedSwapSources",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The trading fee amounts in basis points to charge on the origin chain (supports single or comma-separated values). Must be used together with feeRecipient. When multiple values are provided, must match the length of feeRecipient. Note: integrator fee collection is not yet supported for Tron-originated routes.",
+                          "key": "feeBps",
+                          "value": ""
+                        },
+                        {
+                          "description": "The wallet addresses to receive trading fees on the origin chain (supports single or comma-separated values). Must be used together with feeBps. When multiple values are provided, must match the length of feeBps. Note: integrator fee collection is not yet supported for Tron-originated routes.",
+                          "key": "feeRecipient",
+                          "value": ""
+                        },
+                        {
+                          "description": "The token addresses for fee collection on the origin chain (supports single or comma-separated values). Must be the same as sellToken. When multiple values are provided, must match the length of feeBps. If omitted, defaults to sellToken. Note: integrator fee collection is not yet supported for Tron-originated routes.",
+                          "key": "feeToken",
+                          "value": ""
+                        },
+                        {
+                          "description": "(Required) How to sort the returned quotes - either by speed (fastest execution time) or price (best exchange rate)",
+                          "key": "sortQuotesBy",
+                          "value": "speed"
+                        },
+                        {
+                          "description": "The maximum number of cross-chain quotes to return, between 1 and 10. Each quote represents a different combination of bridges and DEXs",
+                          "key": "maxNumQuotes",
+                          "value": "3"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"name\": \"INPUT_INVALID\",\n  \"message\": \"<string>\",\n  \"data\": {\n    \"zid\": \"<string>\",\n    \"details\": [\n      {\n        \"field\": \"<string>\",\n        \"reason\": \"<string>\"\n      },\n      {\n        \"field\": \"<string>\",\n        \"reason\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-07-28T00:25:39.000Z",
+                  "updatedAt": "2026-07-28T00:25:39.000Z",
+                  "uid": "35240-c677e61e-522b-4655-8ecd-56be3c81ec0d"
+                },
+                {
+                  "id": "6c7c1487-56b1-4879-95b1-a5cc1b7fe79b",
+                  "name": "500 error response",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                        "key": "0x-api-key",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/cross-chain/quotes?originChain=<string>&destinationChain=<string>&sellToken=<string>&buyToken=<string>&sellAmount=-964825429&originAddress=<string>&destinationAddress=<string>&gasPayer=<string>&slippageBps=100&excludedBridges=<string>&includedBridges=<string>&excludedSwapSources=<string>&feeBps=&feeRecipient=&feeToken=&sortQuotesBy=speed&maxNumQuotes=3",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "cross-chain",
+                        "quotes"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) The source chain from which the cross-chain swap will originate. Can be specified as chain ID or name. See [here](https://0x-docs.gitbook.io/0x-cross-chain-api-beta/developer-resources/supported-chains-and-providers) for the list of supported chains",
+                          "key": "originChain",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "(Required) The destination chain where tokens will be received after the cross-chain swap. Can be specified as chain ID or name. See [here](https://0x-docs.gitbook.io/0x-cross-chain-api-beta/developer-resources/supported-chains-and-providers) for the list of supported chains",
+                          "key": "destinationChain",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "(Required) The contract address of the token to sell on the origin chain. Format varies by chain type (EVM address for EVM/HyperCore chains, token mint address for Solana, base58check address for Tron)",
+                          "key": "sellToken",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "(Required) The contract address of the token to buy on the destination chain. Format varies by chain type (EVM address for EVM/HyperCore chains, token mint address for Solana, base58check address for Tron)",
+                          "key": "buyToken",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "(Required) The amount of `sellToken` (in `sellToken`'s base units) to sell on the origin chain",
+                          "key": "sellAmount",
+                          "value": "-964825429"
+                        },
+                        {
+                          "description": "(Required) The wallet address on the origin chain that holds the sellToken balance and will initiate the cross-chain transaction",
+                          "key": "originAddress",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The wallet address on the destination chain that will receive the buyToken. If not specified, defaults to originAddress on the destination chain",
+                          "key": "destinationAddress",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The Solana address that will pay for transaction fees when the origin chain is Solana. Only applicable for Solana origin chains",
+                          "key": "gasPayer",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The maximum acceptable slippage for each swap or bridge step of the cross-chain swap in basis points (100 = 1%)",
+                          "key": "slippageBps",
+                          "value": "100"
+                        },
+                        {
+                          "description": "Comma-separated list of bridge providers to exclude from routing",
+                          "key": "excludedBridges",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Comma-separated list of bridge providers to include in routing. Mutually exclusive with excludedBridges",
+                          "key": "includedBridges",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Comma-separated list of DEX sources to exclude from routing on both chains",
+                          "key": "excludedSwapSources",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The trading fee amounts in basis points to charge on the origin chain (supports single or comma-separated values). Must be used together with feeRecipient. When multiple values are provided, must match the length of feeRecipient. Note: integrator fee collection is not yet supported for Tron-originated routes.",
+                          "key": "feeBps",
+                          "value": ""
+                        },
+                        {
+                          "description": "The wallet addresses to receive trading fees on the origin chain (supports single or comma-separated values). Must be used together with feeBps. When multiple values are provided, must match the length of feeBps. Note: integrator fee collection is not yet supported for Tron-originated routes.",
+                          "key": "feeRecipient",
+                          "value": ""
+                        },
+                        {
+                          "description": "The token addresses for fee collection on the origin chain (supports single or comma-separated values). Must be the same as sellToken. When multiple values are provided, must match the length of feeBps. If omitted, defaults to sellToken. Note: integrator fee collection is not yet supported for Tron-originated routes.",
+                          "key": "feeToken",
+                          "value": ""
+                        },
+                        {
+                          "description": "(Required) How to sort the returned quotes - either by speed (fastest execution time) or price (best exchange rate)",
+                          "key": "sortQuotesBy",
+                          "value": "speed"
+                        },
+                        {
+                          "description": "The maximum number of cross-chain quotes to return, between 1 and 10. Each quote represents a different combination of bridges and DEXs",
+                          "key": "maxNumQuotes",
+                          "value": "3"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"name\": \"INTERNAL_SERVER_ERROR\",\n  \"message\": \"<string>\",\n  \"data\": {\n    \"zid\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T00:25:39.000Z",
+                  "updatedAt": "2026-07-28T00:25:39.000Z",
+                  "uid": "35240-6c7c1487-56b1-4879-95b1-a5cc1b7fe79b"
+                }
+              ],
+              "createdAt": "2026-07-28T00:25:39.000Z",
+              "updatedAt": "2026-07-28T00:25:39.000Z",
+              "uid": "35240-a1b92843-214b-4a2a-9af8-e06df5018f0e"
+            }
+          ],
+          "id": "2e6aef72-faab-407a-aa17-6dbbc8b8945d",
+          "createdAt": "2026-07-28T00:25:39.000Z",
+          "updatedAt": "2026-07-28T00:25:39.000Z",
+          "uid": "35240-2e6aef72-faab-407a-aa17-6dbbc8b8945d"
+        },
+        {
+          "name": "status",
+          "item": [
+            {
+              "name": "Get Gasless Trade Status",
+              "id": "4111ecea-5daf-4980-9081-a3532fc42510",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                    "key": "0x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/cross-chain/status?originChain=<string>&originTxHash=<string>&quoteId=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "cross-chain",
+                    "status"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The origin chain where the cross-chain transaction was initiated",
+                      "key": "originChain",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "(Required) The transaction hash on the origin chain to track. Format varies by chain type (32-byte hex for EVM/HyperCore, base58 signature for Solana, 64-char hex for Tron)",
+                      "key": "originTxHash",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The quote ID associated with the cross-chain transaction",
+                      "key": "quoteId",
+                      "value": "<string>"
+                    }
+                  ]
+                },
+                "description": "Get the status of a cross chain transaction"
+              },
+              "response": [
+                {
+                  "id": "a67884ad-311f-44ab-b20a-b8c34f693381",
+                  "name": "Successful response",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                        "key": "0x-api-key",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/cross-chain/status?originChain=<string>&originTxHash=<string>&quoteId=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "cross-chain",
+                        "status"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) The origin chain where the cross-chain transaction was initiated",
+                          "key": "originChain",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "(Required) The transaction hash on the origin chain to track. Format varies by chain type (32-byte hex for EVM/HyperCore, base58 signature for Solana, 64-char hex for Tron)",
+                          "key": "originTxHash",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The quote ID associated with the cross-chain transaction",
+                          "key": "quoteId",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"status\": \"bridge_pending\",\n  \"steps\": [\n    {\n      \"chainId\": \"<number>\",\n      \"sellToken\": \"0x5E7921313442E8D3f07bb7CeF9bAe1a4Ad0a6aEf\",\n      \"buyToken\": \"0x1A2284dE5Ec3e9B83d4AE3c19F9bB2ECd1D37FfF\",\n      \"amount\": {\n        \"value\": \"<Error: Could not resolve allOf schema\"\n      },\n      \"transactions\": [\n        {\n          \"chainId\": \"<number>\",\n          \"chain\": \"<string>\",\n          \"txHash\": \"<string>\",\n          \"timestamp\": \"<integer>\"\n        },\n        {\n          \"chainId\": \"<number>\",\n          \"chain\": \"<string>\",\n          \"txHash\": \"<string>\",\n          \"timestamp\": \"<integer>\"\n        }\n      ],\n      \"type\": \"wrap\"\n    },\n    {\n      \"chainId\": \"<number>\",\n      \"sellToken\": \"0xfdbCE585Ae7D88BBabdF6087ea4Fe03BD3B8f5eb\",\n      \"buyToken\": \"0xBFbecD49AF4E1cBCDfa182DCE0A5F2B1D27AcDCf\",\n      \"amount\": {\n        \"value\": \"<Error: Could not resolve allOf schema\"\n      },\n      \"transactions\": [\n        {\n          \"chainId\": \"<number>\",\n          \"chain\": \"<string>\",\n          \"txHash\": \"<string>\",\n          \"timestamp\": \"<integer>\"\n        },\n        {\n          \"chainId\": \"<number>\",\n          \"chain\": \"<string>\",\n          \"txHash\": \"<string>\",\n          \"timestamp\": \"<integer>\"\n        }\n      ],\n      \"type\": \"wrap\"\n    }\n  ],\n  \"failure\": {\n    \"reason\": \"<string>\",\n    \"status\": \"refund_succeeded\",\n    \"transactions\": [\n      {\n        \"chainId\": \"<number>\",\n        \"chain\": \"<string>\",\n        \"txHash\": \"<string>\",\n        \"timestamp\": \"<integer>\"\n      },\n      {\n        \"chainId\": \"<number>\",\n        \"chain\": \"<string>\",\n        \"txHash\": \"<string>\",\n        \"timestamp\": \"<integer>\"\n      }\n    ],\n    \"recovery\": {\n      \"chainId\": \"<number>\",\n      \"token\": \"0x9e5bCDFb0e6A1dCbDBc82EDcfeA4dc3b86dc00d0\",\n      \"amount\": {\n        \"value\": \"<Error: Could not resolve allOf schema\"\n      },\n      \"estimatedTimeSeconds\": \"<integer>\",\n      \"deadline\": \"<integer>\",\n      \"manualTransaction\": {\n        \"chainType\": \"evm\",\n        \"details\": {\n          \"to\": \"0xDCEeaA04522cFc3ABb4E92e485DA5aa6293cD7Fb\",\n          \"data\": \"<string>\",\n          \"gas\": {\n            \"value\": \"<Error: Could not resolve allOf schema\"\n          },\n          \"gasPrice\": {\n            \"value\": \"<Error: Could not resolve allOf schema\"\n          },\n          \"value\": {\n            \"value\": \"<Error: Could not resolve allOf schema\"\n          }\n        }\n      },\n      \"settledAmount\": {\n        \"value\": \"<Error: Could not resolve allOf schema\"\n      }\n    }\n  },\n  \"transactions\": [\n    {\n      \"chainId\": \"<number>\",\n      \"chain\": \"<string>\",\n      \"txHash\": \"<string>\",\n      \"timestamp\": \"<integer>\"\n    },\n    {\n      \"chainId\": \"<number>\",\n      \"chain\": \"<string>\",\n      \"txHash\": \"<string>\",\n      \"timestamp\": \"<integer>\"\n    }\n  ],\n  \"zid\": \"<string>\",\n  \"bridge\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T00:25:39.000Z",
+                  "updatedAt": "2026-07-28T00:25:39.000Z",
+                  "uid": "35240-a67884ad-311f-44ab-b20a-b8c34f693381"
+                },
+                {
+                  "id": "11e98f00-6dd4-452a-9b89-6f40e3aff156",
+                  "name": "400 error response",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                        "key": "0x-api-key",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/cross-chain/status?originChain=<string>&originTxHash=<string>&quoteId=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "cross-chain",
+                        "status"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) The origin chain where the cross-chain transaction was initiated",
+                          "key": "originChain",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "(Required) The transaction hash on the origin chain to track. Format varies by chain type (32-byte hex for EVM/HyperCore, base58 signature for Solana, 64-char hex for Tron)",
+                          "key": "originTxHash",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The quote ID associated with the cross-chain transaction",
+                          "key": "quoteId",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"name\": \"INPUT_INVALID\",\n  \"message\": \"<string>\",\n  \"data\": {\n    \"zid\": \"<string>\",\n    \"details\": [\n      {\n        \"field\": \"<string>\",\n        \"reason\": \"<string>\"\n      },\n      {\n        \"field\": \"<string>\",\n        \"reason\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-07-28T00:25:39.000Z",
+                  "updatedAt": "2026-07-28T00:25:39.000Z",
+                  "uid": "35240-11e98f00-6dd4-452a-9b89-6f40e3aff156"
+                },
+                {
+                  "id": "86108ab5-a9f0-493c-9ce1-98433fe05c39",
+                  "name": "404 error response",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                        "key": "0x-api-key",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/cross-chain/status?originChain=<string>&originTxHash=<string>&quoteId=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "cross-chain",
+                        "status"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) The origin chain where the cross-chain transaction was initiated",
+                          "key": "originChain",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "(Required) The transaction hash on the origin chain to track. Format varies by chain type (32-byte hex for EVM/HyperCore, base58 signature for Solana, 64-char hex for Tron)",
+                          "key": "originTxHash",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The quote ID associated with the cross-chain transaction",
+                          "key": "quoteId",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"name\": \"BRIDGE_UNKNOWN\",\n  \"message\": \"<string>\",\n  \"data\": {\n    \"zid\": \"<string>\",\n    \"originChain\": \"<string>\",\n    \"originTxHash\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T00:25:39.000Z",
+                  "updatedAt": "2026-07-28T00:25:39.000Z",
+                  "uid": "35240-86108ab5-a9f0-493c-9ce1-98433fe05c39"
+                },
+                {
+                  "id": "551461fb-385e-4eb6-b118-099ade6fad62",
+                  "name": "500 error response",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                        "key": "0x-api-key",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/cross-chain/status?originChain=<string>&originTxHash=<string>&quoteId=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "cross-chain",
+                        "status"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) The origin chain where the cross-chain transaction was initiated",
+                          "key": "originChain",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "(Required) The transaction hash on the origin chain to track. Format varies by chain type (32-byte hex for EVM/HyperCore, base58 signature for Solana, 64-char hex for Tron)",
+                          "key": "originTxHash",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The quote ID associated with the cross-chain transaction",
+                          "key": "quoteId",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"name\": \"BRIDGE_PROVIDER_ERROR\",\n  \"message\": \"<string>\",\n  \"data\": {\n    \"zid\": \"<string>\",\n    \"bridge\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T00:25:39.000Z",
+                  "updatedAt": "2026-07-28T00:25:39.000Z",
+                  "uid": "35240-551461fb-385e-4eb6-b118-099ade6fad62"
+                }
+              ],
+              "createdAt": "2026-07-28T00:25:39.000Z",
+              "updatedAt": "2026-07-28T00:25:39.000Z",
+              "uid": "35240-4111ecea-5daf-4980-9081-a3532fc42510"
+            }
+          ],
+          "id": "043f547b-6e0d-46da-9b1c-b72999f75559",
+          "createdAt": "2026-07-28T00:25:39.000Z",
+          "updatedAt": "2026-07-28T00:25:39.000Z",
+          "uid": "35240-043f547b-6e0d-46da-9b1c-b72999f75559"
+        },
+        {
+          "name": "sources",
+          "item": [
+            {
+              "name": "List Bridge Sources",
+              "id": "85da2f0f-ff8c-4f56-8127-bd594c324756",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                    "key": "0x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/cross-chain/sources",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "cross-chain",
+                    "sources"
+                  ]
+                },
+                "description": "List available swap and bridge sources for a cross chain swap"
+              },
+              "response": [
+                {
+                  "id": "9eff6fdc-2e95-4d01-a5f0-ace6b420f85c",
+                  "name": "Successful response",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                        "key": "0x-api-key",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/cross-chain/sources",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "cross-chain",
+                        "sources"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"bridges\": [\n    {\n      \"name\": \"<string>\",\n      \"chainPairs\": [\n        {\n          \"originChainId\": \"<number>\",\n          \"destinationChainId\": \"<number>\"\n        },\n        {\n          \"originChainId\": \"<number>\",\n          \"destinationChainId\": \"<number>\"\n        }\n      ]\n    },\n    {\n      \"name\": \"<string>\",\n      \"chainPairs\": [\n        {\n          \"originChainId\": \"<number>\",\n          \"destinationChainId\": \"<number>\"\n        },\n        {\n          \"originChainId\": \"<number>\",\n          \"destinationChainId\": \"<number>\"\n        }\n      ]\n    }\n  ],\n  \"swapSources\": [\n    {\n      \"name\": \"<string>\",\n      \"chainIds\": [\n        \"<number>\",\n        \"<number>\"\n      ]\n    },\n    {\n      \"name\": \"<string>\",\n      \"chainIds\": [\n        \"<number>\",\n        \"<number>\"\n      ]\n    }\n  ],\n  \"zid\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T00:25:39.000Z",
+                  "updatedAt": "2026-07-28T00:25:39.000Z",
+                  "uid": "35240-9eff6fdc-2e95-4d01-a5f0-ace6b420f85c"
+                },
+                {
+                  "id": "b0c342af-3e3e-4b32-ac99-73e0431d2955",
+                  "name": "400 error response",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                        "key": "0x-api-key",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/cross-chain/sources",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "cross-chain",
+                        "sources"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"name\": \"INPUT_INVALID\",\n  \"message\": \"<string>\",\n  \"data\": {\n    \"zid\": \"<string>\",\n    \"details\": [\n      {\n        \"field\": \"<string>\",\n        \"reason\": \"<string>\"\n      },\n      {\n        \"field\": \"<string>\",\n        \"reason\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-07-28T00:25:39.000Z",
+                  "updatedAt": "2026-07-28T00:25:39.000Z",
+                  "uid": "35240-b0c342af-3e3e-4b32-ac99-73e0431d2955"
+                },
+                {
+                  "id": "ded77291-0902-4a36-90ef-827f0c09de98",
+                  "name": "500 error response",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                        "key": "0x-api-key",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/cross-chain/sources",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "cross-chain",
+                        "sources"
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"name\": \"INTERNAL_SERVER_ERROR\",\n  \"message\": \"<string>\",\n  \"data\": {\n    \"zid\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T00:25:39.000Z",
+                  "updatedAt": "2026-07-28T00:25:39.000Z",
+                  "uid": "35240-ded77291-0902-4a36-90ef-827f0c09de98"
+                }
+              ],
+              "createdAt": "2026-07-28T00:25:39.000Z",
+              "updatedAt": "2026-07-28T00:25:39.000Z",
+              "uid": "35240-85da2f0f-ff8c-4f56-8127-bd594c324756"
+            }
+          ],
+          "id": "d2a729a0-1699-4369-9e2f-ba6765d9828f",
+          "createdAt": "2026-07-28T00:25:39.000Z",
+          "updatedAt": "2026-07-28T00:25:39.000Z",
+          "uid": "35240-d2a729a0-1699-4369-9e2f-ba6765d9828f"
+        },
+        {
+          "name": "tx-history-beta",
+          "item": [
+            {
+              "name": "Get Cross-Chain Transaction History",
+              "id": "576d2e69-808c-48f3-a1af-97182afca237",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                    "key": "0x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/cross-chain/tx-history-beta?user=0x1BF500Ae771B2A60E9dfe95fC1CDAbcFFdDd07Db&limit=20&cursor=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "cross-chain",
+                    "tx-history-beta"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The wallet address of the user to get transaction history for. Accepts EVM (0x...), Solana, and Tron addresses",
+                      "key": "user",
+                      "value": "0x1BF500Ae771B2A60E9dfe95fC1CDAbcFFdDd07Db"
+                    },
+                    {
+                      "description": "Maximum number of transactions to return",
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ]
+                },
+                "description": "Get cross-chain transaction history for a user wallet address. Note: this endpoint is in beta and still a work in progress \u2014 please reach out to the 0x team if you or your users run into any issues."
+              },
+              "response": [
+                {
+                  "id": "a2d0531e-8927-4891-969c-de109925a5c3",
+                  "name": "Successful response",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                        "key": "0x-api-key",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/cross-chain/tx-history-beta?user=0x1BF500Ae771B2A60E9dfe95fC1CDAbcFFdDd07Db&limit=20&cursor=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "cross-chain",
+                        "tx-history-beta"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) The wallet address of the user to get transaction history for. Accepts EVM (0x...), Solana, and Tron addresses",
+                          "key": "user",
+                          "value": "0x1BF500Ae771B2A60E9dfe95fC1CDAbcFFdDd07Db"
+                        },
+                        {
+                          "description": "Maximum number of transactions to return",
+                          "key": "limit",
+                          "value": "20"
+                        },
+                        {
+                          "key": "cursor",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"transactions\": [\n    {\n      \"originChain\": \"<number>\",\n      \"originTx\": \"<string>\",\n      \"destinationChain\": \"<number>\",\n      \"destinationTx\": \"<string>\",\n      \"status\": \"<string>\",\n      \"bridge\": \"<string>\"\n    },\n    {\n      \"originChain\": \"<number>\",\n      \"originTx\": \"<string>\",\n      \"destinationChain\": \"<number>\",\n      \"destinationTx\": \"<string>\",\n      \"status\": \"<string>\",\n      \"bridge\": \"<string>\"\n    }\n  ],\n  \"pagination\": {\n    \"limit\": \"<number>\",\n    \"nextCursor\": \"<string>\",\n    \"hasMore\": \"<boolean>\"\n  },\n  \"zid\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T00:25:39.000Z",
+                  "updatedAt": "2026-07-28T00:25:39.000Z",
+                  "uid": "35240-a2d0531e-8927-4891-969c-de109925a5c3"
+                },
+                {
+                  "id": "8dc869a2-3b6e-45fe-8ef5-b26599f2da2a",
+                  "name": "400 error response",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                        "key": "0x-api-key",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/cross-chain/tx-history-beta?user=0x1BF500Ae771B2A60E9dfe95fC1CDAbcFFdDd07Db&limit=20&cursor=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "cross-chain",
+                        "tx-history-beta"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) The wallet address of the user to get transaction history for. Accepts EVM (0x...), Solana, and Tron addresses",
+                          "key": "user",
+                          "value": "0x1BF500Ae771B2A60E9dfe95fC1CDAbcFFdDd07Db"
+                        },
+                        {
+                          "description": "Maximum number of transactions to return",
+                          "key": "limit",
+                          "value": "20"
+                        },
+                        {
+                          "key": "cursor",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"name\": \"INPUT_INVALID\",\n  \"message\": \"<string>\",\n  \"data\": {\n    \"zid\": \"<string>\",\n    \"details\": [\n      {\n        \"field\": \"<string>\",\n        \"reason\": \"<string>\"\n      },\n      {\n        \"field\": \"<string>\",\n        \"reason\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-07-28T00:25:39.000Z",
+                  "updatedAt": "2026-07-28T00:25:39.000Z",
+                  "uid": "35240-8dc869a2-3b6e-45fe-8ef5-b26599f2da2a"
+                },
+                {
+                  "id": "0f7f2353-1600-4066-85d4-63033cb7de2e",
+                  "name": "404 error response",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                        "key": "0x-api-key",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/cross-chain/tx-history-beta?user=0x1BF500Ae771B2A60E9dfe95fC1CDAbcFFdDd07Db&limit=20&cursor=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "cross-chain",
+                        "tx-history-beta"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) The wallet address of the user to get transaction history for. Accepts EVM (0x...), Solana, and Tron addresses",
+                          "key": "user",
+                          "value": "0x1BF500Ae771B2A60E9dfe95fC1CDAbcFFdDd07Db"
+                        },
+                        {
+                          "description": "Maximum number of transactions to return",
+                          "key": "limit",
+                          "value": "20"
+                        },
+                        {
+                          "key": "cursor",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"name\": \"TRANSACTION_NOT_FOUND\",\n  \"message\": \"<string>\",\n  \"data\": {\n    \"zid\": \"<string>\",\n    \"originChain\": \"<string>\",\n    \"originTxHash\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T00:25:39.000Z",
+                  "updatedAt": "2026-07-28T00:25:39.000Z",
+                  "uid": "35240-0f7f2353-1600-4066-85d4-63033cb7de2e"
+                },
+                {
+                  "id": "f8afd7c2-10a4-4446-971e-0113ff76a3ff",
+                  "name": "500 error response",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                        "key": "0x-api-key",
+                        "value": "<string>"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/cross-chain/tx-history-beta?user=0x1BF500Ae771B2A60E9dfe95fC1CDAbcFFdDd07Db&limit=20&cursor=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "cross-chain",
+                        "tx-history-beta"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) The wallet address of the user to get transaction history for. Accepts EVM (0x...), Solana, and Tron addresses",
+                          "key": "user",
+                          "value": "0x1BF500Ae771B2A60E9dfe95fC1CDAbcFFdDd07Db"
+                        },
+                        {
+                          "description": "Maximum number of transactions to return",
+                          "key": "limit",
+                          "value": "20"
+                        },
+                        {
+                          "key": "cursor",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"name\": \"INTERNAL_SERVER_ERROR\",\n  \"message\": \"<string>\",\n  \"data\": {\n    \"zid\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T00:25:39.000Z",
+                  "updatedAt": "2026-07-28T00:25:39.000Z",
+                  "uid": "35240-f8afd7c2-10a4-4446-971e-0113ff76a3ff"
+                }
+              ],
+              "createdAt": "2026-07-28T00:25:39.000Z",
+              "updatedAt": "2026-07-28T00:25:39.000Z",
+              "uid": "35240-576d2e69-808c-48f3-a1af-97182afca237"
+            }
+          ],
+          "id": "f008b97d-47f8-4930-810e-1664afb220bc",
+          "createdAt": "2026-07-28T00:25:39.000Z",
+          "updatedAt": "2026-07-28T00:25:39.000Z",
+          "uid": "35240-f008b97d-47f8-4930-810e-1664afb220bc"
+        }
+      ],
+      "id": "635494b2-8894-4cb2-b02f-b64a23779056",
+      "createdAt": "2026-07-28T00:25:39.000Z",
+      "updatedAt": "2026-07-28T00:25:39.000Z",
+      "uid": "35240-635494b2-8894-4cb2-b02f-b64a23779056"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.0x.org"
+    }
+  ]
+}
