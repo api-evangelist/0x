@@ -1,0 +1,242 @@
+{
+  "item": [
+    {
+      "id": "16f64902-042f-40f9-80ab-e353bdf9756d",
+      "name": "Sources",
+      "description": {
+        "content": "Sources API endpoints",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "5ae2a6ac-2fe8-4887-a683-d6eb98dec50b",
+          "name": "Get Liquidity Sources",
+          "request": {
+            "name": "Get Liquidity Sources",
+            "description": {
+              "content": "Get the list of supported sources",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sources"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "chainId",
+                  "value": "<integer>",
+                  "description": "(Required) Chain ID. See [here](https://docs.0x.org/docs/introduction/supported-chains) for the list of supported chains"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                "key": "0x-api-key",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) API version",
+                "key": "0x-version",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6db8d763-9152-4118-9d21-7072a74207ac",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sources"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "chainId",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                    "key": "0x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version",
+                    "key": "0x-version",
+                    "value": "v2"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"sources\": [\n    \"0x_RFQ\",\n    \"Ambient\",\n    \"BalancerV1\",\n    \"BalancerV2\",\n    \"BancorV3\",\n    \"Curve\",\n    \"DodoV1\",\n    \"DodoV2\",\n    \"FraxswapV2\",\n    \"Integral\",\n    \"Lido\",\n    \"MakerPsm\",\n    \"Maverick\",\n    \"Origin\",\n    \"PancakeSwapV3\",\n    \"RocketPool\",\n    \"SolidlyV3\",\n    \"SushiSwap\",\n    \"Synapse\",\n    \"UniswapV2\",\n    \"UniswapV3\"\n  ],\n  \"zid\": \"0x111111111111111111111111\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "edfe220b-46ec-47d7-a97d-f9f6aa4b9359",
+              "name": "400 error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sources"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "chainId",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                    "key": "0x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version",
+                    "key": "0x-version",
+                    "value": "v2"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"INPUT_INVALID\",\n  \"message\": \"string\",\n  \"data\": {\n    \"zid\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"reason\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"reason\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cb92197a-fcb5-4ee4-ab20-91410013a0ee",
+              "name": "500 error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sources"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "chainId",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                    "key": "0x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version",
+                    "key": "0x-version",
+                    "value": "v2"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"INTERNAL_SERVER_ERROR\",\n  \"message\": \"string\",\n  \"data\": {\n    \"zid\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.0x.org",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "4205aba8-47e7-4dcd-be39-7f0f40cbbe38",
+    "name": "0x Cross-Chain Sources API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This is the official API reference for the latest 0x API (v2).",
+      "type": "text/plain"
+    }
+  }
+}

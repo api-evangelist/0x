@@ -1,0 +1,3248 @@
+{
+  "item": [
+    {
+      "id": "eaeecaac-943f-4078-80a3-357ddffc14ac",
+      "name": "Swap",
+      "description": {
+        "content": "Swap API endpoints",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "91760ef4-1fd9-498a-903c-52ff996af7c1",
+          "name": "Get Price (Allowance Holder)",
+          "request": {
+            "name": "Get Price (Allowance Holder)",
+            "description": {
+              "content": "Get the indicative price for a swap using Allowance Holder to set allowances",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "swap",
+                "allowance-holder",
+                "price"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "chainId",
+                  "value": "<integer>",
+                  "description": "(Required) Chain ID. See [here](https://docs.0x.org/docs/introduction/supported-chains) for the list of supported chains"
+                },
+                {
+                  "disabled": false,
+                  "key": "buyToken",
+                  "value": "<string>",
+                  "description": "(Required) The contract address of the token to buy"
+                },
+                {
+                  "disabled": false,
+                  "key": "sellToken",
+                  "value": "<string>",
+                  "description": "(Required) The contract address of the token to sell"
+                },
+                {
+                  "disabled": false,
+                  "key": "sellAmount",
+                  "value": "<string>",
+                  "description": "The amount of `sellToken` in `sellToken` base units to sell"
+                },
+                {
+                  "disabled": false,
+                  "key": "buyAmount",
+                  "value": "<string>",
+                  "description": "The exact amount of `buyToken` in `buyToken` base units to buy"
+                },
+                {
+                  "disabled": false,
+                  "key": "taker",
+                  "value": "<string>",
+                  "description": "The address which holds the `sellToken` balance and has the allowance set for the swap"
+                },
+                {
+                  "disabled": false,
+                  "key": "txOrigin",
+                  "value": "<string>",
+                  "description": "The address of the external account that started the transaction. This is only needed if `taker` is a smart contract."
+                },
+                {
+                  "disabled": false,
+                  "key": "recipient",
+                  "value": "<string>",
+                  "description": "The address to receive the `buyToken`. If not provided, defaults to the taker address. Not supported for wrap/unwrap operations."
+                },
+                {
+                  "disabled": false,
+                  "key": "swapFeeRecipient",
+                  "value": "<string>",
+                  "description": "The wallet address to receive the specified trading fees (supports single or multiple comma-separated values). You must also specify the `swapFeeBps` in the request to use this feature. When multiple values are provided, must match length of `swapFeeBps`."
+                },
+                {
+                  "disabled": false,
+                  "key": "swapFeeBps",
+                  "value": "<string>",
+                  "description": "The amount in Bps of the `swapFeeToken` to charge and deliver to the `swapFeeRecipient` (supports single or multiple comma-separated values). You must also specify the `swapFeeRecipient` in the request to use this feature. For security, this field has a default limit of 1000 Bps. If your application requires a higher value, please reach out to us."
+                },
+                {
+                  "disabled": false,
+                  "key": "swapFeeToken",
+                  "value": "<string>",
+                  "description": "The contract address of the token to receive trading fees in (supports single or multiple comma-separated values). Each token must be set to the value of either the `buyToken` or the `sellToken`. If omitted, the fee token will be determined by 0x with preference to stablecoins and highly liquid assets. You must also specify the `swapFeeRecipient` and `swapFeeBps` to charge integrator fees. When multiple values are provided, must match length of `swapFeeBps`."
+                },
+                {
+                  "disabled": false,
+                  "key": "tradeSurplusRecipient",
+                  "value": "<string>",
+                  "description": "The address to receive any trade surplus. If specified, this address will receive trade surplus when applicable. Otherwise, the taker will receive the surplus. This feature is only available to selected integrators on a custom pricing plan. In other cases, the surplus will be collected by 0x. For assistance with a custom plan, please contact support."
+                },
+                {
+                  "disabled": false,
+                  "key": "tradeSurplusMaxBps",
+                  "value": "<integer>",
+                  "description": "The maximum trade surplus (positive slippage) that can be collected in Bps of the buy amount. If not provided, defaults to 10000 (100%). Must be used together with `tradeSurplusRecipient`."
+                },
+                {
+                  "disabled": false,
+                  "key": "gasPrice",
+                  "value": "<string>",
+                  "description": "The target gas price (in wei) for the swap transaction. If not provided, the default value is based on the 0x gas price oracle"
+                },
+                {
+                  "disabled": false,
+                  "key": "slippageBps",
+                  "value": "<integer>",
+                  "description": "The maximum acceptable slippage of the `buyToken` in Bps. If this parameter is set to 0, no slippage will be tolerated. If not provided, the default slippage tolerance is 100Bps"
+                },
+                {
+                  "disabled": false,
+                  "key": "slippagePpm",
+                  "value": "<integer>",
+                  "description": "The maximum acceptable slippage of the `buyToken` in parts-per-million (PPM). Mutually exclusive with `slippageBps`. e.g. 3000 PPM = 30 BPS = 0.30%."
+                },
+                {
+                  "disabled": false,
+                  "key": "excludedSources",
+                  "value": "<string>",
+                  "description": "Liquidity sources e.g. Uniswap_V3, SushiSwap, 0x_RFQ to exclude from the provided quote. See https://api.0x.org/sources?chainId=<chain_id> with the desired chain's ID for a full list of sources. Separate multiple sources with a comma"
+                },
+                {
+                  "disabled": false,
+                  "key": "sellEntireBalance",
+                  "value": "false",
+                  "description": "If set to `true`, the taker's entire `sellToken` balance will be sold during trade execution. The `sellAmount` should be the maximum estimated value, as close as possible to the actual taker's balance to ensure the best routing. Selling more than the `sellAmount` may cause the trade to revert. This feature is designed for cases where the precise sell amount is determined during execution. Learn more [here](https://docs.0x.org/docs/0x-swap-api/additional-topics/sell-entire-balance)."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                "key": "0x-api-key",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) API version",
+                "key": "0x-version",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e544b4a5-4b66-4f35-95a3-ad6abd5c5da0",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "swap",
+                    "allowance-holder",
+                    "price"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "chainId",
+                      "value": "1"
+                    },
+                    {
+                      "key": "buyToken",
+                      "value": "0xdac17f958d2ee523a2206206994597c13d831ec7"
+                    },
+                    {
+                      "key": "sellToken",
+                      "value": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
+                    },
+                    {
+                      "key": "sellAmount",
+                      "value": "100000000"
+                    },
+                    {
+                      "key": "buyAmount",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "taker",
+                      "value": "0x70a9f34f9b34c64957b9c401a97bfed35b95049e"
+                    },
+                    {
+                      "key": "txOrigin",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "recipient",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "swapFeeRecipient",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "swapFeeBps",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "swapFeeToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tradeSurplusRecipient",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tradeSurplusMaxBps",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "gasPrice",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slippageBps",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "slippagePpm",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "excludedSources",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sellEntireBalance",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                    "key": "0x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version",
+                    "key": "0x-version",
+                    "value": "v2"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"allowanceTarget\": \"0x000000000022d473030f116ddee9f6b43ac78ba3\",\n  \"blockNumber\": \"20114676\",\n  \"buyAmount\": \"100032748\",\n  \"buyToken\": \"0xdac17f958d2ee523a2206206994597c13d831ec7\",\n  \"fees\": {\n    \"integratorFee\": null,\n    \"zeroExFee\": null,\n    \"gasFee\": null\n  },\n  \"gas\": \"288095\",\n  \"gasPrice\": \"7062490000\",\n  \"issues\": {\n    \"allowance\": {\n      \"actual\": \"0\",\n      \"spender\": \"0x0000000000001ff3684f28c67538d4d072c22734\"\n    },\n    \"balance\": {\n      \"token\": \"0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48\",\n      \"actual\": \"0\",\n      \"expected\": \"100000000\"\n    },\n    \"simulationIncomplete\": false,\n    \"invalidSourcesPassed\": []\n  },\n  \"liquidityAvailable\": true,\n  \"mode\": \"exact-in\",\n  \"minBuyAmount\": \"99032421\",\n  \"route\": {\n    \"fills\": [\n      {\n        \"from\": \"0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48\",\n        \"to\": \"0xdac17f958d2ee523a2206206994597c13d831ec7\",\n        \"source\": \"SolidlyV3\",\n        \"proportionBps\": \"10000\"\n      }\n    ],\n    \"tokens\": [\n      {\n        \"address\": \"0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48\",\n        \"symbol\": \"USDC\"\n      },\n      {\n        \"address\": \"0xdac17f958d2ee523a2206206994597c13d831ec7\",\n        \"symbol\": \"USDT\"\n      }\n    ]\n  },\n  \"sellAmount\": \"100000000\",\n  \"sellToken\": \"0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48\",\n  \"tokenMetadata\": {\n    \"buyToken\": {\n      \"buyTaxBps\": \"0\",\n      \"sellTaxBps\": \"0\"\n    },\n    \"sellToken\": {\n      \"buyTaxBps\": \"0\",\n      \"sellTaxBps\": \"0\"\n    }\n  },\n  \"totalNetworkFee\": \"2034668056550000\",\n  \"zid\": \"0x111111111111111111111111\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "30e2d2ca-54d2-4b10-8b8f-7fed7857a1af",
+              "name": "400 error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "swap",
+                    "allowance-holder",
+                    "price"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "chainId",
+                      "value": "1"
+                    },
+                    {
+                      "key": "buyToken",
+                      "value": "0xdac17f958d2ee523a2206206994597c13d831ec7"
+                    },
+                    {
+                      "key": "sellToken",
+                      "value": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
+                    },
+                    {
+                      "key": "sellAmount",
+                      "value": "100000000"
+                    },
+                    {
+                      "key": "buyAmount",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "taker",
+                      "value": "0x70a9f34f9b34c64957b9c401a97bfed35b95049e"
+                    },
+                    {
+                      "key": "txOrigin",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "recipient",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "swapFeeRecipient",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "swapFeeBps",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "swapFeeToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tradeSurplusRecipient",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tradeSurplusMaxBps",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "gasPrice",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slippageBps",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "slippagePpm",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "excludedSources",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sellEntireBalance",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                    "key": "0x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version",
+                    "key": "0x-version",
+                    "value": "v2"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"INPUT_INVALID\",\n  \"message\": \"string\",\n  \"data\": {\n    \"zid\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"reason\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"reason\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "71c297da-15b8-4eb7-b125-9a024cd7456b",
+              "name": "403 error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "swap",
+                    "allowance-holder",
+                    "price"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "chainId",
+                      "value": "1"
+                    },
+                    {
+                      "key": "buyToken",
+                      "value": "0xdac17f958d2ee523a2206206994597c13d831ec7"
+                    },
+                    {
+                      "key": "sellToken",
+                      "value": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
+                    },
+                    {
+                      "key": "sellAmount",
+                      "value": "100000000"
+                    },
+                    {
+                      "key": "buyAmount",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "taker",
+                      "value": "0x70a9f34f9b34c64957b9c401a97bfed35b95049e"
+                    },
+                    {
+                      "key": "txOrigin",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "recipient",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "swapFeeRecipient",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "swapFeeBps",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "swapFeeToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tradeSurplusRecipient",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tradeSurplusMaxBps",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "gasPrice",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slippageBps",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "slippagePpm",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "excludedSources",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sellEntireBalance",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                    "key": "0x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version",
+                    "key": "0x-version",
+                    "value": "v2"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"TAKER_NOT_AUTHORIZED_FOR_TRADE\",\n  \"message\": \"string\",\n  \"data\": {\n    \"zid\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a26bd3a3-7dcd-42dc-a1fd-f1e90b91d088",
+              "name": "422 error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "swap",
+                    "allowance-holder",
+                    "price"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "chainId",
+                      "value": "1"
+                    },
+                    {
+                      "key": "buyToken",
+                      "value": "0xdac17f958d2ee523a2206206994597c13d831ec7"
+                    },
+                    {
+                      "key": "sellToken",
+                      "value": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
+                    },
+                    {
+                      "key": "sellAmount",
+                      "value": "100000000"
+                    },
+                    {
+                      "key": "buyAmount",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "taker",
+                      "value": "0x70a9f34f9b34c64957b9c401a97bfed35b95049e"
+                    },
+                    {
+                      "key": "txOrigin",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "recipient",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "swapFeeRecipient",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "swapFeeBps",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "swapFeeToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tradeSurplusRecipient",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tradeSurplusMaxBps",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "gasPrice",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slippageBps",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "slippagePpm",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "excludedSources",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sellEntireBalance",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                    "key": "0x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version",
+                    "key": "0x-version",
+                    "value": "v2"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"BUY_TOKEN_NOT_AUTHORIZED_FOR_TRADE\",\n  \"message\": \"string\",\n  \"data\": {\n    \"zid\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0e0f8761-c391-4a99-99b3-0cdbd2087b63",
+              "name": "500 error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "swap",
+                    "allowance-holder",
+                    "price"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "chainId",
+                      "value": "1"
+                    },
+                    {
+                      "key": "buyToken",
+                      "value": "0xdac17f958d2ee523a2206206994597c13d831ec7"
+                    },
+                    {
+                      "key": "sellToken",
+                      "value": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
+                    },
+                    {
+                      "key": "sellAmount",
+                      "value": "100000000"
+                    },
+                    {
+                      "key": "buyAmount",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "taker",
+                      "value": "0x70a9f34f9b34c64957b9c401a97bfed35b95049e"
+                    },
+                    {
+                      "key": "txOrigin",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "recipient",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "swapFeeRecipient",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "swapFeeBps",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "swapFeeToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tradeSurplusRecipient",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tradeSurplusMaxBps",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "gasPrice",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slippageBps",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "slippagePpm",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "excludedSources",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sellEntireBalance",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                    "key": "0x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version",
+                    "key": "0x-version",
+                    "value": "v2"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"INTERNAL_SERVER_ERROR\",\n  \"message\": \"string\",\n  \"data\": {\n    \"zid\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3b7f398d-392b-4453-91bc-5781ddaea09f",
+          "name": "Get Quote (Allowance Holder)",
+          "request": {
+            "name": "Get Quote (Allowance Holder)",
+            "description": {
+              "content": "Get the firm quote for a swap using Allowance Holder to set allowances",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "swap",
+                "allowance-holder",
+                "quote"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "chainId",
+                  "value": "<integer>",
+                  "description": "(Required) Chain ID. See [here](https://docs.0x.org/docs/introduction/supported-chains) for the list of supported chains"
+                },
+                {
+                  "disabled": false,
+                  "key": "buyToken",
+                  "value": "<string>",
+                  "description": "(Required) The contract address of the token to buy"
+                },
+                {
+                  "disabled": false,
+                  "key": "sellToken",
+                  "value": "<string>",
+                  "description": "(Required) The contract address of the token to sell"
+                },
+                {
+                  "disabled": false,
+                  "key": "sellAmount",
+                  "value": "<string>",
+                  "description": "The amount of `sellToken` in `sellToken` base units to sell"
+                },
+                {
+                  "disabled": false,
+                  "key": "buyAmount",
+                  "value": "<string>",
+                  "description": "The exact amount of `buyToken` in `buyToken` base units to buy"
+                },
+                {
+                  "disabled": false,
+                  "key": "taker",
+                  "value": "<string>",
+                  "description": "(Required) The address which holds the `sellToken` balance and has the allowance set for the swap"
+                },
+                {
+                  "disabled": false,
+                  "key": "txOrigin",
+                  "value": "<string>",
+                  "description": "The address of the external account that started the transaction. This is only needed if `taker` is a smart contract."
+                },
+                {
+                  "disabled": false,
+                  "key": "recipient",
+                  "value": "<string>",
+                  "description": "The address to receive the `buyToken`. If not provided, defaults to the taker address. Not supported for wrap/unwrap operations."
+                },
+                {
+                  "disabled": false,
+                  "key": "swapFeeRecipient",
+                  "value": "<string>",
+                  "description": "The wallet address to receive the specified trading fees (supports single or multiple comma-separated values). You must also specify the `swapFeeBps` in the request to use this feature. When multiple values are provided, must match length of `swapFeeBps`."
+                },
+                {
+                  "disabled": false,
+                  "key": "swapFeeBps",
+                  "value": "<string>",
+                  "description": "The amount in Bps of the `swapFeeToken` to charge and deliver to the `swapFeeRecipient` (supports single or multiple comma-separated values). You must also specify the `swapFeeRecipient` in the request to use this feature. For security, this field has a default limit of 1000 Bps. If your application requires a higher value, please reach out to us."
+                },
+                {
+                  "disabled": false,
+                  "key": "swapFeeToken",
+                  "value": "<string>",
+                  "description": "The contract address of the token to receive trading fees in (supports single or multiple comma-separated values). Each token must be set to the value of either the `buyToken` or the `sellToken`. If omitted, the fee token will be determined by 0x with preference to stablecoins and highly liquid assets. You must also specify the `swapFeeRecipient` and `swapFeeBps` to charge integrator fees. When multiple values are provided, must match length of `swapFeeBps`."
+                },
+                {
+                  "disabled": false,
+                  "key": "tradeSurplusRecipient",
+                  "value": "<string>",
+                  "description": "The address to receive any trade surplus. If specified, this address will receive trade surplus when applicable. Otherwise, the taker will receive the surplus. This feature is only available to selected integrators on a custom pricing plan. In other cases, the surplus will be collected by 0x. For assistance with a custom plan, please contact support."
+                },
+                {
+                  "disabled": false,
+                  "key": "tradeSurplusMaxBps",
+                  "value": "<integer>",
+                  "description": "The maximum trade surplus (positive slippage) that can be collected in Bps of the buy amount. If not provided, defaults to 10000 (100%). Must be used together with `tradeSurplusRecipient`."
+                },
+                {
+                  "disabled": false,
+                  "key": "gasPrice",
+                  "value": "<string>",
+                  "description": "The target gas price (in wei) for the swap transaction. If not provided, the default value is based on the 0x gas price oracle"
+                },
+                {
+                  "disabled": false,
+                  "key": "slippageBps",
+                  "value": "<integer>",
+                  "description": "The maximum acceptable slippage of the `buyToken` in Bps. If this parameter is set to 0, no slippage will be tolerated. If not provided, the default slippage tolerance is 100Bps"
+                },
+                {
+                  "disabled": false,
+                  "key": "slippagePpm",
+                  "value": "<integer>",
+                  "description": "The maximum acceptable slippage of the `buyToken` in parts-per-million (PPM). Mutually exclusive with `slippageBps`. e.g. 3000 PPM = 30 BPS = 0.30%."
+                },
+                {
+                  "disabled": false,
+                  "key": "excludedSources",
+                  "value": "<string>",
+                  "description": "Liquidity sources e.g. Uniswap_V3, SushiSwap, 0x_RFQ to exclude from the provided quote. `See https://api.0x.org/sources?chainId=<chain_id>` with the desired chain's ID for a full list of sources. Separate multiple sources with a comma"
+                },
+                {
+                  "disabled": false,
+                  "key": "sellEntireBalance",
+                  "value": "false",
+                  "description": "If set to `true`, the taker's entire `sellToken` balance will be sold during trade execution. The `sellAmount` should be the maximum estimated value, as close as possible to the actual taker's balance to ensure the best routing. Selling more than the `sellAmount` may cause the trade to revert. This feature is designed for cases where the precise sell amount is determined during execution. Learn more [here](https://docs.0x.org/docs/0x-swap-api/additional-topics/sell-entire-balance)."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                "key": "0x-api-key",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) API version",
+                "key": "0x-version",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "05ea4295-37e3-46c8-af85-575847886af4",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "swap",
+                    "allowance-holder",
+                    "quote"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "chainId",
+                      "value": "1"
+                    },
+                    {
+                      "key": "buyToken",
+                      "value": "0xdac17f958d2ee523a2206206994597c13d831ec7"
+                    },
+                    {
+                      "key": "sellToken",
+                      "value": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
+                    },
+                    {
+                      "key": "sellAmount",
+                      "value": "100000000"
+                    },
+                    {
+                      "key": "buyAmount",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "taker",
+                      "value": "0x70a9f34f9b34c64957b9c401a97bfed35b95049e"
+                    },
+                    {
+                      "key": "txOrigin",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "recipient",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "swapFeeRecipient",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "swapFeeBps",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "swapFeeToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tradeSurplusRecipient",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tradeSurplusMaxBps",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "gasPrice",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slippageBps",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "slippagePpm",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "excludedSources",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sellEntireBalance",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                    "key": "0x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version",
+                    "key": "0x-version",
+                    "value": "v2"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"allowanceTarget\": \"0x000000000022d473030f116ddee9f6b43ac78ba3\",\n  \"blockNumber\": \"20114692\",\n  \"buyAmount\": \"100037537\",\n  \"buyToken\": \"0xdac17f958d2ee523a2206206994597c13d831ec7\",\n  \"fees\": {\n    \"integratorFee\": null,\n    \"zeroExFee\": null,\n    \"gasFee\": null\n  },\n  \"issues\": {\n    \"allowance\": {\n      \"actual\": \"0\",\n      \"spender\": \"0x0000000000001ff3684f28c67538d4d072c22734\"\n    },\n    \"balance\": {\n      \"token\": \"0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48\",\n      \"actual\": \"0\",\n      \"expected\": \"100000000\"\n    },\n    \"simulationIncomplete\": false,\n    \"invalidSourcesPassed\": []\n  },\n  \"liquidityAvailable\": true,\n  \"mode\": \"exact-in\",\n  \"minBuyAmount\": \"99037162\",\n  \"route\": {\n    \"fills\": [\n      {\n        \"from\": \"0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48\",\n        \"to\": \"0xdac17f958d2ee523a2206206994597c13d831ec7\",\n        \"source\": \"SolidlyV3\",\n        \"proportionBps\": \"10000\"\n      }\n    ],\n    \"tokens\": [\n      {\n        \"address\": \"0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48\",\n        \"symbol\": \"USDC\"\n      },\n      {\n        \"address\": \"0xdac17f958d2ee523a2206206994597c13d831ec7\",\n        \"symbol\": \"USDT\"\n      }\n    ]\n  },\n  \"sellAmount\": \"100000000\",\n  \"sellToken\": \"0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48\",\n  \"tokenMetadata\": {\n    \"buyToken\": {\n      \"buyTaxBps\": \"0\",\n      \"sellTaxBps\": \"0\"\n    },\n    \"sellToken\": {\n      \"buyTaxBps\": \"0\",\n      \"sellTaxBps\": \"0\"\n    }\n  },\n  \"totalNetworkFee\": \"1393685870940000\",\n  \"transaction\": {\n    \"to\": \"0x7f6cee965959295cc64d0e6c00d99d6532d8e86b\",\n    \"data\": \"0x1fff991f00000000000000000000000070a9f34f9b34c64957b9c401a97bfed35b95049e000000000000000000000000dac17f958d2ee523a2206206994597c13d831ec70000000000000000000000000000000000000000000000000000000005e72fea00000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000001c00000000000000000000000000000000000000000000000000000000000000144c1fb425e0000000000000000000000007f6cee965959295cc64d0e6c00d99d6532d8e86b000000000000000000000000a0b86991c6218b36c1d19d4a2e9eb0ce3606eb480000000000000000000000000000000000000000000000000000000005f5e1000000000000000000000000000000000000006e898131631616b1779bad70bc17000000000000000000000000000000000000000000000000000000006670d06c00000000000000000000000000000000000000000000000000000000000000c00000000000000000000000000000000000000000000000000000000000000041ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000016438c9c147000000000000000000000000a0b86991c6218b36c1d19d4a2e9eb0ce3606eb4800000000000000000000000000000000000000000000000000000000000027100000000000000000000000006146be494fee4c73540cb1c5f87536abf1452500000000000000000000000000000000000000000000000000000000000000004400000000000000000000000000000000000000000000000000000000000000a00000000000000000000000000000000000000000000000000000000000000084c31b8d7a0000000000000000000000007f6cee965959295cc64d0e6c00d99d6532d8e86b00000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000005f5e10000000000000000000000000000000000000000000000000000000001000276a40000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000\",\n    \"gas\": \"288079\",\n    \"gasPrice\": \"4837860000\",\n    \"value\": \"0\"\n  },\n  \"zid\": \"0x111111111111111111111111\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7246908c-98a1-436f-84ab-6fc3577e460b",
+              "name": "400 error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "swap",
+                    "allowance-holder",
+                    "quote"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "chainId",
+                      "value": "1"
+                    },
+                    {
+                      "key": "buyToken",
+                      "value": "0xdac17f958d2ee523a2206206994597c13d831ec7"
+                    },
+                    {
+                      "key": "sellToken",
+                      "value": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
+                    },
+                    {
+                      "key": "sellAmount",
+                      "value": "100000000"
+                    },
+                    {
+                      "key": "buyAmount",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "taker",
+                      "value": "0x70a9f34f9b34c64957b9c401a97bfed35b95049e"
+                    },
+                    {
+                      "key": "txOrigin",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "recipient",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "swapFeeRecipient",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "swapFeeBps",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "swapFeeToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tradeSurplusRecipient",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tradeSurplusMaxBps",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "gasPrice",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slippageBps",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "slippagePpm",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "excludedSources",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sellEntireBalance",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                    "key": "0x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version",
+                    "key": "0x-version",
+                    "value": "v2"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"INPUT_INVALID\",\n  \"message\": \"string\",\n  \"data\": {\n    \"zid\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"reason\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"reason\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a550b4eb-f431-493d-a449-1c33d87ff7f0",
+              "name": "403 error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "swap",
+                    "allowance-holder",
+                    "quote"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "chainId",
+                      "value": "1"
+                    },
+                    {
+                      "key": "buyToken",
+                      "value": "0xdac17f958d2ee523a2206206994597c13d831ec7"
+                    },
+                    {
+                      "key": "sellToken",
+                      "value": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
+                    },
+                    {
+                      "key": "sellAmount",
+                      "value": "100000000"
+                    },
+                    {
+                      "key": "buyAmount",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "taker",
+                      "value": "0x70a9f34f9b34c64957b9c401a97bfed35b95049e"
+                    },
+                    {
+                      "key": "txOrigin",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "recipient",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "swapFeeRecipient",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "swapFeeBps",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "swapFeeToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tradeSurplusRecipient",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tradeSurplusMaxBps",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "gasPrice",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slippageBps",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "slippagePpm",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "excludedSources",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sellEntireBalance",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                    "key": "0x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version",
+                    "key": "0x-version",
+                    "value": "v2"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"TAKER_NOT_AUTHORIZED_FOR_TRADE\",\n  \"message\": \"string\",\n  \"data\": {\n    \"zid\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b3e9b691-d104-4994-a84d-ca0133706530",
+              "name": "422 error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "swap",
+                    "allowance-holder",
+                    "quote"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "chainId",
+                      "value": "1"
+                    },
+                    {
+                      "key": "buyToken",
+                      "value": "0xdac17f958d2ee523a2206206994597c13d831ec7"
+                    },
+                    {
+                      "key": "sellToken",
+                      "value": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
+                    },
+                    {
+                      "key": "sellAmount",
+                      "value": "100000000"
+                    },
+                    {
+                      "key": "buyAmount",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "taker",
+                      "value": "0x70a9f34f9b34c64957b9c401a97bfed35b95049e"
+                    },
+                    {
+                      "key": "txOrigin",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "recipient",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "swapFeeRecipient",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "swapFeeBps",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "swapFeeToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tradeSurplusRecipient",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tradeSurplusMaxBps",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "gasPrice",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slippageBps",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "slippagePpm",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "excludedSources",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sellEntireBalance",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                    "key": "0x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version",
+                    "key": "0x-version",
+                    "value": "v2"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"BUY_TOKEN_NOT_AUTHORIZED_FOR_TRADE\",\n  \"message\": \"string\",\n  \"data\": {\n    \"zid\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e4e2320f-6314-4da0-b220-899b4cca6f15",
+              "name": "500 error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "swap",
+                    "allowance-holder",
+                    "quote"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "chainId",
+                      "value": "1"
+                    },
+                    {
+                      "key": "buyToken",
+                      "value": "0xdac17f958d2ee523a2206206994597c13d831ec7"
+                    },
+                    {
+                      "key": "sellToken",
+                      "value": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
+                    },
+                    {
+                      "key": "sellAmount",
+                      "value": "100000000"
+                    },
+                    {
+                      "key": "buyAmount",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "taker",
+                      "value": "0x70a9f34f9b34c64957b9c401a97bfed35b95049e"
+                    },
+                    {
+                      "key": "txOrigin",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "recipient",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "swapFeeRecipient",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "swapFeeBps",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "swapFeeToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tradeSurplusRecipient",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tradeSurplusMaxBps",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "gasPrice",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slippageBps",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "slippagePpm",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "excludedSources",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sellEntireBalance",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                    "key": "0x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version",
+                    "key": "0x-version",
+                    "value": "v2"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"INTERNAL_SERVER_ERROR\",\n  \"message\": \"string\",\n  \"data\": {\n    \"zid\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6c368a4e-27e3-4c1b-b237-2a4c270bcf5e",
+          "name": "Get Price (Permit2)",
+          "request": {
+            "name": "Get Price (Permit2)",
+            "description": {
+              "content": "Get the indicative price for a swap using Permit2 to set allowances",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "swap",
+                "permit2",
+                "price"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "chainId",
+                  "value": "<integer>",
+                  "description": "(Required) Chain ID. See [here](https://docs.0x.org/docs/introduction/supported-chains) for the list of supported chains"
+                },
+                {
+                  "disabled": false,
+                  "key": "buyToken",
+                  "value": "<string>",
+                  "description": "(Required) The contract address of the token to buy"
+                },
+                {
+                  "disabled": false,
+                  "key": "sellToken",
+                  "value": "<string>",
+                  "description": "(Required) The contract address of the token to sell"
+                },
+                {
+                  "disabled": false,
+                  "key": "sellAmount",
+                  "value": "<string>",
+                  "description": "The amount of `sellToken` in `sellToken` base units to sell"
+                },
+                {
+                  "disabled": false,
+                  "key": "buyAmount",
+                  "value": "<string>",
+                  "description": "The exact amount of `buyToken` in `buyToken` base units to buy"
+                },
+                {
+                  "disabled": false,
+                  "key": "taker",
+                  "value": "<string>",
+                  "description": "The address which holds the `sellToken` balance and has the allowance set for the swap"
+                },
+                {
+                  "disabled": false,
+                  "key": "txOrigin",
+                  "value": "<string>",
+                  "description": "The address of the external account that started the transaction. This is only needed if `taker` is a smart contract."
+                },
+                {
+                  "disabled": false,
+                  "key": "recipient",
+                  "value": "<string>",
+                  "description": "The address to receive the `buyToken`. If not provided, defaults to the taker address. Not supported for wrap/unwrap operations."
+                },
+                {
+                  "disabled": false,
+                  "key": "swapFeeRecipient",
+                  "value": "<string>",
+                  "description": "The wallet address to receive the specified trading fees (supports single or multiple comma-separated values). You must also specify the `swapFeeBps` in the request to use this feature. When multiple values are provided, must match length of `swapFeeBps`."
+                },
+                {
+                  "disabled": false,
+                  "key": "swapFeeBps",
+                  "value": "<string>",
+                  "description": "The amount in Bps of the `swapFeeToken` to charge and deliver to the `swapFeeRecipient` (supports single or multiple comma-separated values). You must also specify the `swapFeeRecipient` in the request to use this feature. For security, this field has a default limit of 1000 Bps. If your application requires a higher value, please reach out to us."
+                },
+                {
+                  "disabled": false,
+                  "key": "swapFeeToken",
+                  "value": "<string>",
+                  "description": "The contract address of the token to receive trading fees in (supports single or multiple comma-separated values). Each token must be set to the value of either the `buyToken` or the `sellToken`. If omitted, the fee token will be determined by 0x with preference to stablecoins and highly liquid assets. You must also specify the `swapFeeRecipient` and `swapFeeBps` to charge integrator fees. When multiple values are provided, must match length of `swapFeeBps`."
+                },
+                {
+                  "disabled": false,
+                  "key": "tradeSurplusRecipient",
+                  "value": "<string>",
+                  "description": "The address to receive any trade surplus. If specified, this address will receive trade surplus when applicable. Otherwise, the taker will receive the surplus. This feature is only available to selected integrators on a custom pricing plan. In other cases, the surplus will be collected by 0x. For assistance with a custom plan, please contact support."
+                },
+                {
+                  "disabled": false,
+                  "key": "tradeSurplusMaxBps",
+                  "value": "<integer>",
+                  "description": "The maximum trade surplus (positive slippage) that can be collected in Bps of the buy amount. If not provided, defaults to 10000 (100%). Must be used together with `tradeSurplusRecipient`."
+                },
+                {
+                  "disabled": false,
+                  "key": "gasPrice",
+                  "value": "<string>",
+                  "description": "The target gas price (in wei) for the swap transaction. If not provided, the default value is based on the 0x gas price oracle"
+                },
+                {
+                  "disabled": false,
+                  "key": "slippageBps",
+                  "value": "<integer>",
+                  "description": "The maximum acceptable slippage of the `buyToken` in Bps. If this parameter is set to 0, no slippage will be tolerated. If not provided, the default slippage tolerance is 100Bps"
+                },
+                {
+                  "disabled": false,
+                  "key": "slippagePpm",
+                  "value": "<integer>",
+                  "description": "The maximum acceptable slippage of the `buyToken` in parts-per-million (PPM). Mutually exclusive with `slippageBps`. e.g. 3000 PPM = 30 BPS = 0.30%."
+                },
+                {
+                  "disabled": false,
+                  "key": "excludedSources",
+                  "value": "<string>",
+                  "description": "Liquidity sources e.g. Uniswap_V3, SushiSwap, 0x_RFQ to exclude from the provided quote. See https://api.0x.org/sources?chainId=<chain_id> with the desired chain's ID for a full list of sources. Separate multiple sources with a comma"
+                },
+                {
+                  "disabled": false,
+                  "key": "sellEntireBalance",
+                  "value": "false",
+                  "description": "If set to `true`, the taker's entire `sellToken` balance will be sold during trade execution. The `sellAmount` should be the maximum estimated value, as close as possible to the actual taker's balance to ensure the best routing. Selling more than the `sellAmount` may cause the trade to revert. This feature is designed for cases where the precise sell amount is determined during execution. Learn more [here](https://docs.0x.org/docs/0x-swap-api/additional-topics/sell-entire-balance)."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                "key": "0x-api-key",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) API version",
+                "key": "0x-version",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d071ba5b-58f3-41fc-9b8d-263a347b2c98",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "swap",
+                    "permit2",
+                    "price"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "chainId",
+                      "value": "1"
+                    },
+                    {
+                      "key": "buyToken",
+                      "value": "0xdac17f958d2ee523a2206206994597c13d831ec7"
+                    },
+                    {
+                      "key": "sellToken",
+                      "value": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
+                    },
+                    {
+                      "key": "sellAmount",
+                      "value": "100000000"
+                    },
+                    {
+                      "key": "buyAmount",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "taker",
+                      "value": "0x70a9f34f9b34c64957b9c401a97bfed35b95049e"
+                    },
+                    {
+                      "key": "txOrigin",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "recipient",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "swapFeeRecipient",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "swapFeeBps",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "swapFeeToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tradeSurplusRecipient",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tradeSurplusMaxBps",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "gasPrice",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slippageBps",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "slippagePpm",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "excludedSources",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sellEntireBalance",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                    "key": "0x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version",
+                    "key": "0x-version",
+                    "value": "v2"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"allowanceTarget\": \"0x000000000022d473030f116ddee9f6b43ac78ba3\",\n  \"blockNumber\": \"20114676\",\n  \"buyAmount\": \"100032748\",\n  \"buyToken\": \"0xdac17f958d2ee523a2206206994597c13d831ec7\",\n  \"fees\": {\n    \"integratorFee\": null,\n    \"zeroExFee\": null,\n    \"gasFee\": null\n  },\n  \"gas\": \"288095\",\n  \"gasPrice\": \"7062490000\",\n  \"issues\": {\n    \"allowance\": {\n      \"actual\": \"0\",\n      \"spender\": \"0x000000000022d473030f116ddee9f6b43ac78ba3\"\n    },\n    \"balance\": {\n      \"token\": \"0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48\",\n      \"actual\": \"0\",\n      \"expected\": \"100000000\"\n    },\n    \"simulationIncomplete\": false,\n    \"invalidSourcesPassed\": []\n  },\n  \"liquidityAvailable\": true,\n  \"mode\": \"exact-in\",\n  \"minBuyAmount\": \"99032421\",\n  \"route\": {\n    \"fills\": [\n      {\n        \"from\": \"0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48\",\n        \"to\": \"0xdac17f958d2ee523a2206206994597c13d831ec7\",\n        \"source\": \"SolidlyV3\",\n        \"proportionBps\": \"10000\"\n      }\n    ],\n    \"tokens\": [\n      {\n        \"address\": \"0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48\",\n        \"symbol\": \"USDC\"\n      },\n      {\n        \"address\": \"0xdac17f958d2ee523a2206206994597c13d831ec7\",\n        \"symbol\": \"USDT\"\n      }\n    ]\n  },\n  \"sellAmount\": \"100000000\",\n  \"sellToken\": \"0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48\",\n  \"tokenMetadata\": {\n    \"buyToken\": {\n      \"buyTaxBps\": \"0\",\n      \"sellTaxBps\": \"0\"\n    },\n    \"sellToken\": {\n      \"buyTaxBps\": \"0\",\n      \"sellTaxBps\": \"0\"\n    }\n  },\n  \"totalNetworkFee\": \"2034668056550000\",\n  \"zid\": \"0x111111111111111111111111\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8ef52447-dd02-4557-89f5-71416798fa1f",
+              "name": "400 error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "swap",
+                    "permit2",
+                    "price"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "chainId",
+                      "value": "1"
+                    },
+                    {
+                      "key": "buyToken",
+                      "value": "0xdac17f958d2ee523a2206206994597c13d831ec7"
+                    },
+                    {
+                      "key": "sellToken",
+                      "value": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
+                    },
+                    {
+                      "key": "sellAmount",
+                      "value": "100000000"
+                    },
+                    {
+                      "key": "buyAmount",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "taker",
+                      "value": "0x70a9f34f9b34c64957b9c401a97bfed35b95049e"
+                    },
+                    {
+                      "key": "txOrigin",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "recipient",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "swapFeeRecipient",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "swapFeeBps",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "swapFeeToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tradeSurplusRecipient",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tradeSurplusMaxBps",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "gasPrice",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slippageBps",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "slippagePpm",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "excludedSources",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sellEntireBalance",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                    "key": "0x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version",
+                    "key": "0x-version",
+                    "value": "v2"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"INPUT_INVALID\",\n  \"message\": \"string\",\n  \"data\": {\n    \"zid\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"reason\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"reason\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cac7403a-6ba1-44a6-8ce7-749e6384e13e",
+              "name": "403 error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "swap",
+                    "permit2",
+                    "price"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "chainId",
+                      "value": "1"
+                    },
+                    {
+                      "key": "buyToken",
+                      "value": "0xdac17f958d2ee523a2206206994597c13d831ec7"
+                    },
+                    {
+                      "key": "sellToken",
+                      "value": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
+                    },
+                    {
+                      "key": "sellAmount",
+                      "value": "100000000"
+                    },
+                    {
+                      "key": "buyAmount",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "taker",
+                      "value": "0x70a9f34f9b34c64957b9c401a97bfed35b95049e"
+                    },
+                    {
+                      "key": "txOrigin",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "recipient",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "swapFeeRecipient",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "swapFeeBps",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "swapFeeToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tradeSurplusRecipient",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tradeSurplusMaxBps",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "gasPrice",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slippageBps",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "slippagePpm",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "excludedSources",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sellEntireBalance",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                    "key": "0x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version",
+                    "key": "0x-version",
+                    "value": "v2"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"TAKER_NOT_AUTHORIZED_FOR_TRADE\",\n  \"message\": \"string\",\n  \"data\": {\n    \"zid\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b20fa96f-86ba-4162-bbbe-e04588a4d78d",
+              "name": "422 error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "swap",
+                    "permit2",
+                    "price"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "chainId",
+                      "value": "1"
+                    },
+                    {
+                      "key": "buyToken",
+                      "value": "0xdac17f958d2ee523a2206206994597c13d831ec7"
+                    },
+                    {
+                      "key": "sellToken",
+                      "value": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
+                    },
+                    {
+                      "key": "sellAmount",
+                      "value": "100000000"
+                    },
+                    {
+                      "key": "buyAmount",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "taker",
+                      "value": "0x70a9f34f9b34c64957b9c401a97bfed35b95049e"
+                    },
+                    {
+                      "key": "txOrigin",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "recipient",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "swapFeeRecipient",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "swapFeeBps",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "swapFeeToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tradeSurplusRecipient",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tradeSurplusMaxBps",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "gasPrice",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slippageBps",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "slippagePpm",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "excludedSources",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sellEntireBalance",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                    "key": "0x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version",
+                    "key": "0x-version",
+                    "value": "v2"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"BUY_TOKEN_NOT_AUTHORIZED_FOR_TRADE\",\n  \"message\": \"string\",\n  \"data\": {\n    \"zid\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eb9a00c4-fb2f-49a2-b592-d94ab14b5318",
+              "name": "500 error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "swap",
+                    "permit2",
+                    "price"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "chainId",
+                      "value": "1"
+                    },
+                    {
+                      "key": "buyToken",
+                      "value": "0xdac17f958d2ee523a2206206994597c13d831ec7"
+                    },
+                    {
+                      "key": "sellToken",
+                      "value": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
+                    },
+                    {
+                      "key": "sellAmount",
+                      "value": "100000000"
+                    },
+                    {
+                      "key": "buyAmount",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "taker",
+                      "value": "0x70a9f34f9b34c64957b9c401a97bfed35b95049e"
+                    },
+                    {
+                      "key": "txOrigin",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "recipient",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "swapFeeRecipient",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "swapFeeBps",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "swapFeeToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tradeSurplusRecipient",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tradeSurplusMaxBps",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "gasPrice",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slippageBps",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "slippagePpm",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "excludedSources",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sellEntireBalance",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                    "key": "0x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version",
+                    "key": "0x-version",
+                    "value": "v2"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"INTERNAL_SERVER_ERROR\",\n  \"message\": \"string\",\n  \"data\": {\n    \"zid\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a78e1c4f-35a6-4752-abe8-d2cdc7e8ad5a",
+          "name": "Get Quote (Permit2)",
+          "request": {
+            "name": "Get Quote (Permit2)",
+            "description": {
+              "content": "Get the firm quote for a swap using Permit2 to set allowances",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "swap",
+                "permit2",
+                "quote"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "chainId",
+                  "value": "<integer>",
+                  "description": "(Required) Chain ID. See [here](https://docs.0x.org/docs/introduction/supported-chains) for the list of supported chains"
+                },
+                {
+                  "disabled": false,
+                  "key": "buyToken",
+                  "value": "<string>",
+                  "description": "(Required) The contract address of the token to buy"
+                },
+                {
+                  "disabled": false,
+                  "key": "sellToken",
+                  "value": "<string>",
+                  "description": "(Required) The contract address of the token to sell"
+                },
+                {
+                  "disabled": false,
+                  "key": "sellAmount",
+                  "value": "<string>",
+                  "description": "The amount of `sellToken` in `sellToken` base units to sell"
+                },
+                {
+                  "disabled": false,
+                  "key": "buyAmount",
+                  "value": "<string>",
+                  "description": "The exact amount of `buyToken` in `buyToken` base units to buy"
+                },
+                {
+                  "disabled": false,
+                  "key": "taker",
+                  "value": "<string>",
+                  "description": "(Required) The address which holds the `sellToken` balance and has the allowance set for the swap"
+                },
+                {
+                  "disabled": false,
+                  "key": "txOrigin",
+                  "value": "<string>",
+                  "description": "The address of the external account that started the transaction. This is only needed if `taker` is a smart contract."
+                },
+                {
+                  "disabled": false,
+                  "key": "recipient",
+                  "value": "<string>",
+                  "description": "The address to receive the `buyToken`. If not provided, defaults to the taker address. Not supported for wrap/unwrap operations."
+                },
+                {
+                  "disabled": false,
+                  "key": "swapFeeRecipient",
+                  "value": "<string>",
+                  "description": "The wallet address to receive the specified trading fees (supports single or multiple comma-separated values). You must also specify the `swapFeeBps` in the request to use this feature. When multiple values are provided, must match length of `swapFeeBps`."
+                },
+                {
+                  "disabled": false,
+                  "key": "swapFeeBps",
+                  "value": "<string>",
+                  "description": "The amount in Bps of the `swapFeeToken` to charge and deliver to the `swapFeeRecipient` (supports single or multiple comma-separated values). You must also specify the `swapFeeRecipient` in the request to use this feature. For security, this field has a default limit of 1000 Bps. If your application requires a higher value, please reach out to us."
+                },
+                {
+                  "disabled": false,
+                  "key": "swapFeeToken",
+                  "value": "<string>",
+                  "description": "The contract address of the token to receive trading fees in (supports single or multiple comma-separated values). Each token must be set to the value of either the `buyToken` or the `sellToken`. If omitted, the fee token will be determined by 0x with preference to stablecoins and highly liquid assets. You must also specify the `swapFeeRecipient` and `swapFeeBps` to charge integrator fees. When multiple values are provided, must match length of `swapFeeBps`."
+                },
+                {
+                  "disabled": false,
+                  "key": "tradeSurplusRecipient",
+                  "value": "<string>",
+                  "description": "The address to receive any trade surplus. If specified, this address will receive trade surplus when applicable. Otherwise, the taker will receive the surplus. This feature is only available to selected integrators on a custom pricing plan. In other cases, the surplus will be collected by 0x. For assistance with a custom plan, please contact support."
+                },
+                {
+                  "disabled": false,
+                  "key": "tradeSurplusMaxBps",
+                  "value": "<integer>",
+                  "description": "The maximum trade surplus (positive slippage) that can be collected in Bps of the buy amount. If not provided, defaults to 10000 (100%). Must be used together with `tradeSurplusRecipient`."
+                },
+                {
+                  "disabled": false,
+                  "key": "gasPrice",
+                  "value": "<string>",
+                  "description": "The target gas price (in wei) for the swap transaction. If not provided, the default value is based on the 0x gas price oracle"
+                },
+                {
+                  "disabled": false,
+                  "key": "slippageBps",
+                  "value": "<integer>",
+                  "description": "The maximum acceptable slippage of the `buyToken` in Bps. If this parameter is set to 0, no slippage will be tolerated. If not provided, the default slippage tolerance is 100Bps"
+                },
+                {
+                  "disabled": false,
+                  "key": "slippagePpm",
+                  "value": "<integer>",
+                  "description": "The maximum acceptable slippage of the `buyToken` in parts-per-million (PPM). Mutually exclusive with `slippageBps`. e.g. 3000 PPM = 30 BPS = 0.30%."
+                },
+                {
+                  "disabled": false,
+                  "key": "excludedSources",
+                  "value": "<string>",
+                  "description": "Liquidity sources e.g. Uniswap_V3, SushiSwap, 0x_RFQ to exclude from the provided quote. `See https://api.0x.org/sources?chainId=<chain_id>` with the desired chain's ID for a full list of sources. Separate multiple sources with a comma"
+                },
+                {
+                  "disabled": false,
+                  "key": "sellEntireBalance",
+                  "value": "false",
+                  "description": "If set to `true`, the taker's entire `sellToken` balance will be sold during trade execution. The `sellAmount` should be the maximum estimated value, as close as possible to the actual taker's balance to ensure the best routing. Selling more than the `sellAmount` may cause the trade to revert. This feature is designed for cases where the precise sell amount is determined during execution. Learn more [here](https://docs.0x.org/docs/0x-swap-api/additional-topics/sell-entire-balance)."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                "key": "0x-api-key",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) API version",
+                "key": "0x-version",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "596ee806-149e-4e13-b077-fcfcb58d9965",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "swap",
+                    "permit2",
+                    "quote"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "chainId",
+                      "value": "1"
+                    },
+                    {
+                      "key": "buyToken",
+                      "value": "0xdac17f958d2ee523a2206206994597c13d831ec7"
+                    },
+                    {
+                      "key": "sellToken",
+                      "value": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
+                    },
+                    {
+                      "key": "sellAmount",
+                      "value": "100000000"
+                    },
+                    {
+                      "key": "buyAmount",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "taker",
+                      "value": "0x70a9f34f9b34c64957b9c401a97bfed35b95049e"
+                    },
+                    {
+                      "key": "txOrigin",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "recipient",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "swapFeeRecipient",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "swapFeeBps",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "swapFeeToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tradeSurplusRecipient",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tradeSurplusMaxBps",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "gasPrice",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slippageBps",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "slippagePpm",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "excludedSources",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sellEntireBalance",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                    "key": "0x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version",
+                    "key": "0x-version",
+                    "value": "v2"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"allowanceTarget\": \"0x000000000022d473030f116ddee9f6b43ac78ba3\",\n  \"blockNumber\": \"20114692\",\n  \"buyAmount\": \"100037537\",\n  \"buyToken\": \"0xdac17f958d2ee523a2206206994597c13d831ec7\",\n  \"fees\": {\n    \"integratorFee\": null,\n    \"zeroExFee\": null,\n    \"gasFee\": null\n  },\n  \"issues\": {\n    \"allowance\": {\n      \"actual\": \"0\",\n      \"spender\": \"0x000000000022d473030f116ddee9f6b43ac78ba3\"\n    },\n    \"balance\": {\n      \"token\": \"0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48\",\n      \"actual\": \"0\",\n      \"expected\": \"100000000\"\n    },\n    \"simulationIncomplete\": false,\n    \"invalidSourcesPassed\": []\n  },\n  \"liquidityAvailable\": true,\n  \"mode\": \"exact-in\",\n  \"minBuyAmount\": \"99037162\",\n  \"permit2\": {\n    \"type\": \"Permit2\",\n    \"hash\": \"0xab0c8909f2f8daed2891abb5e93762c65787e0067ef2ab9184bb635ad0f3df51\",\n    \"eip712\": {\n      \"types\": {\n        \"PermitTransferFrom\": [\n          {\n            \"name\": \"permitted\",\n            \"type\": \"TokenPermissions\"\n          },\n          {\n            \"name\": \"spender\",\n            \"type\": \"address\"\n          },\n          {\n            \"name\": \"nonce\",\n            \"type\": \"uint256\"\n          },\n          {\n            \"name\": \"deadline\",\n            \"type\": \"uint256\"\n          }\n        ],\n        \"TokenPermissions\": [\n          {\n            \"name\": \"token\",\n            \"type\": \"address\"\n          },\n          {\n            \"name\": \"amount\",\n            \"type\": \"uint256\"\n          }\n        ],\n        \"EIP712Domain\": [\n          {\n            \"name\": \"name\",\n            \"type\": \"string\"\n          },\n          {\n            \"name\": \"chainId\",\n            \"type\": \"uint256\"\n          },\n          {\n            \"name\": \"verifyingContract\",\n            \"type\": \"address\"\n          }\n        ]\n      },\n      \"domain\": {\n        \"name\": \"Permit2\",\n        \"chainId\": 1,\n        \"verifyingContract\": \"0x000000000022d473030f116ddee9f6b43ac78ba3\"\n      },\n      \"message\": {\n        \"permitted\": {\n          \"token\": \"0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48\",\n          \"amount\": \"100000000\"\n        },\n        \"spender\": \"0x7f6cee965959295cc64d0e6c00d99d6532d8e86b\",\n        \"nonce\": \"2241959297937691820908574931991575\",\n        \"deadline\": \"1718669420\"\n      },\n      \"primaryType\": \"PermitTransferFrom\"\n    }\n  },\n  \"route\": {\n    \"fills\": [\n      {\n        \"from\": \"0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48\",\n        \"to\": \"0xdac17f958d2ee523a2206206994597c13d831ec7\",\n        \"source\": \"SolidlyV3\",\n        \"proportionBps\": \"10000\"\n      }\n    ],\n    \"tokens\": [\n      {\n        \"address\": \"0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48\",\n        \"symbol\": \"USDC\"\n      },\n      {\n        \"address\": \"0xdac17f958d2ee523a2206206994597c13d831ec7\",\n        \"symbol\": \"USDT\"\n      }\n    ]\n  },\n  \"sellAmount\": \"100000000\",\n  \"sellToken\": \"0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48\",\n  \"tokenMetadata\": {\n    \"buyToken\": {\n      \"buyTaxBps\": \"0\",\n      \"sellTaxBps\": \"0\"\n    },\n    \"sellToken\": {\n      \"buyTaxBps\": \"0\",\n      \"sellTaxBps\": \"0\"\n    }\n  },\n  \"totalNetworkFee\": \"1393685870940000\",\n  \"transaction\": {\n    \"to\": \"0x7f6cee965959295cc64d0e6c00d99d6532d8e86b\",\n    \"data\": \"0x1fff991f00000000000000000000000070a9f34f9b34c64957b9c401a97bfed35b95049e000000000000000000000000dac17f958d2ee523a2206206994597c13d831ec70000000000000000000000000000000000000000000000000000000005e72fea00000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000001c00000000000000000000000000000000000000000000000000000000000000144c1fb425e0000000000000000000000007f6cee965959295cc64d0e6c00d99d6532d8e86b000000000000000000000000a0b86991c6218b36c1d19d4a2e9eb0ce3606eb480000000000000000000000000000000000000000000000000000000005f5e1000000000000000000000000000000000000006e898131631616b1779bad70bc17000000000000000000000000000000000000000000000000000000006670d06c00000000000000000000000000000000000000000000000000000000000000c00000000000000000000000000000000000000000000000000000000000000041ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000016438c9c147000000000000000000000000a0b86991c6218b36c1d19d4a2e9eb0ce3606eb4800000000000000000000000000000000000000000000000000000000000027100000000000000000000000006146be494fee4c73540cb1c5f87536abf1452500000000000000000000000000000000000000000000000000000000000000004400000000000000000000000000000000000000000000000000000000000000a00000000000000000000000000000000000000000000000000000000000000084c31b8d7a0000000000000000000000007f6cee965959295cc64d0e6c00d99d6532d8e86b00000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000005f5e10000000000000000000000000000000000000000000000000000000001000276a40000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000\",\n    \"gas\": \"288079\",\n    \"gasPrice\": \"4837860000\",\n    \"value\": \"0\"\n  },\n  \"zid\": \"0x111111111111111111111111\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "44609ed6-3179-4490-a6b1-9d3b25719e84",
+              "name": "400 error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "swap",
+                    "permit2",
+                    "quote"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "chainId",
+                      "value": "1"
+                    },
+                    {
+                      "key": "buyToken",
+                      "value": "0xdac17f958d2ee523a2206206994597c13d831ec7"
+                    },
+                    {
+                      "key": "sellToken",
+                      "value": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
+                    },
+                    {
+                      "key": "sellAmount",
+                      "value": "100000000"
+                    },
+                    {
+                      "key": "buyAmount",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "taker",
+                      "value": "0x70a9f34f9b34c64957b9c401a97bfed35b95049e"
+                    },
+                    {
+                      "key": "txOrigin",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "recipient",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "swapFeeRecipient",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "swapFeeBps",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "swapFeeToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tradeSurplusRecipient",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tradeSurplusMaxBps",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "gasPrice",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slippageBps",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "slippagePpm",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "excludedSources",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sellEntireBalance",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                    "key": "0x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version",
+                    "key": "0x-version",
+                    "value": "v2"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"INPUT_INVALID\",\n  \"message\": \"string\",\n  \"data\": {\n    \"zid\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"reason\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"reason\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5b0532ed-0417-4304-a141-684eadc0b73c",
+              "name": "403 error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "swap",
+                    "permit2",
+                    "quote"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "chainId",
+                      "value": "1"
+                    },
+                    {
+                      "key": "buyToken",
+                      "value": "0xdac17f958d2ee523a2206206994597c13d831ec7"
+                    },
+                    {
+                      "key": "sellToken",
+                      "value": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
+                    },
+                    {
+                      "key": "sellAmount",
+                      "value": "100000000"
+                    },
+                    {
+                      "key": "buyAmount",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "taker",
+                      "value": "0x70a9f34f9b34c64957b9c401a97bfed35b95049e"
+                    },
+                    {
+                      "key": "txOrigin",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "recipient",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "swapFeeRecipient",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "swapFeeBps",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "swapFeeToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tradeSurplusRecipient",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tradeSurplusMaxBps",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "gasPrice",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slippageBps",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "slippagePpm",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "excludedSources",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sellEntireBalance",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                    "key": "0x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version",
+                    "key": "0x-version",
+                    "value": "v2"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"TAKER_NOT_AUTHORIZED_FOR_TRADE\",\n  \"message\": \"string\",\n  \"data\": {\n    \"zid\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "598350c0-cb24-44d3-8208-a5cfc65ee99b",
+              "name": "422 error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "swap",
+                    "permit2",
+                    "quote"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "chainId",
+                      "value": "1"
+                    },
+                    {
+                      "key": "buyToken",
+                      "value": "0xdac17f958d2ee523a2206206994597c13d831ec7"
+                    },
+                    {
+                      "key": "sellToken",
+                      "value": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
+                    },
+                    {
+                      "key": "sellAmount",
+                      "value": "100000000"
+                    },
+                    {
+                      "key": "buyAmount",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "taker",
+                      "value": "0x70a9f34f9b34c64957b9c401a97bfed35b95049e"
+                    },
+                    {
+                      "key": "txOrigin",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "recipient",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "swapFeeRecipient",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "swapFeeBps",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "swapFeeToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tradeSurplusRecipient",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tradeSurplusMaxBps",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "gasPrice",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slippageBps",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "slippagePpm",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "excludedSources",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sellEntireBalance",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                    "key": "0x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version",
+                    "key": "0x-version",
+                    "value": "v2"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"BUY_TOKEN_NOT_AUTHORIZED_FOR_TRADE\",\n  \"message\": \"string\",\n  \"data\": {\n    \"zid\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a36ff772-328c-431b-a415-95c37e0c6241",
+              "name": "500 error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "swap",
+                    "permit2",
+                    "quote"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "chainId",
+                      "value": "1"
+                    },
+                    {
+                      "key": "buyToken",
+                      "value": "0xdac17f958d2ee523a2206206994597c13d831ec7"
+                    },
+                    {
+                      "key": "sellToken",
+                      "value": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
+                    },
+                    {
+                      "key": "sellAmount",
+                      "value": "100000000"
+                    },
+                    {
+                      "key": "buyAmount",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "taker",
+                      "value": "0x70a9f34f9b34c64957b9c401a97bfed35b95049e"
+                    },
+                    {
+                      "key": "txOrigin",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "recipient",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "swapFeeRecipient",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "swapFeeBps",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "swapFeeToken",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tradeSurplusRecipient",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tradeSurplusMaxBps",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "gasPrice",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slippageBps",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "slippagePpm",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "excludedSources",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sellEntireBalance",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                    "key": "0x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version",
+                    "key": "0x-version",
+                    "value": "v2"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"INTERNAL_SERVER_ERROR\",\n  \"message\": \"string\",\n  \"data\": {\n    \"zid\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "79c5f68c-fdb3-4557-8aeb-9560c9fd03eb",
+          "name": "Get Supported Chains",
+          "request": {
+            "name": "Get Supported Chains",
+            "description": {
+              "content": "Get list of supported chains for swap",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "swap",
+                "chains"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                "key": "0x-api-key",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) API version",
+                "key": "0x-version",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "807d1a47-20a2-4164-817a-942563522224",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "swap",
+                    "chains"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                    "key": "0x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version",
+                    "key": "0x-version",
+                    "value": "v2"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"chainName\": \"Ethereum\",\n    \"chainId\": \"1\"\n  },\n  {\n    \"chainName\": \"Optimism\",\n    \"chainId\": \"10\"\n  },\n  {\n    \"chainName\": \"BSC\",\n    \"chainId\": \"56\"\n  },\n  {\n    \"chainName\": \"Polygon\",\n    \"chainId\": \"137\"\n  },\n  {\n    \"chainName\": \"Base\",\n    \"chainId\": \"8453\"\n  },\n  {\n    \"chainName\": \"Arbitrum\",\n    \"chainId\": \"42161\"\n  },\n  {\n    \"chainName\": \"Avalanche\",\n    \"chainId\": \"43114\"\n  },\n  {\n    \"chainName\": \"Linea\",\n    \"chainId\": \"59144\"\n  },\n  {\n    \"chainName\": \"Scroll\",\n    \"chainId\": \"534352\"\n  },\n  {\n    \"chainName\": \"Mantle\",\n    \"chainId\": \"5000\"\n  },\n  {\n    \"chainName\": \"Blast\",\n    \"chainId\": \"81457\"\n  },\n  {\n    \"chainName\": \"Mode\",\n    \"chainId\": \"34443\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e92aff81-7fb3-438a-bc1f-ec33a6050926",
+              "name": "500 error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "swap",
+                    "chains"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                    "key": "0x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version",
+                    "key": "0x-version",
+                    "value": "v2"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"INTERNAL_SERVER_ERROR\",\n  \"message\": \"string\",\n  \"data\": {\n    \"zid\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.0x.org",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "389fd167-75d3-412d-b229-ee0a1c6dd561",
+    "name": "0x Cross-Chain Swap API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This is the official API reference for the latest 0x API (v2).",
+      "type": "text/plain"
+    }
+  }
+}

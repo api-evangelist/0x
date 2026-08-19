@@ -1,0 +1,587 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "0x Cross-Chain Swap API",
+    "version": "v2"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Swap",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Price (Allowance Holder)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.0x.org/swap/allowance-holder/price",
+            "headers": [
+              {
+                "name": "0x-api-key",
+                "value": ""
+              },
+              {
+                "name": "0x-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "chainId",
+                "value": "1",
+                "type": "query",
+                "description": "Chain ID. See [here](https://docs.0x.org/docs/introduction/supported-chains) for the list of supported chains"
+              },
+              {
+                "name": "buyToken",
+                "value": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+                "type": "query",
+                "description": "The contract address of the token to buy"
+              },
+              {
+                "name": "sellToken",
+                "value": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+                "type": "query",
+                "description": "The contract address of the token to sell"
+              },
+              {
+                "name": "sellAmount",
+                "value": "100000000",
+                "type": "query",
+                "description": "The amount of `sellToken` in `sellToken` base units to sell"
+              },
+              {
+                "name": "buyAmount",
+                "value": "",
+                "type": "query",
+                "description": "The exact amount of `buyToken` in `buyToken` base units to buy"
+              },
+              {
+                "name": "taker",
+                "value": "0x70a9f34f9b34c64957b9c401a97bfed35b95049e",
+                "type": "query",
+                "description": "The address which holds the `sellToken` balance and has the allowance set for the swap"
+              },
+              {
+                "name": "txOrigin",
+                "value": "",
+                "type": "query",
+                "description": "The address of the external account that started the transaction. This is only needed if `taker` is a smart contract."
+              },
+              {
+                "name": "recipient",
+                "value": "",
+                "type": "query",
+                "description": "The address to receive the `buyToken`. If not provided, defaults to the taker address. Not supported for wrap/unwrap operations."
+              },
+              {
+                "name": "swapFeeRecipient",
+                "value": "",
+                "type": "query",
+                "description": "The wallet address to receive the specified trading fees (supports single or multiple comma-separated values). You must also specify the `swapFeeBps` in the request to use this feature. When multiple values are provided, must match length of `swapFeeBps`."
+              },
+              {
+                "name": "swapFeeBps",
+                "value": "",
+                "type": "query",
+                "description": "The amount in Bps of the `swapFeeToken` to charge and deliver to the `swapFeeRecipient` (supports single or multiple comma-separated values). You must also specify the `swapFeeRecipient` in the request to use this feature. For security, this field has a default limit of 1000 Bps. If your application requires a higher value, please reach out to us."
+              },
+              {
+                "name": "swapFeeToken",
+                "value": "",
+                "type": "query",
+                "description": "The contract address of the token to receive trading fees in (supports single or multiple comma-separated values). Each token must be set to the value of either the `buyToken` or the `sellToken`. If omitted, the fee token will be determined by 0x with preference to stablecoins and highly liquid assets. You must also specify the `swapFeeRecipient` and `swapFeeBps` to charge integrator fees. When multiple values are provided, must match length of `swapFeeBps`."
+              },
+              {
+                "name": "tradeSurplusRecipient",
+                "value": "",
+                "type": "query",
+                "description": "The address to receive any trade surplus. If specified, this address will receive trade surplus when applicable. Otherwise, the taker will receive the surplus. This feature is only available to selected integrators on a custom pricing plan. In other cases, the surplus will be collected by 0x. For assistance with a custom plan, please contact support."
+              },
+              {
+                "name": "tradeSurplusMaxBps",
+                "value": "",
+                "type": "query",
+                "description": "The maximum trade surplus (positive slippage) that can be collected in Bps of the buy amount. If not provided, defaults to 10000 (100%). Must be used together with `tradeSurplusRecipient`."
+              },
+              {
+                "name": "gasPrice",
+                "value": "",
+                "type": "query",
+                "description": "The target gas price (in wei) for the swap transaction. If not provided, the default value is based on the 0x gas price oracle"
+              },
+              {
+                "name": "slippageBps",
+                "value": "",
+                "type": "query",
+                "description": "The maximum acceptable slippage of the `buyToken` in Bps. If this parameter is set to 0, no slippage will be tolerated. If not provided, the default slippage tolerance is 100Bps"
+              },
+              {
+                "name": "slippagePpm",
+                "value": "",
+                "type": "query",
+                "description": "The maximum acceptable slippage of the `buyToken` in parts-per-million (PPM). Mutually exclusive with `slippageBps`. e.g. 3000 PPM = 30 BPS = 0.30%."
+              },
+              {
+                "name": "excludedSources",
+                "value": "",
+                "type": "query",
+                "description": "Liquidity sources e.g. Uniswap_V3, SushiSwap, 0x_RFQ to exclude from the provided quote. See https://api.0x.org/sources?chainId=<chain_id> with the desired chain's ID for a full list of sources. Separate multiple sources with a comma"
+              },
+              {
+                "name": "sellEntireBalance",
+                "value": "",
+                "type": "query",
+                "description": "If set to `true`, the taker's entire `sellToken` balance will be sold during trade execution. The `sellAmount` should be the maximum estimated value, as close as possible to the actual taker's balance to ensure the best routing. Selling more than the `sellAmount` may cause the trade to revert. This feature is designed for cases where the precise sell amount is determined during execution. Learn more [here](https://docs.0x.org/docs/0x-swap-api/additional-topics/sell-entire-balance)."
+              },
+              {
+                "name": "wrapUnwrapMode",
+                "value": "",
+                "type": "query",
+                "description": "Controls how native wrap/unwrap trades are executed. `direct` calls the wrapped-native token contract directly. `settler` routes wrap/unwrap through Settler or Allowance Holder for compatibility. Ignored for non-wrap/unwrap swaps. If omitted, `direct` mode is used."
+              }
+            ]
+          },
+          "docs": "Get the indicative price for a swap using Allowance Holder to set allowances"
+        },
+        {
+          "info": {
+            "name": "Get Quote (Allowance Holder)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.0x.org/swap/allowance-holder/quote",
+            "headers": [
+              {
+                "name": "0x-api-key",
+                "value": ""
+              },
+              {
+                "name": "0x-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "chainId",
+                "value": "1",
+                "type": "query",
+                "description": "Chain ID. See [here](https://docs.0x.org/docs/introduction/supported-chains) for the list of supported chains"
+              },
+              {
+                "name": "buyToken",
+                "value": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+                "type": "query",
+                "description": "The contract address of the token to buy"
+              },
+              {
+                "name": "sellToken",
+                "value": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+                "type": "query",
+                "description": "The contract address of the token to sell"
+              },
+              {
+                "name": "sellAmount",
+                "value": "100000000",
+                "type": "query",
+                "description": "The amount of `sellToken` in `sellToken` base units to sell"
+              },
+              {
+                "name": "buyAmount",
+                "value": "",
+                "type": "query",
+                "description": "The exact amount of `buyToken` in `buyToken` base units to buy"
+              },
+              {
+                "name": "taker",
+                "value": "0x70a9f34f9b34c64957b9c401a97bfed35b95049e",
+                "type": "query",
+                "description": "The address which holds the `sellToken` balance and has the allowance set for the swap"
+              },
+              {
+                "name": "txOrigin",
+                "value": "",
+                "type": "query",
+                "description": "The address of the external account that started the transaction. This is only needed if `taker` is a smart contract."
+              },
+              {
+                "name": "recipient",
+                "value": "",
+                "type": "query",
+                "description": "The address to receive the `buyToken`. If not provided, defaults to the taker address. Not supported for wrap/unwrap operations."
+              },
+              {
+                "name": "swapFeeRecipient",
+                "value": "",
+                "type": "query",
+                "description": "The wallet address to receive the specified trading fees (supports single or multiple comma-separated values). You must also specify the `swapFeeBps` in the request to use this feature. When multiple values are provided, must match length of `swapFeeBps`."
+              },
+              {
+                "name": "swapFeeBps",
+                "value": "",
+                "type": "query",
+                "description": "The amount in Bps of the `swapFeeToken` to charge and deliver to the `swapFeeRecipient` (supports single or multiple comma-separated values). You must also specify the `swapFeeRecipient` in the request to use this feature. For security, this field has a default limit of 1000 Bps. If your application requires a higher value, please reach out to us."
+              },
+              {
+                "name": "swapFeeToken",
+                "value": "",
+                "type": "query",
+                "description": "The contract address of the token to receive trading fees in (supports single or multiple comma-separated values). Each token must be set to the value of either the `buyToken` or the `sellToken`. If omitted, the fee token will be determined by 0x with preference to stablecoins and highly liquid assets. You must also specify the `swapFeeRecipient` and `swapFeeBps` to charge integrator fees. When multiple values are provided, must match length of `swapFeeBps`."
+              },
+              {
+                "name": "tradeSurplusRecipient",
+                "value": "",
+                "type": "query",
+                "description": "The address to receive any trade surplus. If specified, this address will receive trade surplus when applicable. Otherwise, the taker will receive the surplus. This feature is only available to selected integrators on a custom pricing plan. In other cases, the surplus will be collected by 0x. For assistance with a custom plan, please contact support."
+              },
+              {
+                "name": "tradeSurplusMaxBps",
+                "value": "",
+                "type": "query",
+                "description": "The maximum trade surplus (positive slippage) that can be collected in Bps of the buy amount. If not provided, defaults to 10000 (100%). Must be used together with `tradeSurplusRecipient`."
+              },
+              {
+                "name": "gasPrice",
+                "value": "",
+                "type": "query",
+                "description": "The target gas price (in wei) for the swap transaction. If not provided, the default value is based on the 0x gas price oracle"
+              },
+              {
+                "name": "slippageBps",
+                "value": "",
+                "type": "query",
+                "description": "The maximum acceptable slippage of the `buyToken` in Bps. If this parameter is set to 0, no slippage will be tolerated. If not provided, the default slippage tolerance is 100Bps"
+              },
+              {
+                "name": "slippagePpm",
+                "value": "",
+                "type": "query",
+                "description": "The maximum acceptable slippage of the `buyToken` in parts-per-million (PPM). Mutually exclusive with `slippageBps`. e.g. 3000 PPM = 30 BPS = 0.30%."
+              },
+              {
+                "name": "excludedSources",
+                "value": "",
+                "type": "query",
+                "description": "Liquidity sources e.g. Uniswap_V3, SushiSwap, 0x_RFQ to exclude from the provided quote. `See https://api.0x.org/sources?chainId=<chain_id>` with the desired chain's ID for a full list of sources. Separate multiple sources with a comma"
+              },
+              {
+                "name": "sellEntireBalance",
+                "value": "",
+                "type": "query",
+                "description": "If set to `true`, the taker's entire `sellToken` balance will be sold during trade execution. The `sellAmount` should be the maximum estimated value, as close as possible to the actual taker's balance to ensure the best routing. Selling more than the `sellAmount` may cause the trade to revert. This feature is designed for cases where the precise sell amount is determined during execution. Learn more [here](https://docs.0x.org/docs/0x-swap-api/additional-topics/sell-entire-balance)."
+              },
+              {
+                "name": "wrapUnwrapMode",
+                "value": "",
+                "type": "query",
+                "description": "Controls how native wrap/unwrap trades are executed. `direct` calls the wrapped-native token contract directly. `settler` routes wrap/unwrap through Settler or Allowance Holder for compatibility. Ignored for non-wrap/unwrap swaps. If omitted, `direct` mode is used."
+              }
+            ]
+          },
+          "docs": "Get the firm quote for a swap using Allowance Holder to set allowances"
+        },
+        {
+          "info": {
+            "name": "Get Price (Permit2)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.0x.org/swap/permit2/price",
+            "headers": [
+              {
+                "name": "0x-api-key",
+                "value": ""
+              },
+              {
+                "name": "0x-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "chainId",
+                "value": "1",
+                "type": "query",
+                "description": "Chain ID. See [here](https://docs.0x.org/docs/introduction/supported-chains) for the list of supported chains"
+              },
+              {
+                "name": "buyToken",
+                "value": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+                "type": "query",
+                "description": "The contract address of the token to buy"
+              },
+              {
+                "name": "sellToken",
+                "value": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+                "type": "query",
+                "description": "The contract address of the token to sell"
+              },
+              {
+                "name": "sellAmount",
+                "value": "100000000",
+                "type": "query",
+                "description": "The amount of `sellToken` in `sellToken` base units to sell"
+              },
+              {
+                "name": "buyAmount",
+                "value": "",
+                "type": "query",
+                "description": "The exact amount of `buyToken` in `buyToken` base units to buy"
+              },
+              {
+                "name": "taker",
+                "value": "0x70a9f34f9b34c64957b9c401a97bfed35b95049e",
+                "type": "query",
+                "description": "The address which holds the `sellToken` balance and has the allowance set for the swap"
+              },
+              {
+                "name": "txOrigin",
+                "value": "",
+                "type": "query",
+                "description": "The address of the external account that started the transaction. This is only needed if `taker` is a smart contract."
+              },
+              {
+                "name": "recipient",
+                "value": "",
+                "type": "query",
+                "description": "The address to receive the `buyToken`. If not provided, defaults to the taker address. Not supported for wrap/unwrap operations."
+              },
+              {
+                "name": "swapFeeRecipient",
+                "value": "",
+                "type": "query",
+                "description": "The wallet address to receive the specified trading fees (supports single or multiple comma-separated values). You must also specify the `swapFeeBps` in the request to use this feature. When multiple values are provided, must match length of `swapFeeBps`."
+              },
+              {
+                "name": "swapFeeBps",
+                "value": "",
+                "type": "query",
+                "description": "The amount in Bps of the `swapFeeToken` to charge and deliver to the `swapFeeRecipient` (supports single or multiple comma-separated values). You must also specify the `swapFeeRecipient` in the request to use this feature. For security, this field has a default limit of 1000 Bps. If your application requires a higher value, please reach out to us."
+              },
+              {
+                "name": "swapFeeToken",
+                "value": "",
+                "type": "query",
+                "description": "The contract address of the token to receive trading fees in (supports single or multiple comma-separated values). Each token must be set to the value of either the `buyToken` or the `sellToken`. If omitted, the fee token will be determined by 0x with preference to stablecoins and highly liquid assets. You must also specify the `swapFeeRecipient` and `swapFeeBps` to charge integrator fees. When multiple values are provided, must match length of `swapFeeBps`."
+              },
+              {
+                "name": "tradeSurplusRecipient",
+                "value": "",
+                "type": "query",
+                "description": "The address to receive any trade surplus. If specified, this address will receive trade surplus when applicable. Otherwise, the taker will receive the surplus. This feature is only available to selected integrators on a custom pricing plan. In other cases, the surplus will be collected by 0x. For assistance with a custom plan, please contact support."
+              },
+              {
+                "name": "tradeSurplusMaxBps",
+                "value": "",
+                "type": "query",
+                "description": "The maximum trade surplus (positive slippage) that can be collected in Bps of the buy amount. If not provided, defaults to 10000 (100%). Must be used together with `tradeSurplusRecipient`."
+              },
+              {
+                "name": "gasPrice",
+                "value": "",
+                "type": "query",
+                "description": "The target gas price (in wei) for the swap transaction. If not provided, the default value is based on the 0x gas price oracle"
+              },
+              {
+                "name": "slippageBps",
+                "value": "",
+                "type": "query",
+                "description": "The maximum acceptable slippage of the `buyToken` in Bps. If this parameter is set to 0, no slippage will be tolerated. If not provided, the default slippage tolerance is 100Bps"
+              },
+              {
+                "name": "slippagePpm",
+                "value": "",
+                "type": "query",
+                "description": "The maximum acceptable slippage of the `buyToken` in parts-per-million (PPM). Mutually exclusive with `slippageBps`. e.g. 3000 PPM = 30 BPS = 0.30%."
+              },
+              {
+                "name": "excludedSources",
+                "value": "",
+                "type": "query",
+                "description": "Liquidity sources e.g. Uniswap_V3, SushiSwap, 0x_RFQ to exclude from the provided quote. See https://api.0x.org/sources?chainId=<chain_id> with the desired chain's ID for a full list of sources. Separate multiple sources with a comma"
+              },
+              {
+                "name": "sellEntireBalance",
+                "value": "",
+                "type": "query",
+                "description": "If set to `true`, the taker's entire `sellToken` balance will be sold during trade execution. The `sellAmount` should be the maximum estimated value, as close as possible to the actual taker's balance to ensure the best routing. Selling more than the `sellAmount` may cause the trade to revert. This feature is designed for cases where the precise sell amount is determined during execution. Learn more [here](https://docs.0x.org/docs/0x-swap-api/additional-topics/sell-entire-balance)."
+              },
+              {
+                "name": "wrapUnwrapMode",
+                "value": "",
+                "type": "query",
+                "description": "Controls how native wrap/unwrap trades are executed. `direct` calls the wrapped-native token contract directly. `settler` routes wrap/unwrap through Settler or Allowance Holder for compatibility. Ignored for non-wrap/unwrap swaps. If omitted, `direct` mode is used."
+              }
+            ]
+          },
+          "docs": "Get the indicative price for a swap using Permit2 to set allowances"
+        },
+        {
+          "info": {
+            "name": "Get Quote (Permit2)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.0x.org/swap/permit2/quote",
+            "headers": [
+              {
+                "name": "0x-api-key",
+                "value": ""
+              },
+              {
+                "name": "0x-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "chainId",
+                "value": "1",
+                "type": "query",
+                "description": "Chain ID. See [here](https://docs.0x.org/docs/introduction/supported-chains) for the list of supported chains"
+              },
+              {
+                "name": "buyToken",
+                "value": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+                "type": "query",
+                "description": "The contract address of the token to buy"
+              },
+              {
+                "name": "sellToken",
+                "value": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+                "type": "query",
+                "description": "The contract address of the token to sell"
+              },
+              {
+                "name": "sellAmount",
+                "value": "100000000",
+                "type": "query",
+                "description": "The amount of `sellToken` in `sellToken` base units to sell"
+              },
+              {
+                "name": "buyAmount",
+                "value": "",
+                "type": "query",
+                "description": "The exact amount of `buyToken` in `buyToken` base units to buy"
+              },
+              {
+                "name": "taker",
+                "value": "0x70a9f34f9b34c64957b9c401a97bfed35b95049e",
+                "type": "query",
+                "description": "The address which holds the `sellToken` balance and has the allowance set for the swap"
+              },
+              {
+                "name": "txOrigin",
+                "value": "",
+                "type": "query",
+                "description": "The address of the external account that started the transaction. This is only needed if `taker` is a smart contract."
+              },
+              {
+                "name": "recipient",
+                "value": "",
+                "type": "query",
+                "description": "The address to receive the `buyToken`. If not provided, defaults to the taker address. Not supported for wrap/unwrap operations."
+              },
+              {
+                "name": "swapFeeRecipient",
+                "value": "",
+                "type": "query",
+                "description": "The wallet address to receive the specified trading fees (supports single or multiple comma-separated values). You must also specify the `swapFeeBps` in the request to use this feature. When multiple values are provided, must match length of `swapFeeBps`."
+              },
+              {
+                "name": "swapFeeBps",
+                "value": "",
+                "type": "query",
+                "description": "The amount in Bps of the `swapFeeToken` to charge and deliver to the `swapFeeRecipient` (supports single or multiple comma-separated values). You must also specify the `swapFeeRecipient` in the request to use this feature. For security, this field has a default limit of 1000 Bps. If your application requires a higher value, please reach out to us."
+              },
+              {
+                "name": "swapFeeToken",
+                "value": "",
+                "type": "query",
+                "description": "The contract address of the token to receive trading fees in (supports single or multiple comma-separated values). Each token must be set to the value of either the `buyToken` or the `sellToken`. If omitted, the fee token will be determined by 0x with preference to stablecoins and highly liquid assets. You must also specify the `swapFeeRecipient` and `swapFeeBps` to charge integrator fees. When multiple values are provided, must match length of `swapFeeBps`."
+              },
+              {
+                "name": "tradeSurplusRecipient",
+                "value": "",
+                "type": "query",
+                "description": "The address to receive any trade surplus. If specified, this address will receive trade surplus when applicable. Otherwise, the taker will receive the surplus. This feature is only available to selected integrators on a custom pricing plan. In other cases, the surplus will be collected by 0x. For assistance with a custom plan, please contact support."
+              },
+              {
+                "name": "tradeSurplusMaxBps",
+                "value": "",
+                "type": "query",
+                "description": "The maximum trade surplus (positive slippage) that can be collected in Bps of the buy amount. If not provided, defaults to 10000 (100%). Must be used together with `tradeSurplusRecipient`."
+              },
+              {
+                "name": "gasPrice",
+                "value": "",
+                "type": "query",
+                "description": "The target gas price (in wei) for the swap transaction. If not provided, the default value is based on the 0x gas price oracle"
+              },
+              {
+                "name": "slippageBps",
+                "value": "",
+                "type": "query",
+                "description": "The maximum acceptable slippage of the `buyToken` in Bps. If this parameter is set to 0, no slippage will be tolerated. If not provided, the default slippage tolerance is 100Bps"
+              },
+              {
+                "name": "slippagePpm",
+                "value": "",
+                "type": "query",
+                "description": "The maximum acceptable slippage of the `buyToken` in parts-per-million (PPM). Mutually exclusive with `slippageBps`. e.g. 3000 PPM = 30 BPS = 0.30%."
+              },
+              {
+                "name": "excludedSources",
+                "value": "",
+                "type": "query",
+                "description": "Liquidity sources e.g. Uniswap_V3, SushiSwap, 0x_RFQ to exclude from the provided quote. `See https://api.0x.org/sources?chainId=<chain_id>` with the desired chain's ID for a full list of sources. Separate multiple sources with a comma"
+              },
+              {
+                "name": "sellEntireBalance",
+                "value": "",
+                "type": "query",
+                "description": "If set to `true`, the taker's entire `sellToken` balance will be sold during trade execution. The `sellAmount` should be the maximum estimated value, as close as possible to the actual taker's balance to ensure the best routing. Selling more than the `sellAmount` may cause the trade to revert. This feature is designed for cases where the precise sell amount is determined during execution. Learn more [here](https://docs.0x.org/docs/0x-swap-api/additional-topics/sell-entire-balance)."
+              },
+              {
+                "name": "wrapUnwrapMode",
+                "value": "",
+                "type": "query",
+                "description": "Controls how native wrap/unwrap trades are executed. `direct` calls the wrapped-native token contract directly. `settler` routes wrap/unwrap through Settler or Allowance Holder for compatibility. Ignored for non-wrap/unwrap swaps. If omitted, `direct` mode is used."
+              }
+            ]
+          },
+          "docs": "Get the firm quote for a swap using Permit2 to set allowances"
+        },
+        {
+          "info": {
+            "name": "Get Supported Chains",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.0x.org/swap/chains",
+            "headers": [
+              {
+                "name": "0x-api-key",
+                "value": ""
+              },
+              {
+                "name": "0x-version",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Get list of supported chains for swap"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

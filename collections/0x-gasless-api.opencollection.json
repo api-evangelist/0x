@@ -1,0 +1,342 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "0x Cross-Chain Gasless API",
+    "version": "v2"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Gasless",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Gasless Price",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.0x.org/gasless/price",
+            "headers": [
+              {
+                "name": "0x-api-key",
+                "value": ""
+              },
+              {
+                "name": "0x-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "chainId",
+                "value": "1",
+                "type": "query",
+                "description": "Chain ID. See [here](https://docs.0x.org/docs/introduction/supported-chains) for the list of supported chains"
+              },
+              {
+                "name": "buyToken",
+                "value": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+                "type": "query",
+                "description": "The contract address of the token to buy"
+              },
+              {
+                "name": "sellToken",
+                "value": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+                "type": "query",
+                "description": "The contract address of the token to sell. Native token is not supported"
+              },
+              {
+                "name": "sellAmount",
+                "value": "300000000",
+                "type": "query",
+                "description": "The amount of `sellToken` in `sellToken` base units to sell"
+              },
+              {
+                "name": "taker",
+                "value": "0x70a9f34f9b34c64957b9c401a97bfed35b95049e",
+                "type": "query",
+                "description": "The address which holds the `sellToken` balance and has the allowance set for the swap"
+              },
+              {
+                "name": "recipient",
+                "value": "",
+                "type": "query",
+                "description": "The address to receive the `buyToken`. If not provided, defaults to the taker address. Not supported for wrap/unwrap operations."
+              },
+              {
+                "name": "swapFeeRecipient",
+                "value": "",
+                "type": "query",
+                "description": "The wallet address to receive the specified trading fees (supports single or multiple comma-separated values). You must also specify the `swapFeeBps` in the request to use this feature. When multiple values are provided, must match length of `swapFeeBps`."
+              },
+              {
+                "name": "swapFeeBps",
+                "value": "",
+                "type": "query",
+                "description": "The amount in Bps of the `swapFeeToken` to charge and deliver to the `swapFeeRecipient` (supports single or multiple comma-separated values). You must also specify the `swapFeeRecipient` in the request to use this feature. For security, this field has a default limit of 1000 Bps. If your application requires a higher value, please reach out to us."
+              },
+              {
+                "name": "swapFeeToken",
+                "value": "",
+                "type": "query",
+                "description": "The contract address of the token to receive trading fees in (supports single or multiple comma-separated values). Each token must be set to the value of either the `buyToken` or the `sellToken`. If omitted, the fee token will be determined by 0x with preference to stablecoins and highly liquid assets. You must also specify the `swapFeeRecipient` and `swapFeeBps` to charge integrator fees. When multiple values are provided, must match length of `swapFeeBps`."
+              },
+              {
+                "name": "tradeSurplusRecipient",
+                "value": "",
+                "type": "query",
+                "description": "The address to receive any trade surplus. If specified, this address will receive trade surplus when applicable. Otherwise, the taker will receive the surplus. This feature is only available to selected integrators on a custom pricing plan. In other cases, the surplus will be collected by 0x. For assistance with a custom plan, please contact support."
+              },
+              {
+                "name": "tradeSurplusMaxBps",
+                "value": "",
+                "type": "query",
+                "description": "The maximum trade surplus (positive slippage) that can be collected in Bps of the buy amount. If not provided, defaults to 10000 (100%). Must be used together with `tradeSurplusRecipient`."
+              },
+              {
+                "name": "slippageBps",
+                "value": "",
+                "type": "query",
+                "description": "The maximum acceptable slippage of the `buyToken` in Bps. 0x sets the optimal slippage tolerance per trade by default. To mitigate the risk of MEV attacks, we recommend adjusting this value only when trading low-liquidity tokens."
+              },
+              {
+                "name": "slippagePpm",
+                "value": "",
+                "type": "query",
+                "description": "The maximum acceptable slippage of the `buyToken` in parts-per-million (PPM). Mutually exclusive with `slippageBps`. e.g. 3000 PPM = 30 BPS = 0.30%."
+              },
+              {
+                "name": "excludedSources",
+                "value": "",
+                "type": "query",
+                "description": "Liquidity sources e.g. Uniswap_V3, SushiSwap, 0x_RFQ to exclude from the provided quote. `See https://api.0x.org/sources?chainId=<chain_id>` with the desired chain's ID for a full list of sources. Separate multiple sources with a comma"
+              }
+            ]
+          },
+          "docs": "Get the indicative price for a gasless swap"
+        },
+        {
+          "info": {
+            "name": "Get Gasless Quote",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.0x.org/gasless/quote",
+            "headers": [
+              {
+                "name": "0x-api-key",
+                "value": ""
+              },
+              {
+                "name": "0x-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "chainId",
+                "value": "1",
+                "type": "query",
+                "description": "Chain ID. See [here](https://docs.0x.org/docs/introduction/supported-chains) for the list of supported chains"
+              },
+              {
+                "name": "buyToken",
+                "value": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+                "type": "query",
+                "description": "The contract address of the token to buy"
+              },
+              {
+                "name": "sellToken",
+                "value": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+                "type": "query",
+                "description": "The contract address of the token to sell. Native token is not supported"
+              },
+              {
+                "name": "sellAmount",
+                "value": "300000000",
+                "type": "query",
+                "description": "The amount of `sellToken` in `sellToken` base units to sell"
+              },
+              {
+                "name": "taker",
+                "value": "0x70a9f34f9b34c64957b9c401a97bfed35b95049e",
+                "type": "query",
+                "description": "The address which holds the `sellToken` balance and has the allowance set for the swap"
+              },
+              {
+                "name": "recipient",
+                "value": "",
+                "type": "query",
+                "description": "The address to receive the `buyToken`. If not provided, defaults to the taker address. Not supported for wrap/unwrap operations."
+              },
+              {
+                "name": "swapFeeRecipient",
+                "value": "",
+                "type": "query",
+                "description": "The wallet address to receive the specified trading fees (supports single or multiple comma-separated values). You must also specify the `swapFeeBps` in the request to use this feature. When multiple values are provided, must match length of `swapFeeBps`."
+              },
+              {
+                "name": "swapFeeBps",
+                "value": "",
+                "type": "query",
+                "description": "The amount in Bps of the `swapFeeToken` to charge and deliver to the `swapFeeRecipient` (supports single or multiple comma-separated values). You must also specify the `swapFeeRecipient` in the request to use this feature. For security, this field has a default limit of 1000 Bps. If your application requires a higher value, please reach out to us."
+              },
+              {
+                "name": "swapFeeToken",
+                "value": "",
+                "type": "query",
+                "description": "The contract address of the token to receive trading fees in (supports single or multiple comma-separated values). Each token must be set to the value of either the `buyToken` or the `sellToken`. If omitted, the fee token will be determined by 0x with preference to stablecoins and highly liquid assets. You must also specify the `swapFeeRecipient` and `swapFeeBps` to charge integrator fees. When multiple values are provided, must match length of `swapFeeBps`."
+              },
+              {
+                "name": "tradeSurplusRecipient",
+                "value": "",
+                "type": "query",
+                "description": "The address to receive any trade surplus. If specified, this address will receive trade surplus when applicable. Otherwise, the taker will receive the surplus. This feature is only available to selected integrators on a custom pricing plan. In other cases, the surplus will be collected by 0x. For assistance with a custom plan, please contact support."
+              },
+              {
+                "name": "tradeSurplusMaxBps",
+                "value": "",
+                "type": "query",
+                "description": "The maximum trade surplus (positive slippage) that can be collected in Bps of the buy amount. If not provided, defaults to 10000 (100%). Must be used together with `tradeSurplusRecipient`."
+              },
+              {
+                "name": "slippageBps",
+                "value": "",
+                "type": "query",
+                "description": "The maximum acceptable slippage of the `buyToken` in Bps. 0x sets the optimal slippage tolerance per trade by default. To mitigate the risk of MEV attacks, we recommend adjusting this value only when trading low-liquidity tokens."
+              },
+              {
+                "name": "slippagePpm",
+                "value": "",
+                "type": "query",
+                "description": "The maximum acceptable slippage of the `buyToken` in parts-per-million (PPM). Mutually exclusive with `slippageBps`. e.g. 3000 PPM = 30 BPS = 0.30%."
+              },
+              {
+                "name": "excludedSources",
+                "value": "",
+                "type": "query",
+                "description": "Liquidity sources e.g. Uniswap_V3, SushiSwap, 0x_RFQ to exclude from the provided quote. See `https://api.0x.org/sources?chainId=<chain_id>` with the desired chain's ID for a full list of sources. Separate multiple sources with a comma"
+              }
+            ]
+          },
+          "docs": "Get the firm quote for a gasless swap"
+        },
+        {
+          "info": {
+            "name": "Submit Gasless Trade",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.0x.org/gasless/submit",
+            "headers": [
+              {
+                "name": "0x-api-key",
+                "value": ""
+              },
+              {
+                "name": "0x-version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submit a gasless swap"
+        },
+        {
+          "info": {
+            "name": "Get Gasless Trade Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.0x.org/gasless/status/:tradeHash",
+            "headers": [
+              {
+                "name": "0x-api-key",
+                "value": ""
+              },
+              {
+                "name": "0x-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "chainId",
+                "value": "8453",
+                "type": "query",
+                "description": " [here](https://docs.0x.org/docs/introduction/supported-chains) for the list of supported chains"
+              },
+              {
+                "name": "tradeHash",
+                "value": "0x6c89e4ac46b246ab72cba02a9fb4f3525b9f8a11ea74262d5dd8ff0e024daf60",
+                "type": "path",
+                "description": "The hash for the trade according to [EIP-712](https://eips.ethereum.org/EIPS/eip-712)"
+              }
+            ]
+          },
+          "docs": "Get the status of a gasless swap"
+        },
+        {
+          "info": {
+            "name": "Get Gasless Approval Tokens",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.0x.org/gasless/gasless-approval-tokens",
+            "headers": [
+              {
+                "name": "0x-api-key",
+                "value": ""
+              },
+              {
+                "name": "0x-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "chainId",
+                "value": "8453",
+                "type": "query",
+                "description": "Chain ID. See [here](https://docs.0x.org/docs/introduction/supported-chains) for the list of supported chains"
+              }
+            ]
+          },
+          "docs": "Get token addresses that support gasless approvals"
+        },
+        {
+          "info": {
+            "name": "Get Supported Chains",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.0x.org/gasless/chains",
+            "headers": [
+              {
+                "name": "0x-api-key",
+                "value": ""
+              },
+              {
+                "name": "0x-version",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Get list of supported chains for gasless"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

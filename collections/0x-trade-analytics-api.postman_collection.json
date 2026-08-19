@@ -1,0 +1,532 @@
+{
+  "item": [
+    {
+      "id": "d3c3496e-4102-4c0d-985f-7f6dca531ebe",
+      "name": "Trade Analytics",
+      "description": {
+        "content": "Trade Analytics API endpoints",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d40144e7-bc11-4513-9e7b-659d2bd2fe35",
+          "name": "Get Swap Trade Analytics",
+          "request": {
+            "name": "Get Swap Trade Analytics",
+            "description": {
+              "content": "Get the list of completed swap trades. Returns a maximum of 200 trades per request. Visit [here](https://docs.0x.org/docs/trade-analytics-api/introduction) for more details about how the API works.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "trade-analytics",
+                "swap"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "A pagination cursor used to fetch the next page of trades. It should be set to `null` for the initial request; otherwise, it should be the value of `nextCursor` that is returned from `getSwapTrades` or `getGaslessTrades` calls."
+                },
+                {
+                  "disabled": false,
+                  "key": "startTimestamp",
+                  "value": "<integer>",
+                  "description": "Unix timestamp in seconds, specifying the starting point of the time range filter. Only trades completed on or after this timestamp will be included in the response."
+                },
+                {
+                  "disabled": false,
+                  "key": "endTimestamp",
+                  "value": "<integer>",
+                  "description": "Unix timestamp in seconds, specifying the end point of the time range filter. Only trades completed on or before this timestamp will be included in the response."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                "key": "0x-api-key",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) API version",
+                "key": "0x-version",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "482c6119-a1fb-49de-bbe4-939f06ff1ef1",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "trade-analytics",
+                    "swap"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "eyJ0aW1lc3RhbXAiOjE3MjkwMzIyMTAsInppZCI6IjB4N2FjM2NlMzExNjA2NzU5MGY5M2U3MWVmIn0="
+                    },
+                    {
+                      "key": "startTimestamp",
+                      "value": "1729032210"
+                    },
+                    {
+                      "key": "endTimestamp",
+                      "value": "1729032211"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                    "key": "0x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version",
+                    "key": "0x-version",
+                    "value": "v2"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"nextCursor\": null,\n  \"trades\": [\n    {\n      \"appName\": \"Example app\",\n      \"blockNumber\": \"123456\",\n      \"buyToken\": \"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee\",\n      \"buyAmount\": \"0.0512\",\n      \"chainId\": 1,\n      \"fees\": {\n        \"integratorFee\": null,\n        \"zeroExFee\": null\n      },\n      \"gasUsed\": \"141111\",\n      \"protocolVersion\": \"Settler\",\n      \"sellToken\": \"0x4d1c297d39c5c1277964d0e3f8aqqqq493664530\",\n      \"sellAmount\": \"123.111\",\n      \"slippageBps\": \"1\",\n      \"taker\": \"0x23f2ad8e04dfdc0000a3e80891e3ae43f322000a\",\n      \"timestamp\": 1777772227,\n      \"tokens\": [\n        {\n          \"address\": \"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee\",\n          \"symbol\": \"ETH\"\n        },\n        {\n          \"address\": \"0xaaaaaaaaaaaaaa277964d0e3f8aa901493664530\",\n          \"symbol\": \"TKN\"\n        }\n      ],\n      \"transactionHash\": \"0x42bad789ddd64aaaaaaaaaaaceb795063f5623558f130e0f4d30ad399b041411\",\n      \"volumeUsd\": \"139.73\",\n      \"zid\": \"0x04baaaaaaa1f1af0304eb412\",\n      \"service\": \"swap\"\n    }\n  ],\n  \"zid\": \"0xaaaaaae1b3bf43f082d5012d\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f17b85e9-0eea-43a1-9e26-f08fd63647e9",
+              "name": "400 error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "trade-analytics",
+                    "swap"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "eyJ0aW1lc3RhbXAiOjE3MjkwMzIyMTAsInppZCI6IjB4N2FjM2NlMzExNjA2NzU5MGY5M2U3MWVmIn0="
+                    },
+                    {
+                      "key": "startTimestamp",
+                      "value": "1729032210"
+                    },
+                    {
+                      "key": "endTimestamp",
+                      "value": "1729032211"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                    "key": "0x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version",
+                    "key": "0x-version",
+                    "value": "v2"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"INPUT_INVALID\",\n  \"message\": \"string\",\n  \"data\": {\n    \"zid\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"reason\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"reason\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2c7558e6-716f-4143-8828-082dd8fa264e",
+              "name": "500 error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "trade-analytics",
+                    "swap"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "eyJ0aW1lc3RhbXAiOjE3MjkwMzIyMTAsInppZCI6IjB4N2FjM2NlMzExNjA2NzU5MGY5M2U3MWVmIn0="
+                    },
+                    {
+                      "key": "startTimestamp",
+                      "value": "1729032210"
+                    },
+                    {
+                      "key": "endTimestamp",
+                      "value": "1729032211"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                    "key": "0x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version",
+                    "key": "0x-version",
+                    "value": "v2"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"INTERNAL_SERVER_ERROR\",\n  \"message\": \"string\",\n  \"data\": {\n    \"zid\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a10b5a16-6707-4388-8a31-22fe2003df01",
+          "name": "Get Gasless Trade Analytics",
+          "request": {
+            "name": "Get Gasless Trade Analytics",
+            "description": {
+              "content": "Get the list of completed gasless trades. Returns a maximum of 200 trades per request. Visit [here](https://docs.0x.org/docs/trade-analytics-api/introduction) for more details about how the API works.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "trade-analytics",
+                "gasless"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "A pagination cursor used to fetch the next page of trades. It should be set to `null` for the initial request; otherwise, it should be the value of `nextCursor` that is returned from `getSwapTrades` or `getGaslessTrades` calls."
+                },
+                {
+                  "disabled": false,
+                  "key": "startTimestamp",
+                  "value": "<integer>",
+                  "description": "Unix timestamp in seconds, specifying the starting point of the time range filter. Only trades completed on or after this timestamp will be included in the response."
+                },
+                {
+                  "disabled": false,
+                  "key": "endTimestamp",
+                  "value": "<integer>",
+                  "description": "Unix timestamp in seconds, specifying the end point of the time range filter. Only trades completed on or before this timestamp will be included in the response."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                "key": "0x-api-key",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) API version",
+                "key": "0x-version",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "cb2fb439-738b-4551-9eac-96f24d7b0501",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "trade-analytics",
+                    "gasless"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "eyJ0aW1lc3RhbXAiOjE3MjkwMzIyMTAsInppZCI6IjB4N2FjM2NlMzExNjA2NzU5MGY5M2U3MWVmIn0="
+                    },
+                    {
+                      "key": "startTimestamp",
+                      "value": "1729032210"
+                    },
+                    {
+                      "key": "endTimestamp",
+                      "value": "1729032211"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                    "key": "0x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version",
+                    "key": "0x-version",
+                    "value": "v2"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"nextCursor\": null,\n  \"trades\": [\n    {\n      \"appName\": \"Example app\",\n      \"blockNumber\": \"123456\",\n      \"buyToken\": \"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee\",\n      \"buyAmount\": \"0.0512\",\n      \"chainId\": 1,\n      \"fees\": {\n        \"integratorFee\": null,\n        \"zeroExFee\": null\n      },\n      \"gasUsed\": \"141111\",\n      \"protocolVersion\": \"Settler\",\n      \"sellToken\": \"0x4d1c297d39c5c1277964d0e3f8aqqqq493664530\",\n      \"sellAmount\": \"123.111\",\n      \"slippageBps\": \"1\",\n      \"taker\": \"0x23f2ad8e04dfdc0000a3e80891e3ae43f322000a\",\n      \"timestamp\": 1777772227,\n      \"tokens\": [\n        {\n          \"address\": \"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee\",\n          \"symbol\": \"ETH\"\n        },\n        {\n          \"address\": \"0xaaaaaaaaaaaaaa277964d0e3f8aa901493664530\",\n          \"symbol\": \"TKN\"\n        }\n      ],\n      \"transactionHash\": \"0x42bad789ddd64aaaaaaaaaaaceb795063f5623558f130e0f4d30ad399b041411\",\n      \"volumeUsd\": \"139.73\",\n      \"zid\": \"0x04baaaaaaa1f1af0304eb412\",\n      \"service\": \"gasless\"\n    }\n  ],\n  \"zid\": \"0xaaaaaae1b3bf43f082d5012d\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "985d1268-4deb-41fd-b1c1-a28efcebfc84",
+              "name": "400 error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "trade-analytics",
+                    "gasless"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "eyJ0aW1lc3RhbXAiOjE3MjkwMzIyMTAsInppZCI6IjB4N2FjM2NlMzExNjA2NzU5MGY5M2U3MWVmIn0="
+                    },
+                    {
+                      "key": "startTimestamp",
+                      "value": "1729032210"
+                    },
+                    {
+                      "key": "endTimestamp",
+                      "value": "1729032211"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                    "key": "0x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version",
+                    "key": "0x-version",
+                    "value": "v2"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"INPUT_INVALID\",\n  \"message\": \"string\",\n  \"data\": {\n    \"zid\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"reason\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"reason\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6dea3368-1881-4aa9-afe7-820578abaeb2",
+              "name": "500 error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "trade-analytics",
+                    "gasless"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "eyJ0aW1lc3RhbXAiOjE3MjkwMzIyMTAsInppZCI6IjB4N2FjM2NlMzExNjA2NzU5MGY5M2U3MWVmIn0="
+                    },
+                    {
+                      "key": "startTimestamp",
+                      "value": "1729032210"
+                    },
+                    {
+                      "key": "endTimestamp",
+                      "value": "1729032211"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                    "key": "0x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version",
+                    "key": "0x-version",
+                    "value": "v2"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"INTERNAL_SERVER_ERROR\",\n  \"message\": \"string\",\n  \"data\": {\n    \"zid\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.0x.org",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "6aff6a25-52a1-4b4d-880c-b8429b002c22",
+    "name": "0x Cross-Chain Trade Analytics API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This is the official API reference for the latest 0x API (v2).",
+      "type": "text/plain"
+    }
+  }
+}

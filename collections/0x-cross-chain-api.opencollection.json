@@ -1,0 +1,344 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "0x Cross-Chain API",
+    "version": "v2"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Cross-Chain",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Cross-Chain Quotes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.0x.org/cross-chain/quotes",
+            "headers": [
+              {
+                "name": "0x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "originChain",
+                "value": "8453",
+                "type": "query",
+                "description": "The source chain from which the cross-chain swap will originate. Can be specified as chain ID or name. See [here](https://0x-docs.gitbook.io/0x-cross-chain-api-beta/developer-resources/supported-chains-and-providers) for the list of supported chains"
+              },
+              {
+                "name": "destinationChain",
+                "value": "42161",
+                "type": "query",
+                "description": "The destination chain where tokens will be received after the cross-chain swap. Can be specified as chain ID or name. See [here](https://0x-docs.gitbook.io/0x-cross-chain-api-beta/developer-resources/supported-chains-and-providers) for the list of supported chains"
+              },
+              {
+                "name": "sellToken",
+                "value": "0xcbb7c0000ab88b473b1f5afd9ef808440eed33bf",
+                "type": "query",
+                "description": "The contract address of the token to sell on the origin chain. Format varies by chain type (EVM address for EVM/HyperCore chains, token mint address for Solana, base58check address for Tron)"
+              },
+              {
+                "name": "buyToken",
+                "value": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+                "type": "query",
+                "description": "The contract address of the token to buy on the destination chain. Format varies by chain type (EVM address for EVM/HyperCore chains, token mint address for Solana, base58check address for Tron)"
+              },
+              {
+                "name": "sellAmount",
+                "value": "2570",
+                "type": "query",
+                "description": "The amount of `sellToken` (in `sellToken`'s base units) to sell on the origin chain"
+              },
+              {
+                "name": "originAddress",
+                "value": "0x56EB0aD2dC746540Fab5C02478B31e2AA9DdC38C",
+                "type": "query",
+                "description": "The wallet address on the origin chain that holds the sellToken balance and will initiate the cross-chain transaction"
+              },
+              {
+                "name": "destinationAddress",
+                "value": "0x56EB0aD2dC746540Fab5C02478B31e2AA9DdC38C",
+                "type": "query",
+                "description": "The wallet address on the destination chain that will receive the buyToken. If not specified, defaults to originAddress on the destination chain"
+              },
+              {
+                "name": "gasPayer",
+                "value": "",
+                "type": "query",
+                "description": "The Solana address that will pay for transaction fees when the origin chain is Solana. Only applicable for Solana origin chains"
+              },
+              {
+                "name": "slippageBps",
+                "value": "",
+                "type": "query",
+                "description": "The maximum acceptable slippage for each swap or bridge step of the cross-chain swap in basis points (100 = 1%)"
+              },
+              {
+                "name": "excludedBridges",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of bridge providers to exclude from routing"
+              },
+              {
+                "name": "includedBridges",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of bridge providers to include in routing. Mutually exclusive with excludedBridges"
+              },
+              {
+                "name": "excludedSwapSources",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of DEX sources to exclude from routing on both chains"
+              },
+              {
+                "name": "feeBps",
+                "value": "",
+                "type": "query",
+                "description": "The trading fee amounts in basis points to charge on the origin chain (supports single or comma-separated values). Must be used together with feeRecipient. When multiple values are provided, must match the length of feeRecipient. Note: integrator fee collection is not yet supported for Tron-originated routes."
+              },
+              {
+                "name": "feeRecipient",
+                "value": "",
+                "type": "query",
+                "description": "The wallet addresses to receive trading fees on the origin chain (supports single or comma-separated values). Must be used together with feeBps. When multiple values are provided, must match the length of feeBps. Note: integrator fee collection is not yet supported for Tron-originated routes."
+              },
+              {
+                "name": "feeToken",
+                "value": "",
+                "type": "query",
+                "description": "The token addresses for fee collection on the origin chain (supports single or comma-separated values). Must be the same as sellToken. When multiple values are provided, must match the length of feeBps. If omitted, defaults to sellToken. Note: integrator fee collection is not yet supported for Tron-originated routes."
+              },
+              {
+                "name": "sortQuotesBy",
+                "value": "speed",
+                "type": "query",
+                "description": "How to sort the returned quotes - either by speed (fastest execution time) or price (best exchange rate)"
+              },
+              {
+                "name": "maxNumQuotes",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of cross-chain quotes to return, between 1 and 10. Each quote represents a different combination of bridges and DEXs"
+              }
+            ]
+          },
+          "docs": "Get the quotes for a cross chain swap"
+        },
+        {
+          "info": {
+            "name": "Get Gasless Trade Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.0x.org/cross-chain/status",
+            "headers": [
+              {
+                "name": "0x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "originChain",
+                "value": "8453",
+                "type": "query",
+                "description": "The origin chain where the cross-chain transaction was initiated"
+              },
+              {
+                "name": "originTxHash",
+                "value": "0xe347e66b1d9793a11a962c1483f9eef03272c362c41dc1f21c87577ef5ec1a7c",
+                "type": "query",
+                "description": "The transaction hash on the origin chain to track. Format varies by chain type (32-byte hex for EVM/HyperCore, base58 signature for Solana, 64-char hex for Tron)"
+              },
+              {
+                "name": "quoteId",
+                "value": "",
+                "type": "query",
+                "description": "The quote ID associated with the cross-chain transaction"
+              }
+            ]
+          },
+          "docs": "Get the status of a cross chain transaction"
+        },
+        {
+          "info": {
+            "name": "List Bridge Sources",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.0x.org/cross-chain/sources",
+            "headers": [
+              {
+                "name": "0x-api-key",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "List available swap and bridge sources for a cross chain swap"
+        },
+        {
+          "info": {
+            "name": "Get Cross-Chain Transaction History",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.0x.org/cross-chain/tx-history-beta",
+            "headers": [
+              {
+                "name": "0x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "user",
+                "value": "",
+                "type": "query",
+                "description": "The wallet address of the user to get transaction history for. Accepts EVM (0x...), Solana, and Tron addresses"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of transactions to return"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get cross-chain transaction history for a user wallet address. Note: this endpoint is in beta and still a work in progress — please reach out to the 0x team if you or your users run into any issues."
+        },
+        {
+          "info": {
+            "name": "Stream Cross-Chain Quotes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.0x.org/cross-chain/quotes/stream",
+            "headers": [
+              {
+                "name": "0x-api-key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "originChain",
+                "value": "8453",
+                "type": "query",
+                "description": "The source chain from which the cross-chain swap will originate. Can be specified as chain ID or name. See [here](https://0x-docs.gitbook.io/0x-cross-chain-api-beta/developer-resources/supported-chains-and-providers) for the list of supported chains"
+              },
+              {
+                "name": "destinationChain",
+                "value": "42161",
+                "type": "query",
+                "description": "The destination chain where tokens will be received after the cross-chain swap. Can be specified as chain ID or name. See [here](https://0x-docs.gitbook.io/0x-cross-chain-api-beta/developer-resources/supported-chains-and-providers) for the list of supported chains"
+              },
+              {
+                "name": "sellToken",
+                "value": "0xcbb7c0000ab88b473b1f5afd9ef808440eed33bf",
+                "type": "query",
+                "description": "The contract address of the token to sell on the origin chain. Format varies by chain type (EVM address for EVM/HyperCore chains, token mint address for Solana, base58check address for Tron)"
+              },
+              {
+                "name": "buyToken",
+                "value": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+                "type": "query",
+                "description": "The contract address of the token to buy on the destination chain. Format varies by chain type (EVM address for EVM/HyperCore chains, token mint address for Solana, base58check address for Tron)"
+              },
+              {
+                "name": "sellAmount",
+                "value": "2570",
+                "type": "query",
+                "description": "The amount of `sellToken` (in `sellToken`'s base units) to sell on the origin chain"
+              },
+              {
+                "name": "originAddress",
+                "value": "0x56EB0aD2dC746540Fab5C02478B31e2AA9DdC38C",
+                "type": "query",
+                "description": "The wallet address on the origin chain that holds the sellToken balance and will initiate the cross-chain transaction"
+              },
+              {
+                "name": "destinationAddress",
+                "value": "0x56EB0aD2dC746540Fab5C02478B31e2AA9DdC38C",
+                "type": "query",
+                "description": "The wallet address on the destination chain that will receive the buyToken. If not specified, defaults to originAddress on the destination chain"
+              },
+              {
+                "name": "gasPayer",
+                "value": "",
+                "type": "query",
+                "description": "The Solana address that will pay for transaction fees when the origin chain is Solana. Only applicable for Solana origin chains"
+              },
+              {
+                "name": "slippageBps",
+                "value": "",
+                "type": "query",
+                "description": "The maximum acceptable slippage for each swap or bridge step of the cross-chain swap in basis points (100 = 1%)"
+              },
+              {
+                "name": "excludedBridges",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of bridge providers to exclude from routing"
+              },
+              {
+                "name": "includedBridges",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of bridge providers to include in routing. Mutually exclusive with excludedBridges"
+              },
+              {
+                "name": "excludedSwapSources",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of DEX sources to exclude from routing on both chains"
+              },
+              {
+                "name": "feeBps",
+                "value": "",
+                "type": "query",
+                "description": "The trading fee amounts in basis points to charge on the origin chain (supports single or comma-separated values). Must be used together with feeRecipient. When multiple values are provided, must match the length of feeRecipient. Note: integrator fee collection is not yet supported for Tron-originated routes."
+              },
+              {
+                "name": "feeRecipient",
+                "value": "",
+                "type": "query",
+                "description": "The wallet addresses to receive trading fees on the origin chain (supports single or comma-separated values). Must be used together with feeBps. When multiple values are provided, must match the length of feeBps. Note: integrator fee collection is not yet supported for Tron-originated routes."
+              },
+              {
+                "name": "feeToken",
+                "value": "",
+                "type": "query",
+                "description": "The token addresses for fee collection on the origin chain (supports single or comma-separated values). Must be the same as sellToken. When multiple values are provided, must match the length of feeBps. If omitted, defaults to sellToken. Note: integrator fee collection is not yet supported for Tron-originated routes."
+              },
+              {
+                "name": "maxNumQuotes",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of cross-chain quotes to return, between 1 and 10. Each quote represents a different combination of bridges and DEXs"
+              }
+            ]
+          },
+          "docs": "Stream cross-chain quotes as they become available"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

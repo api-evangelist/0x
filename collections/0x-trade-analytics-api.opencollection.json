@@ -1,0 +1,100 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "0x Cross-Chain Trade Analytics API",
+    "version": "v2"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Trade Analytics",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Swap Trade Analytics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.0x.org/trade-analytics/swap",
+            "headers": [
+              {
+                "name": "0x-api-key",
+                "value": ""
+              },
+              {
+                "name": "0x-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "cursor",
+                "value": "eyJ0aW1lc3RhbXAiOjE3MjkwMzIyMTAsInppZCI6IjB4N2FjM2NlMzExNjA2NzU5MGY5M2U3MWVmIn0=",
+                "type": "query",
+                "description": "A pagination cursor used to fetch the next page of trades. It should be set to `null` for the initial request; otherwise, it should be the value of `nextCursor` that is returned from `getSwapTrades` or `getGaslessTrades` calls."
+              },
+              {
+                "name": "startTimestamp",
+                "value": "1729032210",
+                "type": "query",
+                "description": "Unix timestamp in seconds, specifying the starting point of the time range filter. Only trades completed on or after this timestamp will be included in the response."
+              },
+              {
+                "name": "endTimestamp",
+                "value": "1729032211",
+                "type": "query",
+                "description": "Unix timestamp in seconds, specifying the end point of the time range filter. Only trades completed on or before this timestamp will be included in the response."
+              }
+            ]
+          },
+          "docs": "Get the list of completed swap trades. Returns a maximum of 200 trades per request. Visit [here](https://docs.0x.org/docs/trade-analytics-api/introduction) for more details about how the API works."
+        },
+        {
+          "info": {
+            "name": "Get Gasless Trade Analytics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.0x.org/trade-analytics/gasless",
+            "headers": [
+              {
+                "name": "0x-api-key",
+                "value": ""
+              },
+              {
+                "name": "0x-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "cursor",
+                "value": "eyJ0aW1lc3RhbXAiOjE3MjkwMzIyMTAsInppZCI6IjB4N2FjM2NlMzExNjA2NzU5MGY5M2U3MWVmIn0=",
+                "type": "query",
+                "description": "A pagination cursor used to fetch the next page of trades. It should be set to `null` for the initial request; otherwise, it should be the value of `nextCursor` that is returned from `getSwapTrades` or `getGaslessTrades` calls."
+              },
+              {
+                "name": "startTimestamp",
+                "value": "1729032210",
+                "type": "query",
+                "description": "Unix timestamp in seconds, specifying the starting point of the time range filter. Only trades completed on or after this timestamp will be included in the response."
+              },
+              {
+                "name": "endTimestamp",
+                "value": "1729032211",
+                "type": "query",
+                "description": "Unix timestamp in seconds, specifying the end point of the time range filter. Only trades completed on or before this timestamp will be included in the response."
+              }
+            ]
+          },
+          "docs": "Get the list of completed gasless trades. Returns a maximum of 200 trades per request. Visit [here](https://docs.0x.org/docs/trade-analytics-api/introduction) for more details about how the API works."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

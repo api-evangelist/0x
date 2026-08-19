@@ -1,0 +1,1703 @@
+{
+  "item": [
+    {
+      "id": "69c0f71a-92a9-45c4-81ab-21a6e8d31cb2",
+      "name": "Cross-Chain",
+      "description": {
+        "content": "Cross-Chain API endpoints",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "88fbe8ee-07fe-42bd-8757-6e21641d5e9b",
+          "name": "Get Cross-Chain Quotes",
+          "request": {
+            "name": "Get Cross-Chain Quotes",
+            "description": {
+              "content": "Get the quotes for a cross chain swap",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "cross-chain",
+                "quotes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "originChain",
+                  "value": "<string>",
+                  "description": "(Required) The source chain from which the cross-chain swap will originate. Can be specified as chain ID or name. See [here](https://0x-docs.gitbook.io/0x-cross-chain-api-beta/developer-resources/supported-chains-and-providers) for the list of supported chains"
+                },
+                {
+                  "disabled": false,
+                  "key": "destinationChain",
+                  "value": "<string>",
+                  "description": "(Required) The destination chain where tokens will be received after the cross-chain swap. Can be specified as chain ID or name. See [here](https://0x-docs.gitbook.io/0x-cross-chain-api-beta/developer-resources/supported-chains-and-providers) for the list of supported chains"
+                },
+                {
+                  "disabled": false,
+                  "key": "sellToken",
+                  "value": "<string>",
+                  "description": "(Required) The contract address of the token to sell on the origin chain. Format varies by chain type (EVM address for EVM/HyperCore chains, token mint address for Solana, base58check address for Tron)"
+                },
+                {
+                  "disabled": false,
+                  "key": "buyToken",
+                  "value": "<string>",
+                  "description": "(Required) The contract address of the token to buy on the destination chain. Format varies by chain type (EVM address for EVM/HyperCore chains, token mint address for Solana, base58check address for Tron)"
+                },
+                {
+                  "disabled": false,
+                  "key": "sellAmount",
+                  "value": "<string>",
+                  "description": "(Required) The amount of `sellToken` (in `sellToken`'s base units) to sell on the origin chain"
+                },
+                {
+                  "disabled": false,
+                  "key": "originAddress",
+                  "value": "<string>",
+                  "description": "(Required) The wallet address on the origin chain that holds the sellToken balance and will initiate the cross-chain transaction"
+                },
+                {
+                  "disabled": false,
+                  "key": "destinationAddress",
+                  "value": "<string>",
+                  "description": "The wallet address on the destination chain that will receive the buyToken. If not specified, defaults to originAddress on the destination chain"
+                },
+                {
+                  "disabled": false,
+                  "key": "gasPayer",
+                  "value": "<string>",
+                  "description": "The Solana address that will pay for transaction fees when the origin chain is Solana. Only applicable for Solana origin chains"
+                },
+                {
+                  "disabled": false,
+                  "key": "slippageBps",
+                  "value": "100",
+                  "description": "The maximum acceptable slippage for each swap or bridge step of the cross-chain swap in basis points (100 = 1%)"
+                },
+                {
+                  "disabled": false,
+                  "key": "excludedBridges",
+                  "value": "<string>",
+                  "description": "Comma-separated list of bridge providers to exclude from routing"
+                },
+                {
+                  "disabled": false,
+                  "key": "includedBridges",
+                  "value": "<string>",
+                  "description": "Comma-separated list of bridge providers to include in routing. Mutually exclusive with excludedBridges"
+                },
+                {
+                  "disabled": false,
+                  "key": "excludedSwapSources",
+                  "value": "<string>",
+                  "description": "Comma-separated list of DEX sources to exclude from routing on both chains"
+                },
+                {
+                  "disabled": false,
+                  "key": "feeBps",
+                  "value": "",
+                  "description": "The trading fee amounts in basis points to charge on the origin chain (supports single or comma-separated values). Must be used together with feeRecipient. When multiple values are provided, must match the length of feeRecipient. Note: integrator fee collection is not yet supported for Tron-originated routes."
+                },
+                {
+                  "disabled": false,
+                  "key": "feeRecipient",
+                  "value": "",
+                  "description": "The wallet addresses to receive trading fees on the origin chain (supports single or comma-separated values). Must be used together with feeBps. When multiple values are provided, must match the length of feeBps. Note: integrator fee collection is not yet supported for Tron-originated routes."
+                },
+                {
+                  "disabled": false,
+                  "key": "feeToken",
+                  "value": "",
+                  "description": "The token addresses for fee collection on the origin chain (supports single or comma-separated values). Must be the same as sellToken. When multiple values are provided, must match the length of feeBps. If omitted, defaults to sellToken. Note: integrator fee collection is not yet supported for Tron-originated routes."
+                },
+                {
+                  "disabled": false,
+                  "key": "sortQuotesBy",
+                  "value": "<string>",
+                  "description": "(Required) How to sort the returned quotes - either by speed (fastest execution time) or price (best exchange rate)"
+                },
+                {
+                  "disabled": false,
+                  "key": "maxNumQuotes",
+                  "value": "3",
+                  "description": "The maximum number of cross-chain quotes to return, between 1 and 10. Each quote represents a different combination of bridges and DEXs"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                "key": "0x-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5dcaeb4d-756b-4ae4-8a6a-33090d8e7019",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "cross-chain",
+                    "quotes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "originChain",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "destinationChain",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sellToken",
+                      "value": "0xcbb7c0000ab88b473b1f5afd9ef808440eed33bf"
+                    },
+                    {
+                      "key": "buyToken",
+                      "value": "0xaf88d065e77c8cc2239327c5edb3a432268e5831"
+                    },
+                    {
+                      "key": "sellAmount",
+                      "value": "2570"
+                    },
+                    {
+                      "key": "originAddress",
+                      "value": "0x56EB0aD2dC746540Fab5C02478B31e2AA9DdC38C"
+                    },
+                    {
+                      "key": "destinationAddress",
+                      "value": "0x56EB0aD2dC746540Fab5C02478B31e2AA9DdC38C"
+                    },
+                    {
+                      "key": "gasPayer",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slippageBps",
+                      "value": "100"
+                    },
+                    {
+                      "key": "excludedBridges",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "includedBridges",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "excludedSwapSources",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "feeBps",
+                      "value": ""
+                    },
+                    {
+                      "key": "feeRecipient",
+                      "value": ""
+                    },
+                    {
+                      "key": "feeToken",
+                      "value": ""
+                    },
+                    {
+                      "key": "sortQuotesBy",
+                      "value": "speed"
+                    },
+                    {
+                      "key": "maxNumQuotes",
+                      "value": "3"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                    "key": "0x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"liquidityAvailable\": true,\n  \"originChainId\": 8453,\n  \"originChain\": \"base\",\n  \"destinationChainId\": 42161,\n  \"destinationChain\": \"arbitrum\",\n  \"sellToken\": \"0xcbb7c0000ab88b473b1f5afd9ef808440eed33bf\",\n  \"buyToken\": \"0xaf88d065e77c8cc2239327c5edb3a432268e5831\",\n  \"issues\": {\n    \"allowance\": null,\n    \"balance\": {\n      \"token\": \"0xcbb7c0000ab88b473b1f5afd9ef808440eed33bf\",\n      \"actual\": \"0\",\n      \"expected\": \"2570\"\n    },\n    \"simulationIncomplete\": false,\n    \"invalidSwapSourcesPassed\": [],\n    \"invalidBridgesPassed\": []\n  },\n  \"zid\": \"0xbed7b45844099af94219ba8c\",\n  \"quotes\": [\n    {\n      \"sellAmount\": \"2570\",\n      \"buyAmount\": \"2972100\",\n      \"minBuyAmount\": \"2942339\",\n      \"fees\": {\n        \"integratorFee\": null,\n        \"zeroExFee\": {\n          \"amount\": \"6\",\n          \"token\": \"0xcbb7c0000ab88b473b1f5afd9ef808440eed33bf\",\n          \"type\": \"volume\"\n        },\n        \"bridgeNativeFee\": null\n      },\n      \"gasCosts\": {\n        \"chainType\": \"evm\",\n        \"gasPrice\": \"11550962\",\n        \"gasLimit\": \"672945\",\n        \"totalNetworkFee\": \"7790577030769\"\n      },\n      \"steps\": [\n        {\n          \"type\": \"swap\",\n          \"chainId\": 8453,\n          \"sellToken\": \"0xcbb7c0000ab88b473b1f5afd9ef808440eed33bf\",\n          \"buyToken\": \"0x833589fcd6edb6e08f4c7c32d4f71b54bda02913\",\n          \"sellAmount\": \"2564\",\n          \"buyAmount\": \"2979865\",\n          \"minBuyAmount\": \"2950101\",\n          \"estimatedTimeSeconds\": 0\n        },\n        {\n          \"type\": \"bridge\",\n          \"originChainId\": 8453,\n          \"destinationChainId\": 42161,\n          \"sellToken\": \"0x833589fcd6edb6e08f4c7c32d4f71b54bda02913\",\n          \"buyToken\": \"0xaf88d065e77c8cc2239327c5edb3a432268e5831\",\n          \"sellAmount\": \"2979865\",\n          \"buyAmount\": \"2972100\",\n          \"minBuyAmount\": \"2942339\",\n          \"provider\": \"across_v3\",\n          \"estimatedTimeSeconds\": 3\n        }\n      ],\n      \"transaction\": {\n        \"chainType\": \"evm\",\n        \"details\": {\n          \"to\": \"0x0000000000001ff3684f28c67538d4d072c22734\",\n          \"data\": \"0x2213bc0b...\",\n          \"gas\": \"672945\",\n          \"gasPrice\": \"0\",\n          \"value\": \"0\"\n        }\n      },\n      \"estimatedTimeSeconds\": 3,\n      \"issues\": {\n        \"allowance\": null,\n        \"balance\": {\n          \"token\": \"0xcbb7c0000ab88b473b1f5afd9ef808440eed33bf\",\n          \"actual\": \"0\",\n          \"expected\": \"2570\"\n        },\n        \"simulationIncomplete\": false\n      },\n      \"quoteId\": \"0xbed7b45844099af94219ba8c00000001\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "83f2aaa9-8ad0-4966-b19e-a6bbf98d04b3",
+              "name": "400 error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "cross-chain",
+                    "quotes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "originChain",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "destinationChain",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sellToken",
+                      "value": "0xcbb7c0000ab88b473b1f5afd9ef808440eed33bf"
+                    },
+                    {
+                      "key": "buyToken",
+                      "value": "0xaf88d065e77c8cc2239327c5edb3a432268e5831"
+                    },
+                    {
+                      "key": "sellAmount",
+                      "value": "2570"
+                    },
+                    {
+                      "key": "originAddress",
+                      "value": "0x56EB0aD2dC746540Fab5C02478B31e2AA9DdC38C"
+                    },
+                    {
+                      "key": "destinationAddress",
+                      "value": "0x56EB0aD2dC746540Fab5C02478B31e2AA9DdC38C"
+                    },
+                    {
+                      "key": "gasPayer",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slippageBps",
+                      "value": "100"
+                    },
+                    {
+                      "key": "excludedBridges",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "includedBridges",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "excludedSwapSources",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "feeBps",
+                      "value": ""
+                    },
+                    {
+                      "key": "feeRecipient",
+                      "value": ""
+                    },
+                    {
+                      "key": "feeToken",
+                      "value": ""
+                    },
+                    {
+                      "key": "sortQuotesBy",
+                      "value": "speed"
+                    },
+                    {
+                      "key": "maxNumQuotes",
+                      "value": "3"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                    "key": "0x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"INPUT_INVALID\",\n  \"message\": \"string\",\n  \"data\": {\n    \"zid\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"reason\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"reason\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "805aa3fd-131d-43d9-95a3-6e9e9f04b182",
+              "name": "500 error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "cross-chain",
+                    "quotes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "originChain",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "destinationChain",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sellToken",
+                      "value": "0xcbb7c0000ab88b473b1f5afd9ef808440eed33bf"
+                    },
+                    {
+                      "key": "buyToken",
+                      "value": "0xaf88d065e77c8cc2239327c5edb3a432268e5831"
+                    },
+                    {
+                      "key": "sellAmount",
+                      "value": "2570"
+                    },
+                    {
+                      "key": "originAddress",
+                      "value": "0x56EB0aD2dC746540Fab5C02478B31e2AA9DdC38C"
+                    },
+                    {
+                      "key": "destinationAddress",
+                      "value": "0x56EB0aD2dC746540Fab5C02478B31e2AA9DdC38C"
+                    },
+                    {
+                      "key": "gasPayer",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slippageBps",
+                      "value": "100"
+                    },
+                    {
+                      "key": "excludedBridges",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "includedBridges",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "excludedSwapSources",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "feeBps",
+                      "value": ""
+                    },
+                    {
+                      "key": "feeRecipient",
+                      "value": ""
+                    },
+                    {
+                      "key": "feeToken",
+                      "value": ""
+                    },
+                    {
+                      "key": "sortQuotesBy",
+                      "value": "speed"
+                    },
+                    {
+                      "key": "maxNumQuotes",
+                      "value": "3"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                    "key": "0x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"INTERNAL_SERVER_ERROR\",\n  \"message\": \"string\",\n  \"data\": {\n    \"zid\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "230a072f-8a47-40b8-80ae-c607b0ea073c",
+          "name": "Get Gasless Trade Status",
+          "request": {
+            "name": "Get Gasless Trade Status",
+            "description": {
+              "content": "Get the status of a cross chain transaction",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "cross-chain",
+                "status"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "originChain",
+                  "value": "<string>",
+                  "description": "(Required) The origin chain where the cross-chain transaction was initiated"
+                },
+                {
+                  "disabled": false,
+                  "key": "originTxHash",
+                  "value": "<string>",
+                  "description": "(Required) The transaction hash on the origin chain to track. Format varies by chain type (32-byte hex for EVM/HyperCore, base58 signature for Solana, 64-char hex for Tron)"
+                },
+                {
+                  "disabled": false,
+                  "key": "quoteId",
+                  "value": "<string>",
+                  "description": "The quote ID associated with the cross-chain transaction"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                "key": "0x-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c380276c-77c0-449e-929c-1f39fc6c0ef7",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "cross-chain",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "originChain",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "originTxHash",
+                      "value": "0xe347e66b1d9793a11a962c1483f9eef03272c362c41dc1f21c87577ef5ec1a7c"
+                    },
+                    {
+                      "key": "quoteId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                    "key": "0x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"bridge_filled\",\n  \"bridge\": \"stargate\",\n  \"steps\": [\n    {\n      \"type\": \"swap\",\n      \"chainId\": 8453,\n      \"sellToken\": \"0x4200000000000000000000000000000000000006\",\n      \"buyToken\": \"0x833589fcd6edb6e08f4c7c32d4f71b54bda02913\",\n      \"minBuyAmount\": \"3676900\",\n      \"quotedBuyAmount\": \"3676946\",\n      \"estimatedTimeSeconds\": 0,\n      \"transactions\": [\n        {\n          \"chainId\": 8453,\n          \"txHash\": \"0xe347e66b1d9793a11a962c1483f9eef03272c362c41dc1f21c87577ef5ec1a7c\",\n          \"timestamp\": 1754335333\n        }\n      ]\n    },\n    {\n      \"type\": \"bridge\",\n      \"bridge\": \"stargate\",\n      \"originChainId\": 8453,\n      \"destinationChainId\": 42161,\n      \"sellToken\": \"0x833589fcd6edb6e08f4c7c32d4f71b54bda02913\",\n      \"buyToken\": \"0xaf88d065e77c8cc2239327c5edb3a432268e5831\",\n      \"minBuyAmount\": \"3671000\",\n      \"quotedBuyAmount\": \"3671430\",\n      \"estimatedTimeSeconds\": 15,\n      \"transactions\": [\n        {\n          \"chainId\": 8453,\n          \"chain\": \"base\",\n          \"txHash\": \"0xe347e66b1d9793a11a962c1483f9eef03272c362c41dc1f21c87577ef5ec1a7c\",\n          \"timestamp\": 1754335333\n        },\n        {\n          \"chainId\": 42161,\n          \"chain\": \"arbitrum\",\n          \"txHash\": \"0xb8f4da7b2f3244d1d3174687cea1b8403e263f86ead168a841caf142b491ed5b\",\n          \"timestamp\": 1754335360\n        }\n      ]\n    }\n  ],\n  \"failure\": null,\n  \"transactions\": [\n    {\n      \"chainId\": 8453,\n      \"chain\": \"base\",\n      \"txHash\": \"0xe347e66b1d9793a11a962c1483f9eef03272c362c41dc1f21c87577ef5ec1a7c\",\n      \"timestamp\": 1754335333\n    },\n    {\n      \"chainId\": 42161,\n      \"chain\": \"arbitrum\",\n      \"txHash\": \"0xb8f4da7b2f3244d1d3174687cea1b8403e263f86ead168a841caf142b491ed5b\",\n      \"timestamp\": 1754335360\n    }\n  ],\n  \"zid\": \"0x1e452d8e6b4ce52de314dcb4\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4604fe07-b350-486c-ba43-103e5561c900",
+              "name": "400 error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "cross-chain",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "originChain",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "originTxHash",
+                      "value": "0xe347e66b1d9793a11a962c1483f9eef03272c362c41dc1f21c87577ef5ec1a7c"
+                    },
+                    {
+                      "key": "quoteId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                    "key": "0x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"INPUT_INVALID\",\n  \"message\": \"string\",\n  \"data\": {\n    \"zid\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"reason\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"reason\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c3787e68-17a5-4e05-94d6-891c91d27a5f",
+              "name": "404 error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "cross-chain",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "originChain",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "originTxHash",
+                      "value": "0xe347e66b1d9793a11a962c1483f9eef03272c362c41dc1f21c87577ef5ec1a7c"
+                    },
+                    {
+                      "key": "quoteId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                    "key": "0x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"BRIDGE_UNKNOWN\",\n  \"message\": \"string\",\n  \"data\": {\n    \"zid\": \"string\",\n    \"originChain\": \"string\",\n    \"originTxHash\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cde2dc1f-2e8b-427e-bbe4-e11456d565ce",
+              "name": "500 error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "cross-chain",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "originChain",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "originTxHash",
+                      "value": "0xe347e66b1d9793a11a962c1483f9eef03272c362c41dc1f21c87577ef5ec1a7c"
+                    },
+                    {
+                      "key": "quoteId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                    "key": "0x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"BRIDGE_PROVIDER_ERROR\",\n  \"message\": \"string\",\n  \"data\": {\n    \"zid\": \"string\",\n    \"bridge\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "88585086-5899-49c9-bb1b-ecabaadbcdab",
+          "name": "List Bridge Sources",
+          "request": {
+            "name": "List Bridge Sources",
+            "description": {
+              "content": "List available swap and bridge sources for a cross chain swap",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "cross-chain",
+                "sources"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                "key": "0x-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a1ba0016-d4de-427d-aab5-e84d301c0df7",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "cross-chain",
+                    "sources"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                    "key": "0x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"bridges\": [\n    {\n      \"name\": \"string\",\n      \"chainPairs\": [\n        {\n          \"originChainId\": 4244.064979277536,\n          \"destinationChainId\": 3180.372295287993\n        },\n        {\n          \"originChainId\": 1239.311591451202,\n          \"destinationChainId\": 1664.6922551795628\n        }\n      ]\n    },\n    {\n      \"name\": \"string\",\n      \"chainPairs\": [\n        {\n          \"originChainId\": 920.4352335652877,\n          \"destinationChainId\": 9013.862647524014\n        },\n        {\n          \"originChainId\": 2435.662038128552,\n          \"destinationChainId\": 8259.0612511573\n        }\n      ]\n    }\n  ],\n  \"swapSources\": [\n    {\n      \"name\": \"string\",\n      \"chainIds\": [\n        7525.295947524041,\n        190.9929017797296\n      ]\n    },\n    {\n      \"name\": \"string\",\n      \"chainIds\": [\n        9470.58866794805,\n        3103.5052429659318\n      ]\n    }\n  ],\n  \"zid\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "10f12b55-cc21-4054-854a-4cc05b38d2b2",
+              "name": "400 error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "cross-chain",
+                    "sources"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                    "key": "0x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"INPUT_INVALID\",\n  \"message\": \"string\",\n  \"data\": {\n    \"zid\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"reason\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"reason\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f24e7185-17a0-4951-b059-6181db51ec33",
+              "name": "500 error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "cross-chain",
+                    "sources"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                    "key": "0x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"INTERNAL_SERVER_ERROR\",\n  \"message\": \"string\",\n  \"data\": {\n    \"zid\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0489f309-20b8-4762-8175-bc3c9837cf32",
+          "name": "Get Cross-Chain Transaction History",
+          "request": {
+            "name": "Get Cross-Chain Transaction History",
+            "description": {
+              "content": "Get cross-chain transaction history for a user wallet address. Note: this endpoint is in beta and still a work in progress — please reach out to the 0x team if you or your users run into any issues.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "cross-chain",
+                "tx-history-beta"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "user",
+                  "value": "<string>",
+                  "description": "(Required) The wallet address of the user to get transaction history for. Accepts EVM (0x...), Solana, and Tron addresses"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "20",
+                  "description": "Maximum number of transactions to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                "key": "0x-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d7436e28-7890-47fe-bf93-95e7ec6913a9",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "cross-chain",
+                    "tx-history-beta"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "user",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                    "key": "0x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"transactions\": [\n    {\n      \"originChain\": 6544.761872457858,\n      \"originTx\": \"string\",\n      \"destinationChain\": 4158.363108669835,\n      \"destinationTx\": \"string\",\n      \"status\": \"string\",\n      \"bridge\": \"string\"\n    },\n    {\n      \"originChain\": 812.802527659433,\n      \"originTx\": \"string\",\n      \"destinationChain\": 8001.103593486217,\n      \"destinationTx\": \"string\",\n      \"status\": \"string\",\n      \"bridge\": \"string\"\n    }\n  ],\n  \"pagination\": {\n    \"limit\": 4312.894071109922,\n    \"nextCursor\": \"string\",\n    \"hasMore\": false\n  },\n  \"zid\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ad1b163e-ec63-43df-bc04-04af8ec11679",
+              "name": "400 error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "cross-chain",
+                    "tx-history-beta"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "user",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                    "key": "0x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"INPUT_INVALID\",\n  \"message\": \"string\",\n  \"data\": {\n    \"zid\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"reason\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"reason\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "825c57ec-04e6-4d3a-9e5a-055f6971d46b",
+              "name": "404 error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "cross-chain",
+                    "tx-history-beta"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "user",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                    "key": "0x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"TRANSACTION_NOT_FOUND\",\n  \"message\": \"string\",\n  \"data\": {\n    \"zid\": \"string\",\n    \"originChain\": \"string\",\n    \"originTxHash\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f67c64e8-a531-4fe8-9541-e3191b83d583",
+              "name": "500 error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "cross-chain",
+                    "tx-history-beta"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "user",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                    "key": "0x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"INTERNAL_SERVER_ERROR\",\n  \"message\": \"string\",\n  \"data\": {\n    \"zid\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e383e2b1-2492-41ed-a2cc-d10484fed428",
+          "name": "Stream Cross-Chain Quotes",
+          "request": {
+            "name": "Stream Cross-Chain Quotes",
+            "description": {
+              "content": "Stream cross-chain quotes as they become available",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "cross-chain",
+                "quotes",
+                "stream"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "originChain",
+                  "value": "<string>",
+                  "description": "(Required) The source chain from which the cross-chain swap will originate. Can be specified as chain ID or name. See [here](https://0x-docs.gitbook.io/0x-cross-chain-api-beta/developer-resources/supported-chains-and-providers) for the list of supported chains"
+                },
+                {
+                  "disabled": false,
+                  "key": "destinationChain",
+                  "value": "<string>",
+                  "description": "(Required) The destination chain where tokens will be received after the cross-chain swap. Can be specified as chain ID or name. See [here](https://0x-docs.gitbook.io/0x-cross-chain-api-beta/developer-resources/supported-chains-and-providers) for the list of supported chains"
+                },
+                {
+                  "disabled": false,
+                  "key": "sellToken",
+                  "value": "<string>",
+                  "description": "(Required) The contract address of the token to sell on the origin chain. Format varies by chain type (EVM address for EVM/HyperCore chains, token mint address for Solana, base58check address for Tron)"
+                },
+                {
+                  "disabled": false,
+                  "key": "buyToken",
+                  "value": "<string>",
+                  "description": "(Required) The contract address of the token to buy on the destination chain. Format varies by chain type (EVM address for EVM/HyperCore chains, token mint address for Solana, base58check address for Tron)"
+                },
+                {
+                  "disabled": false,
+                  "key": "sellAmount",
+                  "value": "<string>",
+                  "description": "(Required) The amount of `sellToken` (in `sellToken`'s base units) to sell on the origin chain"
+                },
+                {
+                  "disabled": false,
+                  "key": "originAddress",
+                  "value": "<string>",
+                  "description": "(Required) The wallet address on the origin chain that holds the sellToken balance and will initiate the cross-chain transaction"
+                },
+                {
+                  "disabled": false,
+                  "key": "destinationAddress",
+                  "value": "<string>",
+                  "description": "The wallet address on the destination chain that will receive the buyToken. If not specified, defaults to originAddress on the destination chain"
+                },
+                {
+                  "disabled": false,
+                  "key": "gasPayer",
+                  "value": "<string>",
+                  "description": "The Solana address that will pay for transaction fees when the origin chain is Solana. Only applicable for Solana origin chains"
+                },
+                {
+                  "disabled": false,
+                  "key": "slippageBps",
+                  "value": "100",
+                  "description": "The maximum acceptable slippage for each swap or bridge step of the cross-chain swap in basis points (100 = 1%)"
+                },
+                {
+                  "disabled": false,
+                  "key": "excludedBridges",
+                  "value": "<string>",
+                  "description": "Comma-separated list of bridge providers to exclude from routing"
+                },
+                {
+                  "disabled": false,
+                  "key": "includedBridges",
+                  "value": "<string>",
+                  "description": "Comma-separated list of bridge providers to include in routing. Mutually exclusive with excludedBridges"
+                },
+                {
+                  "disabled": false,
+                  "key": "excludedSwapSources",
+                  "value": "<string>",
+                  "description": "Comma-separated list of DEX sources to exclude from routing on both chains"
+                },
+                {
+                  "disabled": false,
+                  "key": "feeBps",
+                  "value": "",
+                  "description": "The trading fee amounts in basis points to charge on the origin chain (supports single or comma-separated values). Must be used together with feeRecipient. When multiple values are provided, must match the length of feeRecipient. Note: integrator fee collection is not yet supported for Tron-originated routes."
+                },
+                {
+                  "disabled": false,
+                  "key": "feeRecipient",
+                  "value": "",
+                  "description": "The wallet addresses to receive trading fees on the origin chain (supports single or comma-separated values). Must be used together with feeBps. When multiple values are provided, must match the length of feeBps. Note: integrator fee collection is not yet supported for Tron-originated routes."
+                },
+                {
+                  "disabled": false,
+                  "key": "feeToken",
+                  "value": "",
+                  "description": "The token addresses for fee collection on the origin chain (supports single or comma-separated values). Must be the same as sellToken. When multiple values are provided, must match the length of feeBps. If omitted, defaults to sellToken. Note: integrator fee collection is not yet supported for Tron-originated routes."
+                },
+                {
+                  "disabled": false,
+                  "key": "maxNumQuotes",
+                  "value": "5",
+                  "description": "The maximum number of cross-chain quotes to return, between 1 and 10. Each quote represents a different combination of bridges and DEXs"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                "key": "0x-api-key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "40df8573-8cdd-4141-b9b7-d1517146a01d",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "cross-chain",
+                    "quotes",
+                    "stream"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "originChain",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "destinationChain",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sellToken",
+                      "value": "0xcbb7c0000ab88b473b1f5afd9ef808440eed33bf"
+                    },
+                    {
+                      "key": "buyToken",
+                      "value": "0xaf88d065e77c8cc2239327c5edb3a432268e5831"
+                    },
+                    {
+                      "key": "sellAmount",
+                      "value": "2570"
+                    },
+                    {
+                      "key": "originAddress",
+                      "value": "0x56EB0aD2dC746540Fab5C02478B31e2AA9DdC38C"
+                    },
+                    {
+                      "key": "destinationAddress",
+                      "value": "0x56EB0aD2dC746540Fab5C02478B31e2AA9DdC38C"
+                    },
+                    {
+                      "key": "gasPayer",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slippageBps",
+                      "value": "100"
+                    },
+                    {
+                      "key": "excludedBridges",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "includedBridges",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "excludedSwapSources",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "feeBps",
+                      "value": ""
+                    },
+                    {
+                      "key": "feeRecipient",
+                      "value": ""
+                    },
+                    {
+                      "key": "feeToken",
+                      "value": ""
+                    },
+                    {
+                      "key": "maxNumQuotes",
+                      "value": "5"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                    "key": "0x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"zid\": \"0xbed7b45844099af94219ba8c\",\n  \"event\": {\n    \"type\": \"quote\",\n    \"data\": {\n      \"quote\": {\n        \"sellAmount\": \"2570\",\n        \"buyAmount\": \"2972100\",\n        \"minBuyAmount\": \"2942339\",\n        \"fees\": {\n          \"integratorFee\": null,\n          \"zeroExFee\": {\n            \"amount\": \"6\",\n            \"token\": \"0xcbb7c0000ab88b473b1f5afd9ef808440eed33bf\",\n            \"type\": \"volume\"\n          },\n          \"bridgeNativeFee\": null\n        },\n        \"gasCosts\": {\n          \"chainType\": \"evm\",\n          \"gasPrice\": \"11550962\",\n          \"gasLimit\": \"672945\",\n          \"totalNetworkFee\": \"7790577030769\"\n        },\n        \"steps\": [\n          {\n            \"type\": \"swap\",\n            \"chainId\": 8453,\n            \"sellToken\": \"0xcbb7c0000ab88b473b1f5afd9ef808440eed33bf\",\n            \"buyToken\": \"0x833589fcd6edb6e08f4c7c32d4f71b54bda02913\",\n            \"sellAmount\": \"2564\",\n            \"buyAmount\": \"2979865\",\n            \"minBuyAmount\": \"2950101\",\n            \"estimatedTimeSeconds\": 0\n          },\n          {\n            \"type\": \"bridge\",\n            \"originChainId\": 8453,\n            \"destinationChainId\": 42161,\n            \"sellToken\": \"0x833589fcd6edb6e08f4c7c32d4f71b54bda02913\",\n            \"buyToken\": \"0xaf88d065e77c8cc2239327c5edb3a432268e5831\",\n            \"sellAmount\": \"2979865\",\n            \"buyAmount\": \"2972100\",\n            \"minBuyAmount\": \"2942339\",\n            \"provider\": \"across_v3\",\n            \"estimatedTimeSeconds\": 3\n          }\n        ],\n        \"transaction\": {\n          \"chainType\": \"evm\",\n          \"details\": {\n            \"to\": \"0x0000000000001ff3684f28c67538d4d072c22734\",\n            \"data\": \"0x2213bc0b...\",\n            \"gas\": \"672945\",\n            \"gasPrice\": \"0\",\n            \"value\": \"0\"\n          }\n        },\n        \"estimatedTimeSeconds\": 3,\n        \"issues\": {\n          \"allowance\": null,\n          \"balance\": {\n            \"token\": \"0xcbb7c0000ab88b473b1f5afd9ef808440eed33bf\",\n            \"actual\": \"0\",\n            \"expected\": \"2570\"\n          },\n          \"simulationIncomplete\": false\n        },\n        \"quoteId\": \"0xbed7b45844099af94219ba8c00000001\"\n      },\n      \"allowanceTarget\": \"0x0000000000001ff3684f28c67538d4d072c22734\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c1c364b9-9dad-4853-926b-b1408cbde0cd",
+              "name": "400 error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "cross-chain",
+                    "quotes",
+                    "stream"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "originChain",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "destinationChain",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sellToken",
+                      "value": "0xcbb7c0000ab88b473b1f5afd9ef808440eed33bf"
+                    },
+                    {
+                      "key": "buyToken",
+                      "value": "0xaf88d065e77c8cc2239327c5edb3a432268e5831"
+                    },
+                    {
+                      "key": "sellAmount",
+                      "value": "2570"
+                    },
+                    {
+                      "key": "originAddress",
+                      "value": "0x56EB0aD2dC746540Fab5C02478B31e2AA9DdC38C"
+                    },
+                    {
+                      "key": "destinationAddress",
+                      "value": "0x56EB0aD2dC746540Fab5C02478B31e2AA9DdC38C"
+                    },
+                    {
+                      "key": "gasPayer",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slippageBps",
+                      "value": "100"
+                    },
+                    {
+                      "key": "excludedBridges",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "includedBridges",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "excludedSwapSources",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "feeBps",
+                      "value": ""
+                    },
+                    {
+                      "key": "feeRecipient",
+                      "value": ""
+                    },
+                    {
+                      "key": "feeToken",
+                      "value": ""
+                    },
+                    {
+                      "key": "maxNumQuotes",
+                      "value": "5"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                    "key": "0x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"INPUT_INVALID\",\n  \"message\": \"string\",\n  \"data\": {\n    \"zid\": \"string\",\n    \"details\": [\n      {\n        \"field\": \"string\",\n        \"reason\": \"string\"\n      },\n      {\n        \"field\": \"string\",\n        \"reason\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4c8b7ed9-1ef4-4b62-bd22-fa36ddbd63a9",
+              "name": "500 error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "cross-chain",
+                    "quotes",
+                    "stream"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "originChain",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "destinationChain",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sellToken",
+                      "value": "0xcbb7c0000ab88b473b1f5afd9ef808440eed33bf"
+                    },
+                    {
+                      "key": "buyToken",
+                      "value": "0xaf88d065e77c8cc2239327c5edb3a432268e5831"
+                    },
+                    {
+                      "key": "sellAmount",
+                      "value": "2570"
+                    },
+                    {
+                      "key": "originAddress",
+                      "value": "0x56EB0aD2dC746540Fab5C02478B31e2AA9DdC38C"
+                    },
+                    {
+                      "key": "destinationAddress",
+                      "value": "0x56EB0aD2dC746540Fab5C02478B31e2AA9DdC38C"
+                    },
+                    {
+                      "key": "gasPayer",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slippageBps",
+                      "value": "100"
+                    },
+                    {
+                      "key": "excludedBridges",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "includedBridges",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "excludedSwapSources",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "feeBps",
+                      "value": ""
+                    },
+                    {
+                      "key": "feeRecipient",
+                      "value": ""
+                    },
+                    {
+                      "key": "feeToken",
+                      "value": ""
+                    },
+                    {
+                      "key": "maxNumQuotes",
+                      "value": "5"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Visit dashboard.0x.org to get your API Key",
+                    "key": "0x-api-key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"INTERNAL_SERVER_ERROR\",\n  \"message\": \"string\",\n  \"data\": {\n    \"zid\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.0x.org",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "ad8f8faf-8c69-4ea8-82f5-ac18f67b59f6",
+    "name": "0x Cross-Chain API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This is the official API reference for the latest 0x API (v2).",
+      "type": "text/plain"
+    }
+  }
+}
