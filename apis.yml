@@ -15,6 +15,18 @@ description: >-
   using the Permit2 standard, and integrators get a unified API key, a
   TypeScript SDK, an official Agent Skill, and an MCP server for AI-assisted
   development.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: self-serve
