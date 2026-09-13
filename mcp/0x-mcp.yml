@@ -1,0 +1,24 @@
+generated: '2026-09-11'
+method: probed
+source: https://docs.0x.org/_mcp/server
+status: published
+server:
+  name: 0x
+  transport: http
+  url: https://docs.0x.org/_mcp/server
+deployment:
+  mode: remote
+  endpoint: https://docs.0x.org/_mcp/server
+  verified: probed
+  probe: live
+  checked: '2026-09-11'
+  source: docs-check 2026-09-12 (endpoint found in the provider's own documentation, then probed)
+tools_count: 1
+tools:
+- name: searchDocs
+  description: ''
+tools_source: live tools/list via initialize handshake, 2026-09-12 (signals/audit_mcp_authorship.py --probe)
+authorship: platform
+authorship_note: 'PLATFORM-AUTHORED: this tool shape is shared with at least one other provider in the
+  catalog, so it is a platform default appearing under this provider''s domain rather than an interface
+  this provider designed. Shared shape: (''searchDocs'',)'
