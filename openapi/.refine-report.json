@@ -1,22 +1,30 @@
 {
   "provider": "0x",
   "sources": [
-    "0x-cross-chain-api-openapi.yml",
-    "0x-gasless-api-openapi.yml",
-    "0x-sources-api-openapi.yml",
-    "0x-swap-api-openapi.yml",
-    "0x-trade-analytics-api-openapi.yml"
+    "_original/0x-api.yaml",
+    "_original/0x-cross-chain.yaml"
   ],
   "outputs": [
-    "0x-cross-chain-api-openapi.yml",
     "0x-gasless-api-openapi.yml",
     "0x-sources-api-openapi.yml",
     "0x-swap-api-openapi.yml",
-    "0x-trade-analytics-api-openapi.yml"
+    "0x-trade-analytics-api-openapi.yml",
+    "0x-cross-chain-api-openapi.yml"
   ],
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (2 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "0x-api.yaml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "0x-cross-chain.yaml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "0x-cross-chain-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "0x-gasless-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "0x-sources-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "0x-swap-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "0x-trade-analytics-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: 0x Cross-Chain Sources API
+  title: 0x Sources API
   description: This is the official API reference for the latest 0x API (v2).
   version: v2
   x-source-url: https://github.com/0xProject/0x-docs/blob/main/fern/openapi.json
@@ -37,8 +37,7 @@ paths:
         required: true
         schema:
           type: integer
-          exclusiveMinimum: true
-          minimum: 0
+          exclusiveMinimum: 0
         description: Chain ID. See [here](https://docs.0x.org/docs/introduction/supported-chains) for the list of supported chains
         example: 1
       responses:
@@ -105,29 +104,6 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    UNCATEGORIZED:
-      type: object
-      properties:
-        name:
-          type: string
-          enum:
-          - UNCATEGORIZED
-        message:
-          type: string
-        data:
-          type: object
-          properties:
-            zid:
-              type: string
-              description: The unique ZeroEx identifier of the request
-          required:
-          - zid
-          additionalProperties: false
-      required:
-      - name
-      - message
-      - data
-      additionalProperties: false
     INPUT_INVALID:
       type: object
       properties:
@@ -175,6 +151,29 @@ components:
           type: string
           enum:
           - INTERNAL_SERVER_ERROR
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            zid:
+              type: string
+              description: The unique ZeroEx identifier of the request
+          required:
+          - zid
+          additionalProperties: false
+      required:
+      - name
+      - message
+      - data
+      additionalProperties: false
+    UNCATEGORIZED:
+      type: object
+      properties:
+        name:
+          type: string
+          enum:
+          - UNCATEGORIZED
         message:
           type: string
         data:

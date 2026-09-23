@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: 0x Cross-Chain Gasless API
+  title: 0x Gasless API
   description: This is the official API reference for the latest 0x API (v2).
   version: v2
   x-source-url: https://github.com/0xProject/0x-docs/blob/main/fern/openapi.json
@@ -37,8 +37,7 @@ paths:
         required: true
         schema:
           type: integer
-          exclusiveMinimum: true
-          minimum: 0
+          exclusiveMinimum: 0
         description: Chain ID. See [here](https://docs.0x.org/docs/introduction/supported-chains) for the list of supported chains
         example: 1
       - name: buyToken
@@ -147,9 +146,10 @@ paths:
                 - type: object
                   properties:
                     allowanceTarget:
-                      type: string
+                      type:
+                      - string
+                      - 'null'
                       pattern: ^0x[a-fA-F0-9]{40}$
-                      nullable: true
                       description: The target contract address for which the `taker` needs to have an allowance in order to be able to complete the swap. For swaps with the native asset (ie "ETH" or "BNB") as the `sellToken`, wrapping the native asset (i.e. "ETH" to "WETH") or unwrapping, no allowance is needed
                     blockNumber:
                       allOf:
@@ -171,7 +171,9 @@ paths:
                       type: object
                       properties:
                         integratorFee:
-                          type: object
+                          type:
+                          - object
+                          - 'null'
                           properties:
                             amount:
                               allOf:
@@ -192,10 +194,11 @@ paths:
                           - token
                           - type
                           additionalProperties: false
-                          nullable: true
                           description: The specified fee to charge and deliver to the `swapFeeRecipient`.
                         integratorFees:
-                          type: array
+                          type:
+                          - array
+                          - 'null'
                           items:
                             type: object
                             properties:
@@ -218,10 +221,11 @@ paths:
                             - token
                             - type
                             additionalProperties: false
-                          nullable: true
                           description: The specified fees to charge and deliver to the `swapFeesRecipient`.
                         zeroExFee:
-                          type: object
+                          type:
+                          - object
+                          - 'null'
                           properties:
                             amount:
                               allOf:
@@ -242,10 +246,11 @@ paths:
                           - token
                           - type
                           additionalProperties: false
-                          nullable: true
                           description: The fee charged by 0x for the trade.
                         gasFee:
-                          type: object
+                          type:
+                          - object
+                          - 'null'
                           properties:
                             amount:
                               allOf:
@@ -266,7 +271,6 @@ paths:
                           - token
                           - type
                           additionalProperties: false
-                          nullable: true
                           description: The gas fee to be used in submitting the transaction.
                       required:
                       - integratorFee
@@ -279,7 +283,9 @@ paths:
                       type: object
                       properties:
                         allowance:
-                          type: object
+                          type:
+                          - object
+                          - 'null'
                           properties:
                             actual:
                               allOf:
@@ -296,9 +302,10 @@ paths:
                           - spender
                           additionalProperties: false
                           description: Details of allowances that the `taker` must set for in order to execute the swap successfully. Null if no allowance is required
-                          nullable: true
                         balance:
-                          type: object
+                          type:
+                          - object
+                          - 'null'
                           properties:
                             token:
                               type: string
@@ -322,7 +329,6 @@ paths:
                           - expected
                           additionalProperties: false
                           description: Details of balance of the `sellToken` that the `taker` must hold. Null if the `taker` has sufficient balance
-                          nullable: true
                         simulationIncomplete:
                           type: boolean
                           description: This is set to `true` when 0x cannot validate the transaction. This happens when the `taker` has an insufficient balance of the `sellToken` and 0x is unable to peform ehanced quote validation with the low balance. Note that this does not necessarily mean that the trade will revert
@@ -429,21 +435,18 @@ paths:
                               - {}
                               - type: string
                                 pattern: ^[-+]?(0|[1-9]\d*)(\.\d+)?$
-                              nullable: true
                               description: The buy tax in bps of the token. Since each token could have arbitrary implementation, this field is best effort, meaning it would be set to `null` if the system is not able to determine the tax
                             sellTaxBps:
                               allOf:
                               - {}
                               - type: string
                                 pattern: ^[-+]?(0|[1-9]\d*)(\.\d+)?$
-                              nullable: true
                               description: The sell tax in bps of the token. Since each token could have arbitrary implementation, this field is best effort, meaning it would be set to `null` if the system is not able to determine the tax
                             transferTaxBps:
                               allOf:
                               - {}
                               - type: string
                                 pattern: ^[-+]?(0|[1-9]\d*)(\.\d+)?$
-                              nullable: true
                               description: The transfer tax in bps of the token. Since each token could have arbitrary implementation, this field is best effort, meaning it would be set to `null` if the system is not able to determine the tax
                           required:
                           - buyTaxBps
@@ -459,21 +462,18 @@ paths:
                               - {}
                               - type: string
                                 pattern: ^[-+]?(0|[1-9]\d*)(\.\d+)?$
-                              nullable: true
                               description: The buy tax in bps of the token. Since each token could have arbitrary implementation, this field is best effort, meaning it would be set to `null` if the system is not able to determine the tax
                             sellTaxBps:
                               allOf:
                               - {}
                               - type: string
                                 pattern: ^[-+]?(0|[1-9]\d*)(\.\d+)?$
-                              nullable: true
                               description: The sell tax in bps of the token. Since each token could have arbitrary implementation, this field is best effort, meaning it would be set to `null` if the system is not able to determine the tax
                             transferTaxBps:
                               allOf:
                               - {}
                               - type: string
                                 pattern: ^[-+]?(0|[1-9]\d*)(\.\d+)?$
-                              nullable: true
                               description: The transfer tax in bps of the token. Since each token could have arbitrary implementation, this field is best effort, meaning it would be set to `null` if the system is not able to determine the tax
                           required:
                           - buyTaxBps
@@ -637,8 +637,7 @@ paths:
         required: true
         schema:
           type: integer
-          exclusiveMinimum: true
-          minimum: 0
+          exclusiveMinimum: 0
         description: Chain ID. See [here](https://docs.0x.org/docs/introduction/supported-chains) for the list of supported chains
         example: 1
       - name: buyToken
@@ -747,12 +746,15 @@ paths:
                 - type: object
                   properties:
                     allowanceTarget:
-                      type: string
+                      type:
+                      - string
+                      - 'null'
                       pattern: ^0x[a-fA-F0-9]{40}$
-                      nullable: true
                       description: The target contract address for which the `taker` needs to have an allowance in order to be able to complete the swap. For swaps with the native asset (ie "ETH" or "BNB") as the `sellToken`, wrapping the native asset (i.e. "ETH" to "WETH") or unwrapping, no allowance is needed
                     approval:
-                      type: object
+                      type:
+                      - object
+                      - 'null'
                       properties:
                         type:
                           type: string
@@ -828,7 +830,6 @@ paths:
                       - hash
                       - eip712
                       additionalProperties: false
-                      nullable: true
                       description: This is the “approval” object which contains the necessary information to process a gasless approval
                     blockNumber:
                       allOf:
@@ -850,7 +851,9 @@ paths:
                       type: object
                       properties:
                         integratorFee:
-                          type: object
+                          type:
+                          - object
+                          - 'null'
                           properties:
                             amount:
                               allOf:
@@ -871,10 +874,11 @@ paths:
                           - token
                           - type
                           additionalProperties: false
-                          nullable: true
                           description: The specified fee to charge and deliver to the `swapFeeRecipient`.
                         integratorFees:
-                          type: array
+                          type:
+                          - array
+                          - 'null'
                           items:
                             type: object
                             properties:
@@ -897,10 +901,11 @@ paths:
                             - token
                             - type
                             additionalProperties: false
-                          nullable: true
                           description: The specified fees to charge and deliver to the `swapFeesRecipient`.
                         zeroExFee:
-                          type: object
+                          type:
+                          - object
+                          - 'null'
                           properties:
                             amount:
                               allOf:
@@ -921,10 +926,11 @@ paths:
                           - token
                           - type
                           additionalProperties: false
-                          nullable: true
                           description: The fee charged by 0x for the trade.
                         gasFee:
-                          type: object
+                          type:
+                          - object
+                          - 'null'
                           properties:
                             amount:
                               allOf:
@@ -945,7 +951,6 @@ paths:
                           - token
                           - type
                           additionalProperties: false
-                          nullable: true
                           description: The gas fee to be used in submitting the transaction.
                       required:
                       - integratorFee
@@ -957,7 +962,9 @@ paths:
                       type: object
                       properties:
                         allowance:
-                          type: object
+                          type:
+                          - object
+                          - 'null'
                           properties:
                             actual:
                               allOf:
@@ -974,9 +981,10 @@ paths:
                           - spender
                           additionalProperties: false
                           description: Details of allowances that the `taker` must set for in order to execute the swap successfully. Null if no allowance is required
-                          nullable: true
                         balance:
-                          type: object
+                          type:
+                          - object
+                          - 'null'
                           properties:
                             token:
                               type: string
@@ -1000,7 +1008,6 @@ paths:
                           - expected
                           additionalProperties: false
                           description: Details of balance of the `sellToken` that the `taker` must hold. Null if the `taker` has sufficient balance
-                          nullable: true
                         simulationIncomplete:
                           type: boolean
                           description: This is set to `true` when 0x cannot validate the transaction. This happens when the `taker` has an insufficient balance of the `sellToken` and 0x is unable to peform ehanced quote validation with the low balance. Note that this does not necessarily mean that the trade will revert
@@ -1107,21 +1114,18 @@ paths:
                               - {}
                               - type: string
                                 pattern: ^[-+]?(0|[1-9]\d*)(\.\d+)?$
-                              nullable: true
                               description: The buy tax in bps of the token. Since each token could have arbitrary implementation, this field is best effort, meaning it would be set to `null` if the system is not able to determine the tax
                             sellTaxBps:
                               allOf:
                               - {}
                               - type: string
                                 pattern: ^[-+]?(0|[1-9]\d*)(\.\d+)?$
-                              nullable: true
                               description: The sell tax in bps of the token. Since each token could have arbitrary implementation, this field is best effort, meaning it would be set to `null` if the system is not able to determine the tax
                             transferTaxBps:
                               allOf:
                               - {}
                               - type: string
                                 pattern: ^[-+]?(0|[1-9]\d*)(\.\d+)?$
-                              nullable: true
                               description: The transfer tax in bps of the token. Since each token could have arbitrary implementation, this field is best effort, meaning it would be set to `null` if the system is not able to determine the tax
                           required:
                           - buyTaxBps
@@ -1137,21 +1141,18 @@ paths:
                               - {}
                               - type: string
                                 pattern: ^[-+]?(0|[1-9]\d*)(\.\d+)?$
-                              nullable: true
                               description: The buy tax in bps of the token. Since each token could have arbitrary implementation, this field is best effort, meaning it would be set to `null` if the system is not able to determine the tax
                             sellTaxBps:
                               allOf:
                               - {}
                               - type: string
                                 pattern: ^[-+]?(0|[1-9]\d*)(\.\d+)?$
-                              nullable: true
                               description: The sell tax in bps of the token. Since each token could have arbitrary implementation, this field is best effort, meaning it would be set to `null` if the system is not able to determine the tax
                             transferTaxBps:
                               allOf:
                               - {}
                               - type: string
                                 pattern: ^[-+]?(0|[1-9]\d*)(\.\d+)?$
-                              nullable: true
                               description: The transfer tax in bps of the token. Since each token could have arbitrary implementation, this field is best effort, meaning it would be set to `null` if the system is not able to determine the tax
                           required:
                           - buyTaxBps
@@ -1480,11 +1481,12 @@ paths:
               properties:
                 chainId:
                   type: integer
-                  exclusiveMinimum: true
-                  minimum: 0
                   description: Chain ID. See [here](https://docs.0x.org/docs/introduction/supported-chains) for the list of supported chains
+                  exclusiveMinimum: 0
                 approval:
-                  type: object
+                  type:
+                  - object
+                  - 'null'
                   properties:
                     type:
                       type: string
@@ -1753,7 +1755,6 @@ paths:
                   - eip712
                   - signature
                   additionalProperties: false
-                  nullable: true
                   description: The gasless approval object from the quote endpoint including its signature
                 trade:
                   type: object
@@ -2157,8 +2158,7 @@ paths:
         required: true
         schema:
           type: integer
-          exclusiveMinimum: true
-          minimum: 0
+          exclusiveMinimum: 0
         description: ' [here](https://docs.0x.org/docs/introduction/supported-chains) for the list of supported chains'
         example: 8453
       - name: tradeHash
@@ -2187,9 +2187,8 @@ paths:
                             description: The onchain transaction hash
                           timestamp:
                             type: integer
-                            exclusiveMinimum: true
-                            minimum: 0
                             description: The timestamp when the transaction was submitted onchain
+                            exclusiveMinimum: 0
                         required:
                         - hash
                         - timestamp
@@ -2213,9 +2212,8 @@ paths:
                             description: The onchain transaction hash
                           timestamp:
                             type: integer
-                            exclusiveMinimum: true
-                            minimum: 0
                             description: The timestamp when the transaction was submitted onchain
+                            exclusiveMinimum: 0
                         required:
                         - hash
                         - timestamp
@@ -2241,9 +2239,8 @@ paths:
                             description: The onchain transaction hash
                           timestamp:
                             type: integer
-                            exclusiveMinimum: true
-                            minimum: 0
                             description: The timestamp when the transaction was submitted onchain
+                            exclusiveMinimum: 0
                         required:
                         - hash
                         - timestamp
@@ -2276,9 +2273,8 @@ paths:
                             description: The onchain transaction hash
                           timestamp:
                             type: integer
-                            exclusiveMinimum: true
-                            minimum: 0
                             description: The timestamp when the transaction was submitted onchain
+                            exclusiveMinimum: 0
                         required:
                         - hash
                         - timestamp
@@ -2350,8 +2346,7 @@ paths:
         required: true
         schema:
           type: integer
-          exclusiveMinimum: true
-          minimum: 0
+          exclusiveMinimum: 0
         description: Chain ID. See [here](https://docs.0x.org/docs/introduction/supported-chains) for the list of supported chains
         example: 8453
       responses:
@@ -2487,13 +2482,59 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    INVALID_SIGNER:
+    TOKEN_PAIR_NOT_SUPPORTED:
       type: object
       properties:
         name:
           type: string
           enum:
-          - INVALID_SIGNER
+          - TOKEN_PAIR_NOT_SUPPORTED
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            zid:
+              type: string
+              description: The unique ZeroEx identifier of the request
+          required:
+          - zid
+          additionalProperties: false
+      required:
+      - name
+      - message
+      - data
+      additionalProperties: false
+    INTERNAL_SERVER_ERROR:
+      type: object
+      properties:
+        name:
+          type: string
+          enum:
+          - INTERNAL_SERVER_ERROR
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            zid:
+              type: string
+              description: The unique ZeroEx identifier of the request
+          required:
+          - zid
+          additionalProperties: false
+      required:
+      - name
+      - message
+      - data
+      additionalProperties: false
+    INVALID_SIGNATURE:
+      type: object
+      properties:
+        name:
+          type: string
+          enum:
+          - INVALID_SIGNATURE
         message:
           type: string
         data:
@@ -2509,28 +2550,147 @@ components:
               type: string
               pattern: ^0x[a-fA-F0-9]{40}$
               description: The intended signer of the meta-transaction
-            signer:
-              type: string
-              pattern: ^0x[a-fA-F0-9]{40}$
-              description: The signer of the meta-transaction
           required:
           - zid
           - metaTransactionHash
           - taker
-          - signer
           additionalProperties: false
       required:
       - name
       - message
       - data
       additionalProperties: false
-    BUY_TOKEN_NOT_AUTHORIZED_FOR_TRADE:
+    META_TRANSACTION_INVALID:
       type: object
       properties:
         name:
           type: string
           enum:
-          - BUY_TOKEN_NOT_AUTHORIZED_FOR_TRADE
+          - META_TRANSACTION_INVALID
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            zid:
+              type: string
+              description: The unique ZeroEx identifier of the request
+            metaTransactionHash:
+              type: string
+              description: The hash of the meta-transaction provided by the caller
+          required:
+          - zid
+          - metaTransactionHash
+          additionalProperties: false
+      required:
+      - name
+      - message
+      - data
+      additionalProperties: false
+    META_TRANSACTION_EXPIRY_TOO_SOON:
+      type: object
+      properties:
+        name:
+          type: string
+          enum:
+          - META_TRANSACTION_EXPIRY_TOO_SOON
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            zid:
+              type: string
+              description: The unique ZeroEx identifier of the request
+            metaTransactionHash:
+              type: string
+              description: The hash of the meta-transaction provided by the caller
+            expiry:
+              allOf:
+              - {}
+              - type: string
+                pattern: ^[-+]?(0|[1-9]\d*)(\.\d+)?$
+              description: The expiry of the meta-transaction provided by the caller in ms
+          required:
+          - zid
+          - metaTransactionHash
+          - expiry
+          additionalProperties: false
+      required:
+      - name
+      - message
+      - data
+      additionalProperties: false
+    PENDING_TRADES_ALREADY_EXIST:
+      type: object
+      properties:
+        name:
+          type: string
+          enum:
+          - PENDING_TRADES_ALREADY_EXIST
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            zid:
+              type: string
+              description: The unique ZeroEx identifier of the request
+            metaTransactionHash:
+              type: string
+              description: The hash of the meta-transaction provided by the caller
+            pendingMetaTransactionHashes:
+              type: array
+              items:
+                type: string
+              description: The list of pending meta-transaction hashes for the same taker and sell token
+          required:
+          - zid
+          - metaTransactionHash
+          - pendingMetaTransactionHashes
+          additionalProperties: false
+      required:
+      - name
+      - message
+      - data
+      additionalProperties: false
+    SELL_AMOUNT_TOO_SMALL:
+      type: object
+      properties:
+        name:
+          type: string
+          enum:
+          - SELL_AMOUNT_TOO_SMALL
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            zid:
+              type: string
+              description: The unique ZeroEx identifier of the request
+            minSellAmount:
+              allOf:
+              - {}
+              - type: string
+                pattern: ^[-+]?(0|[1-9]\d*)(\.\d+)?$
+              description: The minimum sell amount required for the trade to go through
+          required:
+          - zid
+          - minSellAmount
+          additionalProperties: false
+      required:
+      - name
+      - message
+      - data
+      additionalProperties: false
+    TAKER_NOT_AUTHORIZED_FOR_TRADE:
+      type: object
+      properties:
+        name:
+          type: string
+          enum:
+          - TAKER_NOT_AUTHORIZED_FOR_TRADE
         message:
           type: string
         data:
@@ -2570,6 +2730,52 @@ components:
       - message
       - data
       additionalProperties: false
+    RECIPIENT_NOT_AUTHORIZED_FOR_TRADE:
+      type: object
+      properties:
+        name:
+          type: string
+          enum:
+          - RECIPIENT_NOT_AUTHORIZED_FOR_TRADE
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            zid:
+              type: string
+              description: The unique ZeroEx identifier of the request
+          required:
+          - zid
+          additionalProperties: false
+      required:
+      - name
+      - message
+      - data
+      additionalProperties: false
+    BUY_TOKEN_NOT_AUTHORIZED_FOR_TRADE:
+      type: object
+      properties:
+        name:
+          type: string
+          enum:
+          - BUY_TOKEN_NOT_AUTHORIZED_FOR_TRADE
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            zid:
+              type: string
+              description: The unique ZeroEx identifier of the request
+          required:
+          - zid
+          additionalProperties: false
+      required:
+      - name
+      - message
+      - data
+      additionalProperties: false
     TOKEN_NOT_SUPPORTED:
       type: object
       properties:
@@ -2587,6 +2793,110 @@ components:
               description: The unique ZeroEx identifier of the request
           required:
           - zid
+          additionalProperties: false
+      required:
+      - name
+      - message
+      - data
+      additionalProperties: false
+    META_TRANSACTION_STATUS_NOT_FOUND:
+      type: object
+      properties:
+        name:
+          type: string
+          enum:
+          - META_TRANSACTION_STATUS_NOT_FOUND
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            zid:
+              type: string
+              description: The unique ZeroEx identifier of the request
+          required:
+          - zid
+          additionalProperties: false
+      required:
+      - name
+      - message
+      - data
+      additionalProperties: false
+    TRADE_ALREADY_SUBMITTED:
+      type: object
+      properties:
+        name:
+          type: string
+          enum:
+          - TRADE_ALREADY_SUBMITTED
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            zid:
+              type: string
+              description: The unique ZeroEx identifier of the request
+            tradeHash:
+              type: string
+              description: The hash of the trade that was already submitted
+          required:
+          - zid
+          - tradeHash
+          additionalProperties: false
+      required:
+      - name
+      - message
+      - data
+      additionalProperties: false
+    UNABLE_TO_CALCULATE_GAS_FEE:
+      type: object
+      properties:
+        name:
+          type: string
+          enum:
+          - UNABLE_TO_CALCULATE_GAS_FEE
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            zid:
+              type: string
+              description: The unique ZeroEx identifier of the request
+          required:
+          - zid
+          additionalProperties: false
+      required:
+      - name
+      - message
+      - data
+      additionalProperties: false
+    SMART_WALLET_NOT_SUPPORTED:
+      type: object
+      properties:
+        name:
+          type: string
+          enum:
+          - SMART_WALLET_NOT_SUPPORTED
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            zid:
+              type: string
+              description: The unique ZeroEx identifier of the request
+            taker:
+              type: string
+              description: The smart wallet address that was rejected
+            chainId:
+              type: number
+              description: The chain where smart wallets are not supported
+          required:
+          - zid
+          - taker
+          - chainId
           additionalProperties: false
       required:
       - name
@@ -2644,13 +2954,13 @@ components:
       - message
       - data
       additionalProperties: false
-    TOKEN_PAIR_NOT_SUPPORTED:
+    RECIPIENT_NOT_SUPPORTED:
       type: object
       properties:
         name:
           type: string
           enum:
-          - TOKEN_PAIR_NOT_SUPPORTED
+          - RECIPIENT_NOT_SUPPORTED
         message:
           type: string
         data:
@@ -2667,13 +2977,13 @@ components:
       - message
       - data
       additionalProperties: false
-    USER_NOT_AUTHORIZED:
+    UNCATEGORIZED:
       type: object
       properties:
         name:
           type: string
           enum:
-          - USER_NOT_AUTHORIZED
+          - UNCATEGORIZED
         message:
           type: string
         data:
@@ -2690,13 +3000,13 @@ components:
       - message
       - data
       additionalProperties: false
-    META_TRANSACTION_STATUS_NOT_FOUND:
+    XSTOCKS_NOT_AUTHORIZED:
       type: object
       properties:
         name:
           type: string
           enum:
-          - META_TRANSACTION_STATUS_NOT_FOUND
+          - XSTOCKS_NOT_AUTHORIZED
         message:
           type: string
         data:
@@ -2736,46 +3046,13 @@ components:
       - message
       - data
       additionalProperties: false
-    PENDING_TRADES_ALREADY_EXIST:
+    USER_NOT_AUTHORIZED:
       type: object
       properties:
         name:
           type: string
           enum:
-          - PENDING_TRADES_ALREADY_EXIST
-        message:
-          type: string
-        data:
-          type: object
-          properties:
-            zid:
-              type: string
-              description: The unique ZeroEx identifier of the request
-            metaTransactionHash:
-              type: string
-              description: The hash of the meta-transaction provided by the caller
-            pendingMetaTransactionHashes:
-              type: array
-              items:
-                type: string
-              description: The list of pending meta-transaction hashes for the same taker and sell token
-          required:
-          - zid
-          - metaTransactionHash
-          - pendingMetaTransactionHashes
-          additionalProperties: false
-      required:
-      - name
-      - message
-      - data
-      additionalProperties: false
-    XSTOCKS_NOT_AUTHORIZED:
-      type: object
-      properties:
-        name:
-          type: string
-          enum:
-          - XSTOCKS_NOT_AUTHORIZED
+          - USER_NOT_AUTHORIZED
         message:
           type: string
         data:
@@ -2792,13 +3069,13 @@ components:
       - message
       - data
       additionalProperties: false
-    INVALID_SIGNATURE:
+    INVALID_SIGNER:
       type: object
       properties:
         name:
           type: string
           enum:
-          - INVALID_SIGNATURE
+          - INVALID_SIGNER
         message:
           type: string
         data:
@@ -2814,33 +3091,15 @@ components:
               type: string
               pattern: ^0x[a-fA-F0-9]{40}$
               description: The intended signer of the meta-transaction
+            signer:
+              type: string
+              pattern: ^0x[a-fA-F0-9]{40}$
+              description: The signer of the meta-transaction
           required:
           - zid
           - metaTransactionHash
           - taker
-          additionalProperties: false
-      required:
-      - name
-      - message
-      - data
-      additionalProperties: false
-    UNABLE_TO_CALCULATE_GAS_FEE:
-      type: object
-      properties:
-        name:
-          type: string
-          enum:
-          - UNABLE_TO_CALCULATE_GAS_FEE
-        message:
-          type: string
-        data:
-          type: object
-          properties:
-            zid:
-              type: string
-              description: The unique ZeroEx identifier of the request
-          required:
-          - zid
+          - signer
           additionalProperties: false
       required:
       - name
@@ -2881,186 +3140,6 @@ components:
           required:
           - zid
           - details
-          additionalProperties: false
-      required:
-      - name
-      - message
-      - data
-      additionalProperties: false
-    TAKER_NOT_AUTHORIZED_FOR_TRADE:
-      type: object
-      properties:
-        name:
-          type: string
-          enum:
-          - TAKER_NOT_AUTHORIZED_FOR_TRADE
-        message:
-          type: string
-        data:
-          type: object
-          properties:
-            zid:
-              type: string
-              description: The unique ZeroEx identifier of the request
-          required:
-          - zid
-          additionalProperties: false
-      required:
-      - name
-      - message
-      - data
-      additionalProperties: false
-    META_TRANSACTION_EXPIRY_TOO_SOON:
-      type: object
-      properties:
-        name:
-          type: string
-          enum:
-          - META_TRANSACTION_EXPIRY_TOO_SOON
-        message:
-          type: string
-        data:
-          type: object
-          properties:
-            zid:
-              type: string
-              description: The unique ZeroEx identifier of the request
-            metaTransactionHash:
-              type: string
-              description: The hash of the meta-transaction provided by the caller
-            expiry:
-              allOf:
-              - {}
-              - type: string
-                pattern: ^[-+]?(0|[1-9]\d*)(\.\d+)?$
-              description: The expiry of the meta-transaction provided by the caller in ms
-          required:
-          - zid
-          - metaTransactionHash
-          - expiry
-          additionalProperties: false
-      required:
-      - name
-      - message
-      - data
-      additionalProperties: false
-    META_TRANSACTION_INVALID:
-      type: object
-      properties:
-        name:
-          type: string
-          enum:
-          - META_TRANSACTION_INVALID
-        message:
-          type: string
-        data:
-          type: object
-          properties:
-            zid:
-              type: string
-              description: The unique ZeroEx identifier of the request
-            metaTransactionHash:
-              type: string
-              description: The hash of the meta-transaction provided by the caller
-          required:
-          - zid
-          - metaTransactionHash
-          additionalProperties: false
-      required:
-      - name
-      - message
-      - data
-      additionalProperties: false
-    UNCATEGORIZED:
-      type: object
-      properties:
-        name:
-          type: string
-          enum:
-          - UNCATEGORIZED
-        message:
-          type: string
-        data:
-          type: object
-          properties:
-            zid:
-              type: string
-              description: The unique ZeroEx identifier of the request
-          required:
-          - zid
-          additionalProperties: false
-      required:
-      - name
-      - message
-      - data
-      additionalProperties: false
-    RECIPIENT_NOT_AUTHORIZED_FOR_TRADE:
-      type: object
-      properties:
-        name:
-          type: string
-          enum:
-          - RECIPIENT_NOT_AUTHORIZED_FOR_TRADE
-        message:
-          type: string
-        data:
-          type: object
-          properties:
-            zid:
-              type: string
-              description: The unique ZeroEx identifier of the request
-          required:
-          - zid
-          additionalProperties: false
-      required:
-      - name
-      - message
-      - data
-      additionalProperties: false
-    TRADE_ALREADY_SUBMITTED:
-      type: object
-      properties:
-        name:
-          type: string
-          enum:
-          - TRADE_ALREADY_SUBMITTED
-        message:
-          type: string
-        data:
-          type: object
-          properties:
-            zid:
-              type: string
-              description: The unique ZeroEx identifier of the request
-            tradeHash:
-              type: string
-              description: The hash of the trade that was already submitted
-          required:
-          - zid
-          - tradeHash
-          additionalProperties: false
-      required:
-      - name
-      - message
-      - data
-      additionalProperties: false
-    RECIPIENT_NOT_SUPPORTED:
-      type: object
-      properties:
-        name:
-          type: string
-          enum:
-          - RECIPIENT_NOT_SUPPORTED
-        message:
-          type: string
-        data:
-          type: object
-          properties:
-            zid:
-              type: string
-              description: The unique ZeroEx identifier of the request
-          required:
-          - zid
           additionalProperties: false
       required:
       - name
@@ -3108,90 +3187,6 @@ components:
           - sellToken
           - sellAmount
           - balance
-          additionalProperties: false
-      required:
-      - name
-      - message
-      - data
-      additionalProperties: false
-    SMART_WALLET_NOT_SUPPORTED:
-      type: object
-      properties:
-        name:
-          type: string
-          enum:
-          - SMART_WALLET_NOT_SUPPORTED
-        message:
-          type: string
-        data:
-          type: object
-          properties:
-            zid:
-              type: string
-              description: The unique ZeroEx identifier of the request
-            taker:
-              type: string
-              description: The smart wallet address that was rejected
-            chainId:
-              type: number
-              description: The chain where smart wallets are not supported
-          required:
-          - zid
-          - taker
-          - chainId
-          additionalProperties: false
-      required:
-      - name
-      - message
-      - data
-      additionalProperties: false
-    SELL_AMOUNT_TOO_SMALL:
-      type: object
-      properties:
-        name:
-          type: string
-          enum:
-          - SELL_AMOUNT_TOO_SMALL
-        message:
-          type: string
-        data:
-          type: object
-          properties:
-            zid:
-              type: string
-              description: The unique ZeroEx identifier of the request
-            minSellAmount:
-              allOf:
-              - {}
-              - type: string
-                pattern: ^[-+]?(0|[1-9]\d*)(\.\d+)?$
-              description: The minimum sell amount required for the trade to go through
-          required:
-          - zid
-          - minSellAmount
-          additionalProperties: false
-      required:
-      - name
-      - message
-      - data
-      additionalProperties: false
-    INTERNAL_SERVER_ERROR:
-      type: object
-      properties:
-        name:
-          type: string
-          enum:
-          - INTERNAL_SERVER_ERROR
-        message:
-          type: string
-        data:
-          type: object
-          properties:
-            zid:
-              type: string
-              description: The unique ZeroEx identifier of the request
-          required:
-          - zid
           additionalProperties: false
       required:
       - name

@@ -1,9 +1,9 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: 0x Cross-Chain API
-  description: This is the official API reference for the latest 0x API (v2).
-  version: v2
-  x-source-url: https://github.com/0xProject/0x-docs/blob/main/fern/openapi.json
+  title: 0x Cross Chain API
+  description: This is the official API reference for the 0x Cross-Chain API (v1).
+  version: v1
+  x-source-url: https://github.com/0xProject/0x-docs/blob/main/fern/openapi-cross-chain.json
   x-last-validated: '2026-05-28'
 servers:
 - url: https://api.0x.org
@@ -170,7 +170,6 @@ paths:
                       - type: string
                         pattern: ^0x[a-fA-F0-9]{32}$
                       - type: string
-                      nullable: true
                       description: The contract address to set the allowance on, if necessary
                     originChainId:
                       type: number
@@ -206,7 +205,9 @@ paths:
                       type: object
                       properties:
                         allowance:
-                          type: object
+                          type:
+                          - object
+                          - 'null'
                           properties:
                             actual:
                               allOf:
@@ -229,9 +230,10 @@ paths:
                           - spender
                           additionalProperties: false
                           description: The allowances that the `originAddress` must set in order to execute the swap successfully. Null if no allowance is required
-                          nullable: true
                         balance:
-                          type: object
+                          type:
+                          - object
+                          - 'null'
                           properties:
                             token:
                               anyOf:
@@ -262,7 +264,6 @@ paths:
                           - expected
                           additionalProperties: false
                           description: The balance of `sellToken` that the `originAddress` must hold. Null if the `originAddress` has sufficient balance
-                          nullable: true
                         simulationIncomplete:
                           type: boolean
                           description: This is set to `true` when 0x cannot validate the transaction. This happens when the `originAddress` has an insufficient balance of `sellToken` and 0x is unable to perform enhanced quote validation with such low balance. Note that this does not necessarily mean that the trade will revert
@@ -316,7 +317,9 @@ paths:
                             type: object
                             properties:
                               integratorFee:
-                                type: object
+                                type:
+                                - object
+                                - 'null'
                                 properties:
                                   amount:
                                     allOf:
@@ -344,10 +347,11 @@ paths:
                                 - token
                                 - type
                                 additionalProperties: false
-                                nullable: true
                                 description: The details about the first fee collected by the integrator
                               integratorFees:
-                                type: array
+                                type:
+                                - array
+                                - 'null'
                                 items:
                                   type: object
                                   properties:
@@ -377,10 +381,11 @@ paths:
                                   - token
                                   - type
                                   additionalProperties: false
-                                nullable: true
                                 description: The details about the fees collected by the integrator
                               zeroExFee:
-                                type: object
+                                type:
+                                - object
+                                - 'null'
                                 properties:
                                   amount:
                                     allOf:
@@ -405,10 +410,11 @@ paths:
                                 - token
                                 - type
                                 additionalProperties: false
-                                nullable: true
                                 description: The details about the fee collected by 0x
                               bridgeNativeFee:
-                                type: object
+                                type:
+                                - object
+                                - 'null'
                                 properties:
                                   amount:
                                     allOf:
@@ -436,7 +442,6 @@ paths:
                                 - token
                                 - type
                                 additionalProperties: false
-                                nullable: true
                                 description: Native fee required by the bridge provider for cross-chain message passing that will be added to the transaction value
                               reimbursementFee:
                                 type: object
@@ -485,7 +490,6 @@ paths:
                                     format: int64
                                   - type: string
                                     pattern: ^[-+]?(0|[1-9]\d*)(\.\d+)?$
-                                  nullable: true
                                   description: The gas price in wei used for cost estimation
                                 gasLimit:
                                   allOf:
@@ -500,7 +504,6 @@ paths:
                                     format: int64
                                   - type: string
                                     pattern: ^[-+]?(0|[1-9]\d*)(\.\d+)?$
-                                  nullable: true
                                   description: The estimated total network cost of the swap. On chains where there is no L1 data cost, it is calculated as `gas` * `gasPrice`. On chains where there is an L1 data cost, it is calculated as `gas` * `gasPrice + L1 data`
                               required:
                               - chainType
@@ -528,7 +531,6 @@ paths:
                                     format: int64
                                   - type: string
                                     pattern: ^[-+]?(0|[1-9]\d*)(\.\d+)?$
-                                  nullable: true
                                   description: The priority fee in lamports for faster transaction processing
                                 total:
                                   allOf:
@@ -683,9 +685,10 @@ paths:
                                       pattern: ^[-+]?(0|[1-9]\d*)(\.\d+)?$
                                     description: The minimum output amount for this swap in token base units
                                   estimatedTimeSeconds:
-                                    type: integer
+                                    type:
+                                    - integer
+                                    - 'null'
                                     minimum: 0
-                                    nullable: true
                                     description: Estimated time for this swap step to complete
                                 required:
                                 - type
@@ -752,9 +755,10 @@ paths:
                                     type: string
                                     description: The bridge provider name handling this cross-chain transfer
                                   estimatedTimeSeconds:
-                                    type: integer
+                                    type:
+                                    - integer
+                                    - 'null'
                                     minimum: 0
-                                    nullable: true
                                     description: Estimated time for this bridge step to complete
                                 required:
                                 - type
@@ -794,7 +798,6 @@ paths:
                                         format: int64
                                       - type: string
                                         pattern: ^[-+]?(0|[1-9]\d*)(\.\d+)?$
-                                      nullable: true
                                       description: The estimated gas limit required for successful transaction execution
                                     gasPrice:
                                       allOf:
@@ -802,7 +805,6 @@ paths:
                                         format: int64
                                       - type: string
                                         pattern: ^[-+]?(0|[1-9]\d*)(\.\d+)?$
-                                      nullable: true
                                       description: The gas price in wei for the EVM transaction
                                     value:
                                       allOf:
@@ -883,15 +885,18 @@ paths:
                               additionalProperties: false
                             description: The transaction details to execute on the origin chain to initiate the cross-chain swap
                           estimatedTimeSeconds:
-                            type: number
+                            type:
+                            - number
+                            - 'null'
                             minimum: 0
-                            nullable: true
                             description: Estimated total time in seconds for the cross-chain swap to complete, including bridge confirmation time
                           issues:
                             type: object
                             properties:
                               allowance:
-                                type: object
+                                type:
+                                - object
+                                - 'null'
                                 properties:
                                   actual:
                                     allOf:
@@ -914,9 +919,10 @@ paths:
                                 - spender
                                 additionalProperties: false
                                 description: The allowances that the `originAddress` must set in order to execute the swap successfully. Null if no allowance is required
-                                nullable: true
                               balance:
-                                type: object
+                                type:
+                                - object
+                                - 'null'
                                 properties:
                                   token:
                                     anyOf:
@@ -947,7 +953,6 @@ paths:
                                 - expected
                                 additionalProperties: false
                                 description: The balance of `sellToken` that the `originAddress` must hold. Null if the `originAddress` has sufficient balance
-                                nullable: true
                               simulationIncomplete:
                                 type: boolean
                                 description: This is set to `true` when 0x cannot validate the transaction. This happens when the `originAddress` has an insufficient balance of `sellToken` and 0x is unable to perform enhanced quote validation with such low balance. Note that this does not necessarily mean that the trade will revert
@@ -1181,14 +1186,14 @@ paths:
                                   type: string
                                   description: The name of the chain where this transaction occurred
                                 txHash:
-                                  type: string
-                                  nullable: true
+                                  type:
+                                  - string
+                                  - 'null'
                                   description: The transaction hash on this specific chain
                                 timestamp:
                                   type: integer
-                                  exclusiveMinimum: true
-                                  minimum: 0
                                   description: Unix timestamp when this transaction was confirmed on-chain
+                                  exclusiveMinimum: 0
                               required:
                               - chainId
                               - chain
@@ -1240,14 +1245,14 @@ paths:
                                   type: string
                                   description: The name of the chain where this transaction occurred
                                 txHash:
-                                  type: string
-                                  nullable: true
+                                  type:
+                                  - string
+                                  - 'null'
                                   description: The transaction hash on this specific chain
                                 timestamp:
                                   type: integer
-                                  exclusiveMinimum: true
-                                  minimum: 0
                                   description: Unix timestamp when this transaction was confirmed on-chain
+                                  exclusiveMinimum: 0
                               required:
                               - chainId
                               - chain
@@ -1302,9 +1307,10 @@ paths:
                               pattern: ^[-+]?(0|[1-9]\d*)(\.\d+)?$
                             description: The quoted output amount for this swap in token base units
                           estimatedTimeSeconds:
-                            type: integer
+                            type:
+                            - integer
+                            - 'null'
                             minimum: 0
-                            nullable: true
                             description: Estimated time for this swap step to complete
                           transactions:
                             type: array
@@ -1318,14 +1324,14 @@ paths:
                                   type: string
                                   description: The name of the chain where this transaction occurred
                                 txHash:
-                                  type: string
-                                  nullable: true
+                                  type:
+                                  - string
+                                  - 'null'
                                   description: The transaction hash on this specific chain
                                 timestamp:
                                   type: integer
-                                  exclusiveMinimum: true
-                                  minimum: 0
                                   description: Unix timestamp when this transaction was confirmed on-chain
+                                  exclusiveMinimum: 0
                               required:
                               - chainId
                               - chain
@@ -1404,12 +1410,12 @@ paths:
                               format: int64
                             - type: string
                               pattern: ^[-+]?(0|[1-9]\d*)(\.\d+)?$
-                            nullable: true
                             description: The settled output amount for this bridge in token base units
                           estimatedTimeSeconds:
-                            type: integer
+                            type:
+                            - integer
+                            - 'null'
                             minimum: 0
-                            nullable: true
                             description: Estimated time for this bridge step to complete
                           transactions:
                             type: array
@@ -1423,14 +1429,14 @@ paths:
                                   type: string
                                   description: The name of the chain where this transaction occurred
                                 txHash:
-                                  type: string
-                                  nullable: true
+                                  type:
+                                  - string
+                                  - 'null'
                                   description: The transaction hash on this specific chain
                                 timestamp:
                                   type: integer
-                                  exclusiveMinimum: true
-                                  minimum: 0
                                   description: Unix timestamp when this transaction was confirmed on-chain
+                                  exclusiveMinimum: 0
                               required:
                               - chainId
                               - chain
@@ -1458,7 +1464,9 @@ paths:
                         additionalProperties: false
                     description: The steps involved in the cross-chain transaction
                   failure:
-                    type: object
+                    type:
+                    - object
+                    - 'null'
                     properties:
                       reason:
                         type: string
@@ -1484,14 +1492,14 @@ paths:
                               type: string
                               description: The name of the chain where this transaction occurred
                             txHash:
-                              type: string
-                              nullable: true
+                              type:
+                              - string
+                              - 'null'
                               description: The transaction hash on this specific chain
                             timestamp:
                               type: integer
-                              exclusiveMinimum: true
-                              minimum: 0
                               description: Unix timestamp when this transaction was confirmed on-chain
+                              exclusiveMinimum: 0
                           required:
                           - chainId
                           - chain
@@ -1500,7 +1508,9 @@ paths:
                           additionalProperties: false
                         description: The transactions involved in the failure
                       recovery:
-                        type: object
+                        type:
+                        - object
+                        - 'null'
                         properties:
                           chainId:
                             type: number
@@ -1522,14 +1532,16 @@ paths:
                               pattern: ^[-+]?(0|[1-9]\d*)(\.\d+)?$
                             description: The amount of tokens to be recovered in token base units
                           estimatedTimeSeconds:
-                            type: integer
+                            type:
+                            - integer
+                            - 'null'
                             minimum: 0
-                            nullable: true
                             description: Estimated time for this recovery step to finish, measured from when the recovery process begins
                           deadline:
-                            type: integer
+                            type:
+                            - integer
+                            - 'null'
                             minimum: 0
-                            nullable: true
                             description: The deadline timestamp of which the funds are available for recovery, if applicable. Not initiating the recovery process within this deadline may result in funds being forever lost
                           manualTransaction:
                             anyOf:
@@ -1556,7 +1568,6 @@ paths:
                                         format: int64
                                       - type: string
                                         pattern: ^[-+]?(0|[1-9]\d*)(\.\d+)?$
-                                      nullable: true
                                       description: The estimated gas limit required for successful transaction execution
                                     gasPrice:
                                       allOf:
@@ -1564,7 +1575,6 @@ paths:
                                         format: int64
                                       - type: string
                                         pattern: ^[-+]?(0|[1-9]\d*)(\.\d+)?$
-                                      nullable: true
                                       description: The gas price in wei for the EVM transaction
                                     value:
                                       allOf:
@@ -1643,7 +1653,6 @@ paths:
                               - chainType
                               - details
                               additionalProperties: false
-                            nullable: true
                             description: The manual transaction for submission, if applicable. This transaction may be submitted by anyone to initiate the recovery process
                           settledAmount:
                             allOf:
@@ -1651,7 +1660,6 @@ paths:
                               format: int64
                             - type: string
                               pattern: ^[-+]?(0|[1-9]\d*)(\.\d+)?$
-                            nullable: true
                             description: The actual settled refund amount in token base units
                         required:
                         - chainId
@@ -1662,7 +1670,6 @@ paths:
                         - manualTransaction
                         - settledAmount
                         additionalProperties: false
-                        nullable: true
                         description: The recovery step for the failure
                     required:
                     - reason
@@ -1670,7 +1677,6 @@ paths:
                     - transactions
                     - recovery
                     additionalProperties: false
-                    nullable: true
                     description: The failure context for the cross-chain transaction
                   transactions:
                     type: array
@@ -1684,14 +1690,14 @@ paths:
                           type: string
                           description: The name of the chain where this transaction occurred
                         txHash:
-                          type: string
-                          nullable: true
+                          type:
+                          - string
+                          - 'null'
                           description: The transaction hash on this specific chain
                         timestamp:
                           type: integer
-                          exclusiveMinimum: true
-                          minimum: 0
                           description: Unix timestamp when this transaction was confirmed on-chain
+                          exclusiveMinimum: 0
                       required:
                       - chainId
                       - chain
@@ -1933,19 +1939,22 @@ paths:
                           type: string
                           description: The transaction hash on the origin chain
                         destinationChain:
-                          type: number
-                          nullable: true
+                          type:
+                          - number
+                          - 'null'
                           description: The destination chain ID
                         destinationTx:
-                          type: string
-                          nullable: true
+                          type:
+                          - string
+                          - 'null'
                           description: The transaction hash on the destination chain
                         status:
                           type: string
                           description: The current status of the transaction
                         bridge:
-                          type: string
-                          nullable: true
+                          type:
+                          - string
+                          - 'null'
                           description: The bridge provider used
                       required:
                       - originChain
@@ -1963,8 +1972,9 @@ paths:
                         type: number
                         description: The limit used for this query
                       nextCursor:
-                        type: string
-                        nullable: true
+                        type:
+                        - string
+                        - 'null'
                         description: Cursor for next page. Null if no more results
                       hasMore:
                         type: boolean
@@ -2186,7 +2196,9 @@ paths:
                                   type: object
                                   properties:
                                     integratorFee:
-                                      type: object
+                                      type:
+                                      - object
+                                      - 'null'
                                       properties:
                                         amount:
                                           allOf:
@@ -2214,10 +2226,11 @@ paths:
                                       - token
                                       - type
                                       additionalProperties: false
-                                      nullable: true
                                       description: The details about the first fee collected by the integrator
                                     integratorFees:
-                                      type: array
+                                      type:
+                                      - array
+                                      - 'null'
                                       items:
                                         type: object
                                         properties:
@@ -2247,10 +2260,11 @@ paths:
                                         - token
                                         - type
                                         additionalProperties: false
-                                      nullable: true
                                       description: The details about the fees collected by the integrator
                                     zeroExFee:
-                                      type: object
+                                      type:
+                                      - object
+                                      - 'null'
                                       properties:
                                         amount:
                                           allOf:
@@ -2275,10 +2289,11 @@ paths:
                                       - token
                                       - type
                                       additionalProperties: false
-                                      nullable: true
                                       description: The details about the fee collected by 0x
                                     bridgeNativeFee:
-                                      type: object
+                                      type:
+                                      - object
+                                      - 'null'
                                       properties:
                                         amount:
                                           allOf:
@@ -2306,7 +2321,6 @@ paths:
                                       - token
                                       - type
                                       additionalProperties: false
-                                      nullable: true
                                       description: Native fee required by the bridge provider for cross-chain message passing that will be added to the transaction value
                                     reimbursementFee:
                                       type: object
@@ -2355,7 +2369,6 @@ paths:
                                           format: int64
                                         - type: string
                                           pattern: ^[-+]?(0|[1-9]\d*)(\.\d+)?$
-                                        nullable: true
                                         description: The gas price in wei used for cost estimation
                                       gasLimit:
                                         allOf:
@@ -2370,7 +2383,6 @@ paths:
                                           format: int64
                                         - type: string
                                           pattern: ^[-+]?(0|[1-9]\d*)(\.\d+)?$
-                                        nullable: true
                                         description: The estimated total network cost of the swap. On chains where there is no L1 data cost, it is calculated as `gas` * `gasPrice`. On chains where there is an L1 data cost, it is calculated as `gas` * `gasPrice + L1 data`
                                     required:
                                     - chainType
@@ -2398,7 +2410,6 @@ paths:
                                           format: int64
                                         - type: string
                                           pattern: ^[-+]?(0|[1-9]\d*)(\.\d+)?$
-                                        nullable: true
                                         description: The priority fee in lamports for faster transaction processing
                                       total:
                                         allOf:
@@ -2553,9 +2564,10 @@ paths:
                                             pattern: ^[-+]?(0|[1-9]\d*)(\.\d+)?$
                                           description: The minimum output amount for this swap in token base units
                                         estimatedTimeSeconds:
-                                          type: integer
+                                          type:
+                                          - integer
+                                          - 'null'
                                           minimum: 0
-                                          nullable: true
                                           description: Estimated time for this swap step to complete
                                       required:
                                       - type
@@ -2622,9 +2634,10 @@ paths:
                                           type: string
                                           description: The bridge provider name handling this cross-chain transfer
                                         estimatedTimeSeconds:
-                                          type: integer
+                                          type:
+                                          - integer
+                                          - 'null'
                                           minimum: 0
-                                          nullable: true
                                           description: Estimated time for this bridge step to complete
                                       required:
                                       - type
@@ -2664,7 +2677,6 @@ paths:
                                               format: int64
                                             - type: string
                                               pattern: ^[-+]?(0|[1-9]\d*)(\.\d+)?$
-                                            nullable: true
                                             description: The estimated gas limit required for successful transaction execution
                                           gasPrice:
                                             allOf:
@@ -2672,7 +2684,6 @@ paths:
                                               format: int64
                                             - type: string
                                               pattern: ^[-+]?(0|[1-9]\d*)(\.\d+)?$
-                                            nullable: true
                                             description: The gas price in wei for the EVM transaction
                                           value:
                                             allOf:
@@ -2753,15 +2764,18 @@ paths:
                                     additionalProperties: false
                                   description: The transaction details to execute on the origin chain to initiate the cross-chain swap
                                 estimatedTimeSeconds:
-                                  type: number
+                                  type:
+                                  - number
+                                  - 'null'
                                   minimum: 0
-                                  nullable: true
                                   description: Estimated total time in seconds for the cross-chain swap to complete, including bridge confirmation time
                                 issues:
                                   type: object
                                   properties:
                                     allowance:
-                                      type: object
+                                      type:
+                                      - object
+                                      - 'null'
                                       properties:
                                         actual:
                                           allOf:
@@ -2784,9 +2798,10 @@ paths:
                                       - spender
                                       additionalProperties: false
                                       description: The allowances that the `originAddress` must set in order to execute the swap successfully. Null if no allowance is required
-                                      nullable: true
                                     balance:
-                                      type: object
+                                      type:
+                                      - object
+                                      - 'null'
                                       properties:
                                         token:
                                           anyOf:
@@ -2817,7 +2832,6 @@ paths:
                                       - expected
                                       additionalProperties: false
                                       description: The balance of `sellToken` that the `originAddress` must hold. Null if the `originAddress` has sufficient balance
-                                      nullable: true
                                     simulationIncomplete:
                                       type: boolean
                                       description: This is set to `true` when 0x cannot validate the transaction. This happens when the `originAddress` has an insufficient balance of `sellToken` and 0x is unable to perform enhanced quote validation with such low balance. Note that this does not necessarily mean that the trade will revert
@@ -2958,43 +2972,13 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    TRANSACTION_NOT_FOUND:
+    INTERNAL_SERVER_ERROR:
       type: object
       properties:
         name:
           type: string
           enum:
-          - TRANSACTION_NOT_FOUND
-        message:
-          type: string
-        data:
-          type: object
-          properties:
-            zid:
-              type: string
-              description: The unique ZeroEx identifier of the request
-            originChain:
-              type: string
-            originTxHash:
-              type: string
-              description: The hash of the transaction on the origin chain
-          required:
-          - zid
-          - originChain
-          - originTxHash
-          additionalProperties: false
-      required:
-      - name
-      - message
-      - data
-      additionalProperties: false
-    UNCATEGORIZED:
-      type: object
-      properties:
-        name:
-          type: string
-          enum:
-          - UNCATEGORIZED
+          - INTERNAL_SERVER_ERROR
         message:
           type: string
         data:
@@ -3005,33 +2989,6 @@ components:
               description: The unique ZeroEx identifier of the request
           required:
           - zid
-          additionalProperties: false
-      required:
-      - name
-      - message
-      - data
-      additionalProperties: false
-    BRIDGE_PROVIDER_ERROR:
-      type: object
-      properties:
-        name:
-          type: string
-          enum:
-          - BRIDGE_PROVIDER_ERROR
-        message:
-          type: string
-        data:
-          type: object
-          properties:
-            zid:
-              type: string
-              description: The unique ZeroEx identifier of the request
-            bridge:
-              type: string
-              description: The bridge provider
-          required:
-          - zid
-          - bridge
           additionalProperties: false
       required:
       - name
@@ -3063,6 +3020,63 @@ components:
           - zid
           - originChain
           - originTxHash
+          additionalProperties: false
+      required:
+      - name
+      - message
+      - data
+      additionalProperties: false
+    TRANSACTION_NOT_FOUND:
+      type: object
+      properties:
+        name:
+          type: string
+          enum:
+          - TRANSACTION_NOT_FOUND
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            zid:
+              type: string
+              description: The unique ZeroEx identifier of the request
+            originChain:
+              type: string
+            originTxHash:
+              type: string
+              description: The hash of the transaction on the origin chain
+          required:
+          - zid
+          - originChain
+          - originTxHash
+          additionalProperties: false
+      required:
+      - name
+      - message
+      - data
+      additionalProperties: false
+    BRIDGE_PROVIDER_ERROR:
+      type: object
+      properties:
+        name:
+          type: string
+          enum:
+          - BRIDGE_PROVIDER_ERROR
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            zid:
+              type: string
+              description: The unique ZeroEx identifier of the request
+            bridge:
+              type: string
+              description: The bridge provider
+          required:
+          - zid
+          - bridge
           additionalProperties: false
       required:
       - name
@@ -3109,13 +3123,13 @@ components:
       - message
       - data
       additionalProperties: false
-    INTERNAL_SERVER_ERROR:
+    UNCATEGORIZED:
       type: object
       properties:
         name:
           type: string
           enum:
-          - INTERNAL_SERVER_ERROR
+          - UNCATEGORIZED
         message:
           type: string
         data:
@@ -3133,7 +3147,7 @@ components:
       - data
       additionalProperties: false
   securitySchemes:
-    ApiKeyAuth:
+    0x-api-key:
       type: apiKey
       in: header
       name: 0x-api-key

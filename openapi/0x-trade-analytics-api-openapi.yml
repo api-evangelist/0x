@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: 0x Cross-Chain Trade Analytics API
+  title: 0x Trade Analytics API
   description: This is the official API reference for the latest 0x API (v2).
   version: v2
   x-source-url: https://github.com/0xProject/0x-docs/blob/main/fern/openapi.json
@@ -15,7 +15,7 @@ paths:
     get:
       operationId: tradeAnalytics::swap
       summary: Get Swap Trade Analytics
-      description: Get the list of completed swap trades. Returns a maximum of 200 trades per request. Visit [here](https://docs.0x.org/docs/trade-analytics-api/introduction) for more details about how the API works.
+      description: Get the list of completed swap trades. Returns a maximum of 200 trades per request. Visit here for more details about how the API works.
       tags:
       - Trade Analytics
       parameters:
@@ -44,8 +44,7 @@ paths:
         required: false
         schema:
           type: integer
-          exclusiveMinimum: true
-          minimum: 0
+          exclusiveMinimum: 0
         description: Unix timestamp in seconds, specifying the starting point of the time range filter. Only trades completed on or after this timestamp will be included in the response.
         example: 1729032210
       - name: endTimestamp
@@ -53,8 +52,7 @@ paths:
         required: false
         schema:
           type: integer
-          exclusiveMinimum: true
-          minimum: 0
+          exclusiveMinimum: 0
         description: Unix timestamp in seconds, specifying the end point of the time range filter. Only trades completed on or before this timestamp will be included in the response.
         example: 1729032211
       responses:
@@ -66,8 +64,9 @@ paths:
                 type: object
                 properties:
                   nextCursor:
-                    type: string
-                    nullable: true
+                    type:
+                    - string
+                    - 'null'
                     description: The cursor to fetch the next page of trades. If not present, there are no more trades to fetch for given parameters.
                   trades:
                     type: array
@@ -85,14 +84,14 @@ paths:
                           pattern: ^0x[a-fA-F0-9]{40}$
                           description: The contract address of the token received by the taker
                         buyAmount:
-                          type: string
-                          nullable: true
+                          type:
+                          - string
+                          - 'null'
                           description: The settled amount on the `buyToken`, formatted by the token decimals
                         chainId:
                           type: integer
-                          exclusiveMinimum: true
-                          minimum: 0
                           description: The ID of the chain where the trade was executed
+                          exclusiveMinimum: 0
                         chainName:
                           type: string
                           description: The name of the chain where the trade was executed
@@ -100,20 +99,25 @@ paths:
                           type: object
                           properties:
                             integratorFee:
-                              type: object
+                              type:
+                              - object
+                              - 'null'
                               properties:
                                 token:
-                                  type: string
+                                  type:
+                                  - string
+                                  - 'null'
                                   pattern: ^0x[a-fA-F0-9]{40}$
                                   description: The contract address of the token in which the integrator collected a fee
-                                  nullable: true
                                 amount:
-                                  type: string
-                                  nullable: true
+                                  type:
+                                  - string
+                                  - 'null'
                                   description: The amount of the integrator fee, formatted by the token decimals
                                 amountUsd:
-                                  type: string
-                                  nullable: true
+                                  type:
+                                  - string
+                                  - 'null'
                                   description: The amount of the integrator fee in USD.
                               required:
                               - token
@@ -121,22 +125,26 @@ paths:
                               - amountUsd
                               additionalProperties: false
                               description: The details about the fee collected by integrator
-                              nullable: true
                             zeroExFee:
-                              type: object
+                              type:
+                              - object
+                              - 'null'
                               properties:
                                 token:
-                                  type: string
+                                  type:
+                                  - string
+                                  - 'null'
                                   pattern: ^0x[a-fA-F0-9]{40}$
                                   description: The contract address of the token in which 0x collected a fee
-                                  nullable: true
                                 amount:
-                                  type: string
-                                  nullable: true
+                                  type:
+                                  - string
+                                  - 'null'
                                   description: The amount of the 0x fee, formatted by the token decimals
                                 amountUsd:
-                                  type: string
-                                  nullable: true
+                                  type:
+                                  - string
+                                  - 'null'
                                   description: The amount of the 0x fee in USD.
                               required:
                               - token
@@ -144,7 +152,6 @@ paths:
                               - amountUsd
                               additionalProperties: false
                               description: The details about the fee collected by 0x
-                              nullable: true
                           required:
                           - integratorFee
                           - zeroExFee
@@ -164,12 +171,14 @@ paths:
                           pattern: ^0x[a-fA-F0-9]{40}$
                           description: The contract address of the token spent by the taker
                         sellAmount:
-                          type: string
-                          nullable: true
+                          type:
+                          - string
+                          - 'null'
                           description: The amount of the `sellToken`, formatted by the token decimals
                         slippageBps:
-                          type: string
-                          nullable: true
+                          type:
+                          - string
+                          - 'null'
                           description: The slippage of the `buyToken` in bps
                         taker:
                           type: string
@@ -177,9 +186,8 @@ paths:
                           description: The wallet address of the taker​
                         timestamp:
                           type: integer
-                          exclusiveMinimum: true
-                          minimum: 0
                           description: The timestamp of the block containing the trade
+                          exclusiveMinimum: 0
                         tokens:
                           type: array
                           items:
@@ -190,8 +198,9 @@ paths:
                                 pattern: ^0x[a-fA-F0-9]{40}$
                                 description: The contract address of the token
                               symbol:
-                                type: string
-                                nullable: true
+                                type:
+                                - string
+                                - 'null'
                                 description: The symbol of the token
                             required:
                             - address
@@ -203,8 +212,9 @@ paths:
                           type: string
                           description: The trade's transaction hash
                         volumeUsd:
-                          type: string
-                          nullable: true
+                          type:
+                          - string
+                          - 'null'
                           description: The total volume of the trade in USD. This value is based on an estimate of the token price at the point of execution.
                         zid:
                           type: string
@@ -292,7 +302,7 @@ paths:
     get:
       operationId: tradeAnalytics::gasless
       summary: Get Gasless Trade Analytics
-      description: Get the list of completed gasless trades. Returns a maximum of 200 trades per request. Visit [here](https://docs.0x.org/docs/trade-analytics-api/introduction) for more details about how the API works.
+      description: Get the list of completed gasless trades. Returns a maximum of 200 trades per request. Visit here for more details about how the API works.
       tags:
       - Trade Analytics
       parameters:
@@ -321,8 +331,7 @@ paths:
         required: false
         schema:
           type: integer
-          exclusiveMinimum: true
-          minimum: 0
+          exclusiveMinimum: 0
         description: Unix timestamp in seconds, specifying the starting point of the time range filter. Only trades completed on or after this timestamp will be included in the response.
         example: 1729032210
       - name: endTimestamp
@@ -330,8 +339,7 @@ paths:
         required: false
         schema:
           type: integer
-          exclusiveMinimum: true
-          minimum: 0
+          exclusiveMinimum: 0
         description: Unix timestamp in seconds, specifying the end point of the time range filter. Only trades completed on or before this timestamp will be included in the response.
         example: 1729032211
       responses:
@@ -343,8 +351,9 @@ paths:
                 type: object
                 properties:
                   nextCursor:
-                    type: string
-                    nullable: true
+                    type:
+                    - string
+                    - 'null'
                     description: The cursor to fetch the next page of trades. If not present, there are no more trades to fetch for given parameters.
                   trades:
                     type: array
@@ -362,14 +371,14 @@ paths:
                           pattern: ^0x[a-fA-F0-9]{40}$
                           description: The contract address of the token received by the taker
                         buyAmount:
-                          type: string
-                          nullable: true
+                          type:
+                          - string
+                          - 'null'
                           description: The settled amount on the `buyToken`, formatted by the token decimals
                         chainId:
                           type: integer
-                          exclusiveMinimum: true
-                          minimum: 0
                           description: The ID of the chain where the trade was executed
+                          exclusiveMinimum: 0
                         chainName:
                           type: string
                           description: The name of the chain where the trade was executed
@@ -377,20 +386,25 @@ paths:
                           type: object
                           properties:
                             integratorFee:
-                              type: object
+                              type:
+                              - object
+                              - 'null'
                               properties:
                                 token:
-                                  type: string
+                                  type:
+                                  - string
+                                  - 'null'
                                   pattern: ^0x[a-fA-F0-9]{40}$
                                   description: The contract address of the token in which the integrator collected a fee
-                                  nullable: true
                                 amount:
-                                  type: string
-                                  nullable: true
+                                  type:
+                                  - string
+                                  - 'null'
                                   description: The amount of the integrator fee, formatted by the token decimals
                                 amountUsd:
-                                  type: string
-                                  nullable: true
+                                  type:
+                                  - string
+                                  - 'null'
                                   description: The amount of the integrator fee in USD.
                               required:
                               - token
@@ -398,22 +412,26 @@ paths:
                               - amountUsd
                               additionalProperties: false
                               description: The details about the fee collected by integrator
-                              nullable: true
                             zeroExFee:
-                              type: object
+                              type:
+                              - object
+                              - 'null'
                               properties:
                                 token:
-                                  type: string
+                                  type:
+                                  - string
+                                  - 'null'
                                   pattern: ^0x[a-fA-F0-9]{40}$
                                   description: The contract address of the token in which 0x collected a fee
-                                  nullable: true
                                 amount:
-                                  type: string
-                                  nullable: true
+                                  type:
+                                  - string
+                                  - 'null'
                                   description: The amount of the 0x fee, formatted by the token decimals
                                 amountUsd:
-                                  type: string
-                                  nullable: true
+                                  type:
+                                  - string
+                                  - 'null'
                                   description: The amount of the 0x fee in USD.
                               required:
                               - token
@@ -421,7 +439,6 @@ paths:
                               - amountUsd
                               additionalProperties: false
                               description: The details about the fee collected by 0x
-                              nullable: true
                           required:
                           - integratorFee
                           - zeroExFee
@@ -441,12 +458,14 @@ paths:
                           pattern: ^0x[a-fA-F0-9]{40}$
                           description: The contract address of the token spent by the taker
                         sellAmount:
-                          type: string
-                          nullable: true
+                          type:
+                          - string
+                          - 'null'
                           description: The amount of the `sellToken`, formatted by the token decimals
                         slippageBps:
-                          type: string
-                          nullable: true
+                          type:
+                          - string
+                          - 'null'
                           description: The slippage of the `buyToken` in bps
                         taker:
                           type: string
@@ -454,9 +473,8 @@ paths:
                           description: The wallet address of the taker​
                         timestamp:
                           type: integer
-                          exclusiveMinimum: true
-                          minimum: 0
                           description: The timestamp of the block containing the trade
+                          exclusiveMinimum: 0
                         tokens:
                           type: array
                           items:
@@ -467,8 +485,9 @@ paths:
                                 pattern: ^0x[a-fA-F0-9]{40}$
                                 description: The contract address of the token
                               symbol:
-                                type: string
-                                nullable: true
+                                type:
+                                - string
+                                - 'null'
                                 description: The symbol of the token
                             required:
                             - address
@@ -480,8 +499,9 @@ paths:
                           type: string
                           description: The trade's transaction hash
                         volumeUsd:
-                          type: string
-                          nullable: true
+                          type:
+                          - string
+                          - 'null'
                           description: The total volume of the trade in USD. This value is based on an estimate of the token price at the point of execution.
                         zid:
                           type: string
@@ -567,29 +587,6 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    UNCATEGORIZED:
-      type: object
-      properties:
-        name:
-          type: string
-          enum:
-          - UNCATEGORIZED
-        message:
-          type: string
-        data:
-          type: object
-          properties:
-            zid:
-              type: string
-              description: The unique ZeroEx identifier of the request
-          required:
-          - zid
-          additionalProperties: false
-      required:
-      - name
-      - message
-      - data
-      additionalProperties: false
     INPUT_INVALID:
       type: object
       properties:
@@ -637,6 +634,29 @@ components:
           type: string
           enum:
           - INTERNAL_SERVER_ERROR
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            zid:
+              type: string
+              description: The unique ZeroEx identifier of the request
+          required:
+          - zid
+          additionalProperties: false
+      required:
+      - name
+      - message
+      - data
+      additionalProperties: false
+    UNCATEGORIZED:
+      type: object
+      properties:
+        name:
+          type: string
+          enum:
+          - UNCATEGORIZED
         message:
           type: string
         data:
