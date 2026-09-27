@@ -2995,13 +2995,13 @@ components:
       - message
       - data
       additionalProperties: false
-    BRIDGE_UNKNOWN:
+    UNCATEGORIZED:
       type: object
       properties:
         name:
           type: string
           enum:
-          - BRIDGE_UNKNOWN
+          - UNCATEGORIZED
         message:
           type: string
         data:
@@ -3010,46 +3010,8 @@ components:
             zid:
               type: string
               description: The unique ZeroEx identifier of the request
-            originChain:
-              type: string
-              description: The origin chain of the transaction
-            originTxHash:
-              type: string
-              description: The hash of the transaction on the origin chain
           required:
           - zid
-          - originChain
-          - originTxHash
-          additionalProperties: false
-      required:
-      - name
-      - message
-      - data
-      additionalProperties: false
-    TRANSACTION_NOT_FOUND:
-      type: object
-      properties:
-        name:
-          type: string
-          enum:
-          - TRANSACTION_NOT_FOUND
-        message:
-          type: string
-        data:
-          type: object
-          properties:
-            zid:
-              type: string
-              description: The unique ZeroEx identifier of the request
-            originChain:
-              type: string
-            originTxHash:
-              type: string
-              description: The hash of the transaction on the origin chain
-          required:
-          - zid
-          - originChain
-          - originTxHash
           additionalProperties: false
       required:
       - name
@@ -3077,6 +3039,37 @@ components:
           required:
           - zid
           - bridge
+          additionalProperties: false
+      required:
+      - name
+      - message
+      - data
+      additionalProperties: false
+    BRIDGE_UNKNOWN:
+      type: object
+      properties:
+        name:
+          type: string
+          enum:
+          - BRIDGE_UNKNOWN
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            zid:
+              type: string
+              description: The unique ZeroEx identifier of the request
+            originChain:
+              type: string
+              description: The origin chain of the transaction
+            originTxHash:
+              type: string
+              description: The hash of the transaction on the origin chain
+          required:
+          - zid
+          - originChain
+          - originTxHash
           additionalProperties: false
       required:
       - name
@@ -3123,13 +3116,13 @@ components:
       - message
       - data
       additionalProperties: false
-    UNCATEGORIZED:
+    TRANSACTION_NOT_FOUND:
       type: object
       properties:
         name:
           type: string
           enum:
-          - UNCATEGORIZED
+          - TRANSACTION_NOT_FOUND
         message:
           type: string
         data:
@@ -3138,8 +3131,15 @@ components:
             zid:
               type: string
               description: The unique ZeroEx identifier of the request
+            originChain:
+              type: string
+            originTxHash:
+              type: string
+              description: The hash of the transaction on the origin chain
           required:
           - zid
+          - originChain
+          - originTxHash
           additionalProperties: false
       required:
       - name
