@@ -16,9 +16,12 @@ deployment:
 tools_count: 1
 tools:
 - name: searchDocs
-  description: ''
+  description: Search the documentation at https://docs.0x.org. Returns relevant doc passages with source
+    URLs.
 tools_source: live tools/list via initialize handshake, 2026-09-12 (signals/audit_mcp_authorship.py --probe)
 authorship: platform
 authorship_note: 'PLATFORM-AUTHORED: this tool shape is shared with at least one other provider in the
   catalog, so it is a platform default appearing under this provider''s domain rather than an interface
   this provider designed. Shared shape: (''searchDocs'',)'
+descriptions_source: live tools/list (authorship probe or saved capture); filled by backfill-tools-from-authorship.py
+  --descriptions, 2026-09-28
