@@ -587,29 +587,6 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    INTERNAL_SERVER_ERROR:
-      type: object
-      properties:
-        name:
-          type: string
-          enum:
-          - INTERNAL_SERVER_ERROR
-        message:
-          type: string
-        data:
-          type: object
-          properties:
-            zid:
-              type: string
-              description: The unique ZeroEx identifier of the request
-          required:
-          - zid
-          additionalProperties: false
-      required:
-      - name
-      - message
-      - data
-      additionalProperties: false
     UNCATEGORIZED:
       type: object
       properties:
@@ -667,6 +644,29 @@ components:
           required:
           - zid
           - details
+          additionalProperties: false
+      required:
+      - name
+      - message
+      - data
+      additionalProperties: false
+    INTERNAL_SERVER_ERROR:
+      type: object
+      properties:
+        name:
+          type: string
+          enum:
+          - INTERNAL_SERVER_ERROR
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            zid:
+              type: string
+              description: The unique ZeroEx identifier of the request
+          required:
+          - zid
           additionalProperties: false
       required:
       - name
