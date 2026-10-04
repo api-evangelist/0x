@@ -4696,6 +4696,52 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
+    XSTOCKS_NOT_AUTHORIZED:
+      type: object
+      properties:
+        name:
+          type: string
+          enum:
+          - XSTOCKS_NOT_AUTHORIZED
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            zid:
+              type: string
+              description: The unique ZeroEx identifier of the request
+          required:
+          - zid
+          additionalProperties: false
+      required:
+      - name
+      - message
+      - data
+      additionalProperties: false
+    RECIPIENT_NOT_SUPPORTED:
+      type: object
+      properties:
+        name:
+          type: string
+          enum:
+          - RECIPIENT_NOT_SUPPORTED
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            zid:
+              type: string
+              description: The unique ZeroEx identifier of the request
+          required:
+          - zid
+          additionalProperties: false
+      required:
+      - name
+      - message
+      - data
+      additionalProperties: false
     TOKEN_NOT_SUPPORTED:
       type: object
       properties:
@@ -4719,13 +4765,13 @@ components:
       - message
       - data
       additionalProperties: false
-    USER_NOT_AUTHORIZED:
+    TAKER_NOT_AUTHORIZED_FOR_TRADE:
       type: object
       properties:
         name:
           type: string
           enum:
-          - USER_NOT_AUTHORIZED
+          - TAKER_NOT_AUTHORIZED_FOR_TRADE
         message:
           type: string
         data:
@@ -4742,13 +4788,13 @@ components:
       - message
       - data
       additionalProperties: false
-    XSTOCKS_NOT_AUTHORIZED:
+    USER_NOT_AUTHORIZED:
       type: object
       properties:
         name:
           type: string
           enum:
-          - XSTOCKS_NOT_AUTHORIZED
+          - USER_NOT_AUTHORIZED
         message:
           type: string
         data:
@@ -4811,59 +4857,13 @@ components:
       - message
       - data
       additionalProperties: false
-    UNCATEGORIZED:
+    RECIPIENT_NOT_AUTHORIZED_FOR_TRADE:
       type: object
       properties:
         name:
           type: string
           enum:
-          - UNCATEGORIZED
-        message:
-          type: string
-        data:
-          type: object
-          properties:
-            zid:
-              type: string
-              description: The unique ZeroEx identifier of the request
-          required:
-          - zid
-          additionalProperties: false
-      required:
-      - name
-      - message
-      - data
-      additionalProperties: false
-    TAKER_NOT_AUTHORIZED_FOR_TRADE:
-      type: object
-      properties:
-        name:
-          type: string
-          enum:
-          - TAKER_NOT_AUTHORIZED_FOR_TRADE
-        message:
-          type: string
-        data:
-          type: object
-          properties:
-            zid:
-              type: string
-              description: The unique ZeroEx identifier of the request
-          required:
-          - zid
-          additionalProperties: false
-      required:
-      - name
-      - message
-      - data
-      additionalProperties: false
-    SELL_TOKEN_NOT_AUTHORIZED_FOR_TRADE:
-      type: object
-      properties:
-        name:
-          type: string
-          enum:
-          - SELL_TOKEN_NOT_AUTHORIZED_FOR_TRADE
+          - RECIPIENT_NOT_AUTHORIZED_FOR_TRADE
         message:
           type: string
         data:
@@ -4903,36 +4903,13 @@ components:
       - message
       - data
       additionalProperties: false
-    RECIPIENT_NOT_AUTHORIZED_FOR_TRADE:
+    UNCATEGORIZED:
       type: object
       properties:
         name:
           type: string
           enum:
-          - RECIPIENT_NOT_AUTHORIZED_FOR_TRADE
-        message:
-          type: string
-        data:
-          type: object
-          properties:
-            zid:
-              type: string
-              description: The unique ZeroEx identifier of the request
-          required:
-          - zid
-          additionalProperties: false
-      required:
-      - name
-      - message
-      - data
-      additionalProperties: false
-    RECIPIENT_NOT_SUPPORTED:
-      type: object
-      properties:
-        name:
-          type: string
-          enum:
-          - RECIPIENT_NOT_SUPPORTED
+          - UNCATEGORIZED
         message:
           type: string
         data:
@@ -4983,6 +4960,29 @@ components:
           required:
           - zid
           - details
+          additionalProperties: false
+      required:
+      - name
+      - message
+      - data
+      additionalProperties: false
+    SELL_TOKEN_NOT_AUTHORIZED_FOR_TRADE:
+      type: object
+      properties:
+        name:
+          type: string
+          enum:
+          - SELL_TOKEN_NOT_AUTHORIZED_FOR_TRADE
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            zid:
+              type: string
+              description: The unique ZeroEx identifier of the request
+          required:
+          - zid
           additionalProperties: false
       required:
       - name

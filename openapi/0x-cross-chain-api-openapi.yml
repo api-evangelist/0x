@@ -2972,37 +2972,6 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    BRIDGE_UNKNOWN:
-      type: object
-      properties:
-        name:
-          type: string
-          enum:
-          - BRIDGE_UNKNOWN
-        message:
-          type: string
-        data:
-          type: object
-          properties:
-            zid:
-              type: string
-              description: The unique ZeroEx identifier of the request
-            originChain:
-              type: string
-              description: The origin chain of the transaction
-            originTxHash:
-              type: string
-              description: The hash of the transaction on the origin chain
-          required:
-          - zid
-          - originChain
-          - originTxHash
-          additionalProperties: false
-      required:
-      - name
-      - message
-      - data
-      additionalProperties: false
     TRANSACTION_NOT_FOUND:
       type: object
       properties:
@@ -3100,6 +3069,37 @@ components:
               description: The unique ZeroEx identifier of the request
           required:
           - zid
+          additionalProperties: false
+      required:
+      - name
+      - message
+      - data
+      additionalProperties: false
+    BRIDGE_UNKNOWN:
+      type: object
+      properties:
+        name:
+          type: string
+          enum:
+          - BRIDGE_UNKNOWN
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            zid:
+              type: string
+              description: The unique ZeroEx identifier of the request
+            originChain:
+              type: string
+              description: The origin chain of the transaction
+            originTxHash:
+              type: string
+              description: The hash of the transaction on the origin chain
+          required:
+          - zid
+          - originChain
+          - originTxHash
           additionalProperties: false
       required:
       - name
