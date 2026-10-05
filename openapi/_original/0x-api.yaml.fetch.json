@@ -1,0 +1,12 @@
+{
+ "url": "https://docs.0x.org/openapi/evm-apis.yaml",
+ "requested_url": "https://docs.0x.org/openapi/evm-apis.yaml",
+ "status": 200,
+ "content_type": "application/x-yaml; charset=utf-8",
+ "bytes": 436854,
+ "sha256": "8fc6b12c100602484780dc84fb27df5f8db37ea8081a514d036d65b3738dca39",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "equivalent",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the provider's current document describes the same operations (Jaccard 0.929), but the bytes differ, so the archive is an earlier or reformatted copy."
+}
