@@ -2972,6 +2972,46 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
+    INPUT_INVALID:
+      type: object
+      properties:
+        name:
+          type: string
+          enum:
+          - INPUT_INVALID
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            zid:
+              type: string
+              description: The unique ZeroEx identifier of the request
+            details:
+              type: array
+              items:
+                type: object
+                properties:
+                  field:
+                    type: string
+                    description: The input field name
+                  reason:
+                    type: string
+                    description: The validation failure reason
+                required:
+                - field
+                - reason
+                additionalProperties: false
+              description: The list of invalid inputs
+          required:
+          - zid
+          - details
+          additionalProperties: false
+      required:
+      - name
+      - message
+      - data
+      additionalProperties: false
     TRANSACTION_NOT_FOUND:
       type: object
       properties:
@@ -3002,56 +3042,6 @@ components:
       - message
       - data
       additionalProperties: false
-    INTERNAL_SERVER_ERROR:
-      type: object
-      properties:
-        name:
-          type: string
-          enum:
-          - INTERNAL_SERVER_ERROR
-        message:
-          type: string
-        data:
-          type: object
-          properties:
-            zid:
-              type: string
-              description: The unique ZeroEx identifier of the request
-          required:
-          - zid
-          additionalProperties: false
-      required:
-      - name
-      - message
-      - data
-      additionalProperties: false
-    BRIDGE_PROVIDER_ERROR:
-      type: object
-      properties:
-        name:
-          type: string
-          enum:
-          - BRIDGE_PROVIDER_ERROR
-        message:
-          type: string
-        data:
-          type: object
-          properties:
-            zid:
-              type: string
-              description: The unique ZeroEx identifier of the request
-            bridge:
-              type: string
-              description: The bridge provider
-          required:
-          - zid
-          - bridge
-          additionalProperties: false
-      required:
-      - name
-      - message
-      - data
-      additionalProperties: false
     UNCATEGORIZED:
       type: object
       properties:
@@ -3059,6 +3049,29 @@ components:
           type: string
           enum:
           - UNCATEGORIZED
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            zid:
+              type: string
+              description: The unique ZeroEx identifier of the request
+          required:
+          - zid
+          additionalProperties: false
+      required:
+      - name
+      - message
+      - data
+      additionalProperties: false
+    INTERNAL_SERVER_ERROR:
+      type: object
+      properties:
+        name:
+          type: string
+          enum:
+          - INTERNAL_SERVER_ERROR
         message:
           type: string
         data:
@@ -3106,13 +3119,13 @@ components:
       - message
       - data
       additionalProperties: false
-    INPUT_INVALID:
+    BRIDGE_PROVIDER_ERROR:
       type: object
       properties:
         name:
           type: string
           enum:
-          - INPUT_INVALID
+          - BRIDGE_PROVIDER_ERROR
         message:
           type: string
         data:
@@ -3121,25 +3134,12 @@ components:
             zid:
               type: string
               description: The unique ZeroEx identifier of the request
-            details:
-              type: array
-              items:
-                type: object
-                properties:
-                  field:
-                    type: string
-                    description: The input field name
-                  reason:
-                    type: string
-                    description: The validation failure reason
-                required:
-                - field
-                - reason
-                additionalProperties: false
-              description: The list of invalid inputs
+            bridge:
+              type: string
+              description: The bridge provider
           required:
           - zid
-          - details
+          - bridge
           additionalProperties: false
       required:
       - name
