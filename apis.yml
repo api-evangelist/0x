@@ -50,6 +50,19 @@ tags:
   - DeFi
   - DEX Aggregator
   - Swap
+  - Gasless Transactions
+  - Cross-Chain
+  - Permit2
+  - Liquidity
+  - Trade Analytics
+  - Web3
+  - Settlement
+  - Smart Contracts
+tags_raw:
+  - Cryptocurrency
+  - DeFi
+  - DEX Aggregator
+  - Swap
   - Gasless
   - Cross-Chain
   - Permit2
@@ -121,6 +134,8 @@ apis:
   humanURL: https://0x.org/products/swap
   baseURL: https://api.0x.org
   tags:
+  - Gasless Transactions
+  tags_raw:
   - Gasless
   properties:
   - type: OpenAPI
