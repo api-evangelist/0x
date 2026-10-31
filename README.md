@@ -66,7 +66,7 @@
 
 0x is the institutional-grade DEX aggregation and crypto liquidity infrastructure platform that powers token swaps inside hundreds of consumer wallets, exchanges, and onchain apps. The 0x API surface aggregates 150+ liquidity sources — public AMMs and exclusive professional market makers — across 20+ EVM chains, exposing four primary products: the Swap API (AllowanceHolder and Permit2 flows) for on-chain swaps, the Gasless API for swaps with no native gas token, the Cross-Chain API for any-token any-chain bridging across 16+ providers, and the Trade Analytics API for monetisation and reporting. Settlement is performed by the 0x Settler smart contracts using the Permit2 standard, and integrators get a unified API key, a TypeScript SDK, an official Agent Skill, and an MCP server for AI-assisted development.
 
-**Areas:** Cryptocurrency · DeFi · DEX Aggregator · Swap · Gasless · Cross-Chain · Permit2 · Liquidity · Trade Analytics · Web3 · Settlement · Smart Contracts
+**Areas:** Cryptocurrency · DeFi · DEX Aggregator · Swap · Gasless Transactions · Cross-Chain · Permit2 · Liquidity · Trade Analytics · Web3 · Settlement · Smart Contracts
 
 ## 0x on APIs.io
 
@@ -205,18 +205,18 @@ Links to the company's own pages. This repository publishes no copy of their spe
 
 ## API Evangelist rating
 
-**Kin Score 46.1** — developing · rubric 0.24.0 · scored 2026-10-17
+**Kin Score 45.6** — developing · rubric 0.25.0 · scored 2026-10-23
 
 | Facet | Score |
 |---|---|
-| Discoverability | 73.3 |
+| Discoverability | 68.3 |
 | Contract quality | 59.5 |
 | Contract governance | 27.3 |
 | Operational transparency | 42.1 |
 | Developer ergonomics | 46.4 |
 | Access clarity | 31.6 |
 
-**Agent readiness 25.1** — agent-aware
+**Agent readiness 26.7** — agent-aware
 
 | Agent-readiness dimension | Result |
 |---|---|
@@ -239,6 +239,8 @@ Links to the company's own pages. This repository publishes no copy of their spe
 | Protected Resource Metadata | — |
 | Dynamic Client Registration | — |
 | Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | distinct |
 
 **Regulatory alignment 16.7** — Horizontal (data, software, accessibility, platform)
 
