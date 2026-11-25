@@ -94,7 +94,7 @@ Model Context Protocol servers that expose the API to agents.
 
 Which operations an agent can call, which act, and which need a human in the loop.
 
-- [0X Agentic Access](https://apis.io/agentic-access/0x/0x-agentic-access/)
+- [0x Agentic Access](https://apis.io/agentic-access/0x/0x-agentic-access/)
 
 #### JSON Schema (9)
 
@@ -114,8 +114,8 @@ The data models the API reads and writes.
 
 Data models expressed in JSON Structure.
 
-- [0X Gasless Trade Structure](https://apis.io/json-structure/0x/0x-gasless-trade-structure/)
-- [0X Swap Quote Structure](https://apis.io/json-structure/0x/0x-swap-quote-structure/)
+- [0x Gasless Trade Structure](https://apis.io/json-structure/0x/0x-gasless-trade-structure/)
+- [0x Swap Quote Structure](https://apis.io/json-structure/0x/0x-swap-quote-structure/)
 
 #### JSON-LD (1)
 
@@ -133,16 +133,16 @@ The provider's domain terms, defined.
 
 Example requests and responses.
 
-- [0X Cross Chain Get Quotes Example](https://apis.io/examples/0x/0x-cross-chain-get-quotes-example/)
-- [0X Gasless Get Quote Example](https://apis.io/examples/0x/0x-gasless-get-quote-example/)
-- [0X Gasless Get Status Example](https://apis.io/examples/0x/0x-gasless-get-status-example/)
-- [0X Gasless Submit Trade Example](https://apis.io/examples/0x/0x-gasless-submit-trade-example/)
-- [0X Sources Get Sources Example](https://apis.io/examples/0x/0x-sources-get-sources-example/)
-- [0X Swap Allowance Holder Get Price Example](https://apis.io/examples/0x/0x-swap-allowance-holder-get-price-example/)
-- [0X Swap Allowance Holder Get Quote Example](https://apis.io/examples/0x/0x-swap-allowance-holder-get-quote-example/)
-- [0X Swap Get Chains Example](https://apis.io/examples/0x/0x-swap-get-chains-example/)
-- [0X Swap Permit2 Get Quote Example](https://apis.io/examples/0x/0x-swap-permit2-get-quote-example/)
-- [0X Trade Analytics Swap Example](https://apis.io/examples/0x/0x-trade-analytics-swap-example/)
+- [0x Cross Chain Get Quotes Example](https://apis.io/examples/0x/0x-cross-chain-get-quotes-example/)
+- [0x Gasless Get Quote Example](https://apis.io/examples/0x/0x-gasless-get-quote-example/)
+- [0x Gasless Get Status Example](https://apis.io/examples/0x/0x-gasless-get-status-example/)
+- [0x Gasless Submit Trade Example](https://apis.io/examples/0x/0x-gasless-submit-trade-example/)
+- [0x Sources Get Sources Example](https://apis.io/examples/0x/0x-sources-get-sources-example/)
+- [0x Swap Allowance Holder Get Price Example](https://apis.io/examples/0x/0x-swap-allowance-holder-get-price-example/)
+- [0x Swap Allowance Holder Get Quote Example](https://apis.io/examples/0x/0x-swap-allowance-holder-get-quote-example/)
+- [0x Swap Get Chains Example](https://apis.io/examples/0x/0x-swap-get-chains-example/)
+- [0x Swap Permit2 Get Quote Example](https://apis.io/examples/0x/0x-swap-permit2-get-quote-example/)
+- [0x Trade Analytics Swap Example](https://apis.io/examples/0x/0x-trade-analytics-swap-example/)
 
 #### Collections (10)
 
@@ -159,6 +159,16 @@ Postman and Open Collection request collections.
 - [0x Cross-Chain Swap API](https://apis.io/collections/0x/postman-0x-swap-api/)
 - [0x Cross-Chain Trade Analytics API](https://apis.io/collections/0x/postman-0x-trade-analytics-api/)
 
+#### Overlays (5)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [0x Cross Chain Api Certification Overlay](https://apis.io/overlays/0x/0x-cross-chain-api-certification-overlay/)
+- [0x Gasless Api Certification Overlay](https://apis.io/overlays/0x/0x-gasless-api-certification-overlay/)
+- [0x Sources Api Certification Overlay](https://apis.io/overlays/0x/0x-sources-api-certification-overlay/)
+- [0x Swap Api Certification Overlay](https://apis.io/overlays/0x/0x-swap-api-certification-overlay/)
+- [0x Trade Analytics Api Certification Overlay](https://apis.io/overlays/0x/0x-trade-analytics-api-certification-overlay/)
+
 #### Governance rules (2)
 
 Spectral rulesets for the provider's contracts.
@@ -170,26 +180,27 @@ Spectral rulesets for the provider's contracts.
 
 Authentication, trust centre, and vulnerability disclosure.
 
-- [0X Authentication](https://apis.io/security/0x/0x-authentication/)
-- [0X Domain Security](https://apis.io/security/0x/0x-domain-security/)
+- [0x Authentication](https://apis.io/security/0x/0x-authentication/)
+- [0x Domain Security](https://apis.io/security/0x/0x-domain-security/)
 
-#### Plans and pricing (1)
+#### Plans and pricing (2)
 
 Published plans, tiers and prices.
 
-- [0X Plans Pricing](https://apis.io/plans/0x/0x-plans-pricing/)
+- [0x Plans Pricing](https://apis.io/plans/0x/0x-plans-pricing/)
+- [0x Price Estimates](https://apis.io/plans/0x/0x-price-estimates/)
 
 #### Rate limits (1)
 
 Published request limits.
 
-- [0X Rate Limits](https://apis.io/rate-limits/0x/0x-rate-limits/)
+- [0x Rate Limits](https://apis.io/rate-limits/0x/0x-rate-limits/)
 
 #### FinOps (1)
 
 What the API costs to run, by operation.
 
-- [0X Finops](https://apis.io/finops/0x/0x-finops/)
+- [0x Finops](https://apis.io/finops/0x/0x-finops/)
 
 ## Where to find this API
 
@@ -205,18 +216,18 @@ Links to the company's own pages. This repository publishes no copy of their spe
 
 ## API Evangelist rating
 
-**Kin Score 45.6** — developing · rubric 0.25.0 · scored 2026-10-23
+**Kin Score 49.2** — developing · rubric 0.28.1 · scored 2026-11-21
 
 | Facet | Score |
 |---|---|
-| Discoverability | 68.3 |
-| Contract quality | 59.5 |
-| Contract governance | 27.3 |
-| Operational transparency | 42.1 |
+| Discoverability | 75.0 |
+| Contract quality | 63.9 |
+| Contract governance | 33.3 |
+| Operational transparency | 40.5 |
 | Developer ergonomics | 46.4 |
-| Access clarity | 31.6 |
+| Access clarity | 42.6 |
 
-**Agent readiness 26.7** — agent-aware
+**Agent readiness 26.6** — agent-aware
 
 | Agent-readiness dimension | Result |
 |---|---|
@@ -241,8 +252,12 @@ Links to the company's own pages. This repository publishes no copy of their spe
 | Agentic Commerce | — |
 | Pagination Ratio | na |
 | Operation Distinctiveness | distinct |
+| MCP Tool Quality | na |
+| Onboarding Descriptor | — |
+| Dns Aid Index | na |
+| Markdown Negotiation | yes |
 
-**Regulatory alignment 16.7** — Horizontal (data, software, accessibility, platform)
+**Regulatory alignment 10.8** — Horizontal (data, software, accessibility, platform)
 
 The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/0x/](https://apis.io/providers/0x/).
 
